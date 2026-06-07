@@ -407,7 +407,7 @@ const NEWS_DATA = [
   { t:"c", cat:"co", cl:"Entreprise",   ic:"fa-trophy",    em:"🏆", title:"MDS NovaTech remporte le Prix de l'Innovation 2026",        ex:"Distingués au palmarès national des entreprises innovantes.", date:"15 Mai 2026" },
 ];
 
-const PHOTO = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face";
+const PHOTO = "/promoteur.jpg";
 
 function CustomSelect({ options, value, onChange }) {
   const [open, setOpen] = useState(false);
@@ -1030,7 +1030,7 @@ function Footer({ nav }) {
       <div className="footer-top">
         <div>
           <div className="logo" onClick={()=>nav("accueil")} style={{gap:10,cursor:"pointer",display:"flex",alignItems:"center"}}>
-            <div className="logo-box">M</div>
+            <img src="/logo1.png" alt="MDS NovaTech" style={{width:70,height:70,borderRadius:"50%",objectFit:"contain"}}/>
             <div className="footer-logo-name">MDS <span>NovaTech</span></div>
           </div>
           <p className="footer-desc">Solutions informatiques et agricoles pour bâtir un avenir connecté et prospère.</p>
@@ -1188,7 +1188,7 @@ export default function App() {
       <style>{CSS}</style>
       <nav className="nav">
         <div className="logo" onClick={()=>nav("accueil")}>
-          <div className="logo-box">M</div>
+         <img src={dark ? "/logo1.png" : "/logo.png"} alt="MDS NovaTech" style={{width:66,height:66,borderRadius:"50%",objectFit:"contain"}}/>
           <div className="logo-name">MDS <span>NovaTech</span></div>
         </div>
         <ul className="nav-links">
