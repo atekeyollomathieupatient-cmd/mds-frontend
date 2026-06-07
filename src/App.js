@@ -892,7 +892,7 @@ function PromoteurPage() {
             </div>
             <div className="promo-socials">
               {[["fa-linkedin-in"],["fa-x-twitter"],["fa-facebook-f"]].map(([ic])=>(
-                <a key={ic} href="#" className="promo-soc"><i className={`fa-brands ${ic}`}/></a>
+                <a key={ic} href="/" className="promo-soc"><i className={`fa-brands ${ic}`}/></a>
               ))}
             </div>
           </div>
@@ -1065,7 +1065,7 @@ function Footer({ nav }) {
         <span>© 2026 MDS NovaTech. Tous droits réservés.</span>
         <div className="socials">
           {["fa-linkedin-in","fa-facebook-f","fa-x-twitter","fa-youtube"].map(ic=>(
-            <a key={ic} href="#" className="soc"><i className={`fa-brands ${ic}`}/></a>
+            <a key={ic} href="/" className="soc"><i className={`fa-brands ${ic}`}/></a>
           ))}
         </div>
       </div>
