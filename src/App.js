@@ -755,11 +755,25 @@ function RecrutementPage({ openModal }) {
 }
 
 function PartenariatsPage() {
+  const [onglet, setOnglet] = useState("partenaires");
+  const [partenaires, setPartenaires] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [type, setType] = useState("comm");
-  const [form, setForm] = useState({ organisation:"", contact:"", email:"", proposition:"" });
-  const [sending, setSending] = useState(false);
-  const [msg, setMsg] = useState("");
-  const [msgType, setMsgType] = useState("success");
+
+  const SUPABASE_URL = "https://upmwjlgqzjjhotoahwaa.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwbXdqbGdxempqaG90b2Fod2FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3OTE3MjksImV4cCI6MjA5NjM2NzcyOX0.KnFffTUZlVNd5okLFGGL2Mx7uB22DOgm6aa8nigoxSg";
+
+  useEffect(() => {
+    fetch(`${SUPABASE_URL}/rest/v1/partenaires?select=*&order=created_at.desc`, {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      }
+    })
+    .then(r => r.json())
+    .then(data => { setPartenaires(data || []); setLoading(false); })
+    .catch(() => setLoading(false));
+  }, []);
 
   const typeOpts = [
     {value:"comm",  icon:"fa-store",            label:"Partenariat commercial"},
@@ -768,6 +782,11 @@ function PartenariatsPage() {
     {value:"inv",   icon:"fa-chart-line",       label:"Investissement"},
     {value:"autre", icon:"fa-ellipsis",         label:"Autre"},
   ];
+
+  const [form, setForm] = useState({ organisation:"", contact:"", email:"", proposition:"" });
+  const [sending, setSending] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [msgType, setMsgType] = useState("success");
 
   const handlePartner = async () => {
     if (!form.organisation || !form.email) {
@@ -797,44 +816,102 @@ function PartenariatsPage() {
 
   return (
     <div>
-      <PH tag="Collaborons" ticon="fa-handshake" title="Partenariats Stratégiques" sub="Que vous soyez une institution, ONG, entreprise ou investisseur — construisons l'avenir ensemble."/>
-      <div className="partner-grid">
+      <PH tag="Partenariats" ticon="fa-handshake" title="Partenariats Stratégiques" sub="Découvrez nos partenaires et proposez une collaboration."/>
+
+      {/* ONGLETS */}
+      <div style={{display:"flex",gap:8,marginBottom:36}}>
+        <button className={`btn ${onglet==="partenaires"?"btn-blue":"btn-outline"}`}
+          onClick={()=>setOnglet("partenaires")} style={{fontSize:"0.88rem"}}>
+          <i className="fa-solid fa-star"/>Nos Partenaires
+        </button>
+        <button className={`btn ${onglet==="collaborons"?"btn-blue":"btn-outline"}`}
+          onClick={()=>setOnglet("collaborons")} style={{fontSize:"0.88rem"}}>
+          <i className="fa-solid fa-handshake"/>Collaborons
+        </button>
+      </div>
+
+      {/* ONGLET PARTENAIRES */}
+      {onglet==="partenaires" && (
         <div>
-          <p style={{color:"var(--text2)",fontSize:"0.93rem",lineHeight:1.75,marginBottom:8}}>Nous croyons en la force des alliances stratégiques pour créer de la valeur durable.</p>
-          <div className="benefits">
-            {[
-              {icon:"fa-store",            title:"Partenariat Commercial",     desc:"Développez votre réseau et accédez à notre base de clients."},
-              {icon:"fa-microchip",        title:"Partenariat Technologique",  desc:"Intégrez vos solutions ou co-développez des produits innovants."},
-              {icon:"fa-building-columns", title:"Partenariat Institutionnel", desc:"Rejoignez nos projets à fort impact social."},
-              {icon:"fa-chart-line",       title:"Investissement",             desc:"Participez à notre croissance et expansion régionale."},
-            ].map(b=>(
-              <div className="benefit" key={b.title}>
-                <div className="ben-icon"><i className={`fa-solid ${b.icon}`}/></div>
-                <div className="ben-text"><h4>{b.title}</h4><p>{b.desc}</p></div>
+          {loading && (
+            <div style={{textAlign:"center",padding:"40px",color:"var(--gray)"}}>
+              <i className="fa-solid fa-spinner fa-spin" style={{fontSize:"2rem",marginBottom:12,display:"block"}}/>
+              Chargement...
+            </div>
+          )}
+          {!loading && partenaires.length===0 && (
+            <div style={{textAlign:"center",padding:"60px 20px",color:"var(--gray)"}}>
+              <i className="fa-solid fa-handshake" style={{fontSize:"3rem",marginBottom:16,display:"block",opacity:0.3}}/>
+              <p style={{fontSize:"1rem",fontWeight:600,color:"var(--text)",marginBottom:8}}>Aucun partenaire pour le moment</p>
+              <p style={{fontSize:"0.88rem"}}>Devenez notre premier partenaire !</p>
+              <button className="btn btn-blue" style={{marginTop:20}} onClick={()=>setOnglet("collaborons")}>
+                <i className="fa-solid fa-handshake"/>Proposer un partenariat
+              </button>
+            </div>
+          )}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
+            {partenaires.map(p=>(
+              <div key={p.id} style={{background:"var(--card)",borderRadius:18,padding:"28px",border:"1px solid var(--border)",boxShadow:"0 4px 20px rgba(26,58,143,0.06)",transition:"all 0.3s",textAlign:"center"}}>
+                {p.logo_url ? (
+                  <img src={p.logo_url} alt={p.nom} style={{width:100,height:100,objectFit:"contain",borderRadius:12,marginBottom:16,background:"var(--bg2)",padding:8}}/>
+                ) : (
+                  <div style={{width:100,height:100,borderRadius:12,background:"var(--bg2)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 16px",fontSize:"2rem",color:"var(--gray)"}}>
+                    <i className="fa-solid fa-building"/>
+                  </div>
+                )}
+                <h3 style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"1rem",fontWeight:700,color:"var(--text)",marginBottom:8}}>{p.nom}</h3>
+                {p.description && <p style={{fontSize:"0.83rem",color:"var(--text2)",lineHeight:1.6,marginBottom:12}}>{p.description}</p>}
+                {p.site_web && (
+                  <a href={p.site_web} target="_blank" rel="noreferrer" className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 14px",display:"inline-flex"}}>
+                    <i className="fa-solid fa-arrow-up-right-from-square"/>Visiter le site
+                  </a>
+                )}
               </div>
             ))}
           </div>
         </div>
-        <div className="form-box" style={{margin:0}}>
-          <h3><i className="fa-solid fa-handshake" style={{color:"var(--green)",marginRight:9}}/>Proposer un Partenariat</h3>
-          <p className="sub">Notre équipe vous contactera sous 48h.</p>
-          <FG label="Nom de l'organisation *" icon="fa-building"><input type="text" placeholder="Votre entreprise" value={form.organisation} onChange={e=>setForm({...form,organisation:e.target.value})}/></FG>
-          <div className="frow">
-            <FG label="Contact" icon="fa-user"><input type="text" placeholder="Nom & prénom" value={form.contact} onChange={e=>setForm({...form,contact:e.target.value})}/></FG>
-            <FG label="Email *" icon="fa-envelope"><input type="email" placeholder="contact@org.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></FG>
+      )}
+
+      {/* ONGLET COLLABORONS */}
+      {onglet==="collaborons" && (
+        <div className="partner-grid">
+          <div>
+            <p style={{color:"var(--text2)",fontSize:"0.93rem",lineHeight:1.75,marginBottom:8}}>Nous croyons en la force des alliances stratégiques pour créer de la valeur durable.</p>
+            <div className="benefits">
+              {[
+                {icon:"fa-store",            title:"Partenariat Commercial",     desc:"Développez votre réseau et accédez à notre base de clients."},
+                {icon:"fa-microchip",        title:"Partenariat Technologique",  desc:"Intégrez vos solutions ou co-développez des produits innovants."},
+                {icon:"fa-building-columns", title:"Partenariat Institutionnel", desc:"Rejoignez nos projets à fort impact social."},
+                {icon:"fa-chart-line",       title:"Investissement",             desc:"Participez à notre croissance et expansion régionale."},
+              ].map(b=>(
+                <div className="benefit" key={b.title}>
+                  <div className="ben-icon"><i className={`fa-solid ${b.icon}`}/></div>
+                  <div className="ben-text"><h4>{b.title}</h4><p>{b.desc}</p></div>
+                </div>
+              ))}
+            </div>
           </div>
-          <FG label="Type de partenariat" icon="fa-tags">
-            <CustomSelect options={typeOpts} value={type} onChange={setType}/>
-          </FG>
-          <FG label="Votre proposition" icon="fa-pen-to-square">
-            <textarea placeholder="Présentez votre organisation et votre proposition..." value={form.proposition} onChange={e=>setForm({...form,proposition:e.target.value})}/>
-          </FG>
-          <button className="btn btn-green btn-full" onClick={handlePartner} disabled={sending}>
-            <i className="fa-solid fa-paper-plane"/>{sending ? "Envoi en cours..." : "Envoyer la proposition"}
-          </button>
-          <Alert type={msgType} msg={msg}/>
+          <div className="form-box" style={{margin:0}}>
+            <h3><i className="fa-solid fa-handshake" style={{color:"var(--green)",marginRight:9}}/>Proposer un Partenariat</h3>
+            <p className="sub">Notre équipe vous contactera sous 48h.</p>
+            <FG label="Nom de l'organisation *" icon="fa-building"><input type="text" placeholder="Votre entreprise" value={form.organisation} onChange={e=>setForm({...form,organisation:e.target.value})}/></FG>
+            <div className="frow">
+              <FG label="Contact" icon="fa-user"><input type="text" placeholder="Nom & prénom" value={form.contact} onChange={e=>setForm({...form,contact:e.target.value})}/></FG>
+              <FG label="Email *" icon="fa-envelope"><input type="email" placeholder="contact@org.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></FG>
+            </div>
+            <FG label="Type de partenariat" icon="fa-tags">
+              <CustomSelect options={typeOpts} value={type} onChange={setType}/>
+            </FG>
+            <FG label="Votre proposition" icon="fa-pen-to-square">
+              <textarea placeholder="Présentez votre organisation..." value={form.proposition} onChange={e=>setForm({...form,proposition:e.target.value})}/>
+            </FG>
+            <button className="btn btn-green btn-full" onClick={handlePartner} disabled={sending}>
+              <i className="fa-solid fa-paper-plane"/>{sending ? "Envoi en cours..." : "Envoyer la proposition"}
+            </button>
+            <Alert type={msgType} msg={msg}/>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
