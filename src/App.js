@@ -1505,6 +1505,37 @@ setPartenaires(pt || []);
     </div>
   );
 }
+function LangSelector({ lang, setLang }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{padding:"0 4px"}}>
+      <button
+        style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray)",fontFamily:"'DM Sans',sans-serif",fontSize:"0.97rem",padding:"12px 14px",borderRadius:12,textAlign:"left",display:"flex",alignItems:"center",gap:10,width:"100%",justifyContent:"space-between",transition:"all 0.2s"}}
+        onClick={()=>setOpen(!open)}>
+        <span style={{display:"flex",alignItems:"center",gap:10}}>
+          <i className="fa-solid fa-globe"/>
+          Langue — <strong>{lang==="fr"?"Français":"English"}</strong>
+        </span>
+        <i className={`fa-solid fa-chevron-${open?"up":"down"}`} style={{fontSize:"0.8rem"}}/>
+      </button>
+      {open && (
+        <div style={{paddingLeft:16,display:"flex",flexDirection:"column",gap:4,marginBottom:8}}>
+          {[
+            {code:"fr", flag:"🇫🇷", label:"Français"},
+            {code:"en", flag:"🇬🇧", label:"English"},
+          ].map(l=>(
+            <button key={l.code}
+              onClick={()=>{ setLang(l.code); setOpen(false); }}
+              style={{background:lang===l.code?"rgba(42,82,201,0.08)":"none",border:"none",cursor:"pointer",color:lang===l.code?"var(--blue-l)":"var(--gray)",fontFamily:"'DM Sans',sans-serif",fontSize:"0.9rem",padding:"10px 14px",borderRadius:10,textAlign:"left",display:"flex",alignItems:"center",gap:10,transition:"all 0.2s",fontWeight:lang===l.code?600:400}}>
+              {l.flag} {l.label}
+              {lang===l.code && <i className="fa-solid fa-check" style={{marginLeft:"auto",fontSize:"0.8rem"}}/>}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Footer({ nav }) {
   return (
@@ -1630,6 +1661,7 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [modal, setModal] = useState(null);
   const [dark, setDark] = useState(false);
+  const [lang, setLang] = useState("fr");
 
   useEffect(() => { injectAssets(); }, []);
 
@@ -1713,6 +1745,8 @@ default: return null;
         <button onClick={()=>nav("contact")}><i className="fa-solid fa-envelope"/>Contact</button>
         <div className="mob-menu-divider"/>
         <button onClick={()=>nav("promoteur")}><i className="fa-solid fa-user-tie"/>Le Promoteur</button>
+        <div className="mob-menu-divider"/>
+<LangSelector lang={lang} setLang={setLang}/>
       </div>
       <div className="pages">
         {PAGES_LIST.map(p=>(
