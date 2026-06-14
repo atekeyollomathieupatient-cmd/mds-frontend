@@ -844,9 +844,6 @@ function PartenariatsPage() {
               <i className="fa-solid fa-handshake" style={{fontSize:"3rem",marginBottom:16,display:"block",opacity:0.3}}/>
               <p style={{fontSize:"1rem",fontWeight:600,color:"var(--text)",marginBottom:8}}>Aucun partenaire pour le moment</p>
               <p style={{fontSize:"0.88rem"}}>Devenez notre premier partenaire !</p>
-              <button className="btn btn-blue" style={{marginTop:20}} onClick={()=>setOnglet("collaborons")}>
-                <i className="fa-solid fa-handshake"/>Proposer un partenariat
-              </button>
             </div>
           )}
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
