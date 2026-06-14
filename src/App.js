@@ -961,17 +961,28 @@ function ContactPage() {
         <div>
           <p style={{color:"var(--text2)",fontSize:"0.93rem",lineHeight:1.75,marginBottom:4}}>Vous avez un projet ou une question ? N'hésitez pas à nous écrire.</p>
           <div className="contact-cards">
-            {[
-              {icon:"fa-location-dot", lbl:"Adresse",   val:"Siège social MDS NovaTech"},
-              {icon:"fa-phone",        lbl:"Téléphone", val:"+XXX XX XX XX XX"},
-              {icon:"fa-envelope",     lbl:"Email",     val:"contact@mds-novatech.com"},
-              {icon:"fa-clock",        lbl:"Horaires",  val:"Lun – Ven : 08h00 – 17h00"},
-            ].map(c=>(
-              <div className="ccard" key={c.lbl}>
-                <div className="ccard-icon"><i className={`fa-solid ${c.icon}`}/></div>
-                <div><div className="ccard-lbl">{c.lbl}</div><div className="ccard-val">{c.val}</div></div>
-              </div>
-            ))}
+{[
+  {icon:"fa-location-dot",  lbl:"Adresse",   val:"Siège social MDS NovaTech", href:null},
+  {icon:"fa-phone",         lbl:"Téléphone", val:"+XXX XX XX XX XX",           href:"tel:+XXX"},
+  {icon:"fa-envelope",      lbl:"Email",     val:"contact@mds-novatech.com",   href:"mailto:contact@mds-novatech.com"},
+  {icon:"fa-whatsapp",      lbl:"WhatsApp",  val:"Discuter sur WhatsApp",      href:"https://wa.me/XXX", fab:true},
+].map(c=>(
+  <div className="ccard" key={c.lbl}>
+    <div className="ccard-icon">
+      <i className={`${c.fab?"fa-brands":"fa-solid"} ${c.icon}`}/>
+    </div>
+    <div>
+      <div className="ccard-lbl">{c.lbl}</div>
+      {c.href ? (
+        <a href={c.href} style={{color:"var(--blue-l)",fontWeight:500,fontSize:"0.91rem",textDecoration:"none"}}>
+          {c.val}
+        </a>
+      ) : (
+        <div className="ccard-val">{c.val}</div>
+      )}
+    </div>
+  </div>
+))}
           </div>
         </div>
         <div className="form-box" style={{margin:0}}>
