@@ -1452,7 +1452,14 @@ default: return null;
     <>
       <style>{CSS}</style>
       <nav className="nav">
-        <div className="logo" onClick={()=>nav("accueil")}>
+        <div className="logo" onClick={()=>{
+  const now = Date.now();
+  if (!window._clicks) window._clicks = [];
+  window._clicks = window._clicks.filter(t => now - t < 2000);
+  window._clicks.push(now);
+  if (window._clicks.length >= 5) { window._clicks = []; nav("admin"); }
+  else nav("accueil");
+}}>
          <img src={dark ? "/logo1.png" : "/logo.png"} alt="MDS NovaTech" style={{width:66,height:66,borderRadius:"50%",objectFit:"contain"}}/>
           <div className="logo-name">MDS <span>NovaTech</span></div>
         </div>
