@@ -384,7 +384,7 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 }
 `;
 
-const PAGES_LIST = ["accueil","services","actualites","recrutement","partenariats","contact","promoteur","mentions","confidentialite","cgu"];
+const PAGES_LIST = ["accueil","services","actualites","recrutement","partenariats","contact","promoteur","mentions","confidentialite","cgu","admin"];
 
 const NAV = [
   { id:"accueil",       icon:"fa-house",      label:"Accueil" },
@@ -1023,6 +1023,270 @@ function CguPage() {
     </div>
   );
 }
+// ── ADMIN ──
+function AdminPage({ nav }) {
+  const [authed, setAuthed] = useState(false);
+  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
+  const [loginError, setLoginError] = useState("");
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("actualites");
+  const [actualites, setActualites] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const [candidatures, setCandidatures] = useState([]);
+  const [abonnes, setAbonnes] = useState([]);
+  const [newArticle, setNewArticle] = useState({ titre:"", contenu:"", categorie:"Informatique", image_url:"" });
+  const [articleMsg, setArticleMsg] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const SUPABASE_URL = "https://upmwjlgqzjjhotoahwaa.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwbXdqbGdxempqaG90b2Fod2FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3OTE3MjksImV4cCI6MjA5NjM2NzcyOX0.KnFffTUZlVNd5okLFGGL2Mx7uB22DOgm6aa8nigoxSg";
+
+  const sbFetch = async (table, method="GET", body=null, id=null) => {
+    const url = `${SUPABASE_URL}/rest/v1/${table}${id?`?id=eq.${id}`:""}`;
+    const res = await fetch(method==="GET" ? `${SUPABASE_URL}/rest/v1/${table}?select=*&order=created_at.desc` : url, {
+      method,
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": "application/json",
+        "Prefer": method==="POST" ? "return=minimal" : ""
+      },
+      body: body ? JSON.stringify(body) : null
+    });
+    if (method==="GET") return await res.json();
+    return res;
+  };
+
+  const handleLogin = async () => {
+    setLoginLoading(true);
+    setLoginError("");
+    try {
+      const data = await sbFetch(`admins?email=eq.${loginForm.email}&password=eq.${loginForm.password}&select=*`);
+      if (data && data.length > 0) {
+        setAuthed(true);
+        loadData();
+      } else {
+        setLoginError("Email ou mot de passe incorrect.");
+      }
+    } catch {
+      setLoginError("Erreur de connexion.");
+    }
+    setLoginLoading(false);
+  };
+
+  const loadData = async () => {
+    setLoading(true);
+    const [a, c, ca, ab] = await Promise.all([
+      sbFetch("actualites"),
+      sbFetch("contacts"),
+      sbFetch("candidatures"),
+      sbFetch("abonnes"),
+    ]);
+    setActualites(a || []);
+    setContacts(c || []);
+    setCandidatures(ca || []);
+    setAbonnes(ab || []);
+    setLoading(false);
+  };
+
+  const handleAddArticle = async () => {
+    if (!newArticle.titre || !newArticle.contenu) {
+      setArticleMsg("Titre et contenu obligatoires."); return;
+    }
+    await sbFetch("actualites", "POST", { ...newArticle, date_pub: new Date().toISOString() });
+    setArticleMsg("Article publié !");
+    setNewArticle({ titre:"", contenu:"", categorie:"Informatique", image_url:"" });
+    loadData();
+  };
+
+  const handleDelete = async (table, id) => {
+    await sbFetch(table, "DELETE", null, id);
+    loadData();
+  };
+
+  if (!authed) return (
+    <div style={{minHeight:"calc(100vh - 88px)",display:"flex",alignItems:"center",justifyContent:"center",padding:"20px"}}>
+      <div className="form-box" style={{maxWidth:400,width:"100%",margin:0}}>
+        <h3 style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"1.4rem",fontWeight:800,color:"var(--text)",marginBottom:6}}>
+          <i className="fa-solid fa-lock" style={{color:"var(--blue-l)",marginRight:10}}/>Administration
+        </h3>
+        <p className="sub">Accès réservé — MDS NovaTech</p>
+        <FG label="Email" icon="fa-envelope">
+          <input type="email" placeholder="votre@email.com" value={loginForm.email} onChange={e=>setLoginForm({...loginForm,email:e.target.value})}/>
+        </FG>
+        <FG label="Mot de passe" icon="fa-lock">
+          <input type="password" placeholder="••••••••" value={loginForm.password} onChange={e=>setLoginForm({...loginForm,password:e.target.value})}/>
+        </FG>
+        {loginError && <div className="alert alert-error"><i className="fa-solid fa-circle-exclamation"/>{loginError}</div>}
+        <button className="btn btn-blue btn-full" style={{marginTop:8}} onClick={handleLogin} disabled={loginLoading}>
+          <i className="fa-solid fa-right-to-bracket"/>{loginLoading ? "Connexion..." : "Se connecter"}
+        </button>
+      </div>
+    </div>
+  );
+
+  return (
+    <div style={{padding:"20px 0"}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:28}}>
+        <div>
+          <div className="page-tag"><i className="fa-solid fa-gauge"/>Tableau de bord</div>
+          <h1 style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"clamp(1.6rem,3vw,2.2rem)",fontWeight:800,color:"var(--text)"}}>Administration</h1>
+        </div>
+        <button className="btn btn-outline" onClick={()=>setAuthed(false)} style={{fontSize:"0.82rem"}}>
+          <i className="fa-solid fa-right-from-bracket"/>Déconnexion
+        </button>
+      </div>
+
+      {/* STATS */}
+      <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14,marginBottom:28}}>
+        {[
+          {icon:"fa-newspaper",    col:"var(--blue-l)", bg:"rgba(42,82,201,0.1)", label:"Actualités",   val:actualites.length},
+          {icon:"fa-envelope",     col:"var(--blue-l)", bg:"rgba(42,82,201,0.1)", label:"Messages",     val:contacts.length},
+          {icon:"fa-users",        col:"var(--green)",  bg:"rgba(46,163,18,0.1)", label:"Candidatures", val:candidatures.length},
+          {icon:"fa-rss",          col:"var(--green)",  bg:"rgba(46,163,18,0.1)", label:"Abonnés",      val:abonnes.length},
+        ].map(s=>(
+          <div key={s.label} style={{background:"var(--card)",borderRadius:16,padding:"18px",border:"1px solid var(--border)",textAlign:"center"}}>
+            <div style={{width:40,height:40,borderRadius:11,background:s.bg,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 10px"}}>
+              <i className={`fa-solid ${s.icon}`} style={{color:s.col}}/>
+            </div>
+            <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"1.6rem",fontWeight:800,color:"var(--text)"}}>{s.val}</div>
+            <div style={{fontSize:"0.75rem",color:"var(--gray)"}}>{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* TABS */}
+      <div style={{display:"flex",gap:8,marginBottom:24,flexWrap:"wrap"}}>
+        {[
+          {id:"actualites",   icon:"fa-newspaper",  label:"Actualités"},
+          {id:"contacts",     icon:"fa-envelope",   label:"Messages"},
+          {id:"candidatures", icon:"fa-users",       label:"Candidatures"},
+          {id:"abonnes",      icon:"fa-rss",         label:"Abonnés"},
+        ].map(t=>(
+          <button key={t.id} className={`btn ${activeTab===t.id?"btn-blue":"btn-outline"}`}
+            style={{fontSize:"0.82rem",padding:"8px 16px"}} onClick={()=>setActiveTab(t.id)}>
+            <i className={`fa-solid ${t.icon}`}/>{t.label}
+          </button>
+        ))}
+      </div>
+
+      {loading && <p style={{color:"var(--gray)",textAlign:"center"}}><i className="fa-solid fa-spinner fa-spin"/> Chargement...</p>}
+
+      {/* ACTUALITES TAB */}
+      {activeTab==="actualites" && (
+        <div>
+          <div className="form-box" style={{marginBottom:24}}>
+            <h3><i className="fa-solid fa-plus" style={{color:"var(--blue-l)",marginRight:9}}/>Publier un article</h3>
+            <p className="sub">Ajoutez une nouvelle actualité sur le site.</p>
+            <FG label="Titre" icon="fa-heading">
+              <input type="text" placeholder="Titre de l'article" value={newArticle.titre} onChange={e=>setNewArticle({...newArticle,titre:e.target.value})}/>
+            </FG>
+            <FG label="Catégorie" icon="fa-tags">
+              <CustomSelect
+                options={[
+                  {value:"Informatique", icon:"fa-laptop-code", label:"Informatique"},
+                  {value:"Agriculture",  icon:"fa-wheat-awn",   label:"Agriculture"},
+                  {value:"Entreprise",   icon:"fa-building",    label:"Entreprise"},
+                ]}
+                value={newArticle.categorie}
+                onChange={v=>setNewArticle({...newArticle,categorie:v})}
+              />
+            </FG>
+            <FG label="Contenu" icon="fa-pen">
+              <textarea placeholder="Contenu de l'article..." value={newArticle.contenu} onChange={e=>setNewArticle({...newArticle,contenu:e.target.value})} style={{minHeight:140}}/>
+            </FG>
+            <FG label="Image URL (optionnel)" icon="fa-image">
+              <input type="text" placeholder="https://..." value={newArticle.image_url} onChange={e=>setNewArticle({...newArticle,image_url:e.target.value})}/>
+            </FG>
+            {articleMsg && <div className="alert alert-success"><i className="fa-solid fa-circle-check"/>{articleMsg}</div>}
+            <button className="btn btn-blue btn-full" onClick={handleAddArticle}>
+              <i className="fa-solid fa-paper-plane"/>Publier l'article
+            </button>
+          </div>
+
+          <div style={{display:"flex",flexDirection:"column",gap:14}}>
+            {actualites.length===0 && <p style={{color:"var(--gray)"}}>Aucun article publié.</p>}
+            {actualites.map(a=>(
+              <div key={a.id} style={{background:"var(--card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--border)",display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12}}>
+                <div>
+                  <div style={{fontSize:"0.7rem",fontWeight:700,color:"var(--blue-l)",textTransform:"uppercase",marginBottom:4}}>{a.categorie}</div>
+                  <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:700,color:"var(--text)",marginBottom:4}}>{a.titre}</div>
+                  <div style={{fontSize:"0.8rem",color:"var(--gray)"}}>{a.contenu?.slice(0,100)}...</div>
+                </div>
+                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("actualites",a.id)}>
+                  <i className="fa-solid fa-trash"/>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* CONTACTS TAB */}
+      {activeTab==="contacts" && (
+        <div style={{display:"flex",flexDirection:"column",gap:14}}>
+          {contacts.length===0 && <p style={{color:"var(--gray)"}}>Aucun message reçu.</p>}
+          {contacts.map(c=>(
+            <div key={c.id} style={{background:"var(--card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--border)"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12}}>
+                <div style={{flex:1}}>
+                  <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:700,color:"var(--text)",marginBottom:4}}>{c.nom}</div>
+                  <div style={{fontSize:"0.8rem",color:"var(--blue-l)",marginBottom:6}}>{c.email} · {c.service}</div>
+                  <div style={{fontSize:"0.85rem",color:"var(--text2)",lineHeight:1.6}}>{c.message}</div>
+                  <div style={{fontSize:"0.72rem",color:"var(--gray)",marginTop:8}}><i className="fa-regular fa-calendar" style={{marginRight:5}}/>{new Date(c.created_at).toLocaleDateString("fr-FR")}</div>
+                </div>
+                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("contacts",c.id)}>
+                  <i className="fa-solid fa-trash"/>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* CANDIDATURES TAB */}
+      {activeTab==="candidatures" && (
+        <div style={{display:"flex",flexDirection:"column",gap:14}}>
+          {candidatures.length===0 && <p style={{color:"var(--gray)"}}>Aucune candidature reçue.</p>}
+          {candidatures.map(c=>(
+            <div key={c.id} style={{background:"var(--card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--border)"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12}}>
+                <div style={{flex:1}}>
+                  <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:700,color:"var(--text)",marginBottom:4}}>{c.prenom} {c.nom}</div>
+                  <div style={{fontSize:"0.8rem",color:"var(--blue-l)",marginBottom:4}}>{c.email} · {c.telephone}</div>
+                  <div style={{fontSize:"0.8rem",color:"var(--gray)",marginBottom:6}}><strong>Poste :</strong> {c.poste} · <strong>Domaine :</strong> {c.domaine}</div>
+                  <div style={{fontSize:"0.83rem",color:"var(--text2)",lineHeight:1.6}}>{c.motivation}</div>
+                  <div style={{fontSize:"0.72rem",color:"var(--gray)",marginTop:8}}><i className="fa-regular fa-calendar" style={{marginRight:5}}/>{new Date(c.created_at).toLocaleDateString("fr-FR")}</div>
+                </div>
+                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("candidatures",c.id)}>
+                  <i className="fa-solid fa-trash"/>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* ABONNES TAB */}
+      {activeTab==="abonnes" && (
+        <div style={{display:"flex",flexDirection:"column",gap:10}}>
+          {abonnes.length===0 && <p style={{color:"var(--gray)"}}>Aucun abonné.</p>}
+          {abonnes.map(a=>(
+            <div key={a.id} style={{background:"var(--card)",borderRadius:12,padding:"14px 18px",border:"1px solid var(--border)",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
+              <div>
+                <div style={{fontWeight:500,color:"var(--text)"}}>{a.email}</div>
+                <div style={{fontSize:"0.72rem",color:"var(--gray)",marginTop:3}}><i className="fa-regular fa-calendar" style={{marginRight:5}}/>{new Date(a.created_at).toLocaleDateString("fr-FR")}</div>
+              </div>
+              <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("abonnes",a.id)}>
+                <i className="fa-solid fa-trash"/>
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function Footer({ nav }) {
   return (
@@ -1179,7 +1443,8 @@ export default function App() {
       case "mentions":        return <><MentionsPage/><Footer nav={nav}/></>;
       case "confidentialite": return <><ConfidentialitePage/><Footer nav={nav}/></>;
       case "cgu":             return <><CguPage/><Footer nav={nav}/></>;
-      default: return null;
+      case "admin": return <AdminPage nav={nav}/>;
+default: return null;
     }
   };
 
