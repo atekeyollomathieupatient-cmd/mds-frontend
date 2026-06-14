@@ -1195,9 +1195,33 @@ function AdminPage({ nav }) {
             <FG label="Contenu" icon="fa-pen">
               <textarea placeholder="Contenu de l'article..." value={newArticle.contenu} onChange={e=>setNewArticle({...newArticle,contenu:e.target.value})} style={{minHeight:140}}/>
             </FG>
-            <FG label="Image URL (optionnel)" icon="fa-image">
-              <input type="text" placeholder="https://..." value={newArticle.image_url} onChange={e=>setNewArticle({...newArticle,image_url:e.target.value})}/>
-            </FG>
+            <FG label="Image de l'article" icon="fa-image">
+  <input type="text" placeholder="https://... ou uploadez ci-dessous" value={newArticle.image_url} onChange={e=>setNewArticle({...newArticle,image_url:e.target.value})}/>
+</FG>
+<div className="upload" onClick={()=>document.getElementById("img-upload").click()} style={{marginBottom:13}}>
+  <input type="file" id="img-upload" accept="image/*" style={{display:"none"}} onChange={async(e)=>{
+    const file = e.target.files[0];
+    if (!file) return;
+    const filename = `${Date.now()}-${file.name}`;
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/images/${filename}`, {
+      method: "POST",
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`,
+        "Content-Type": file.type,
+      },
+      body: file
+    });
+    if (res.ok) {
+      const url = `${SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
+      setNewArticle(prev=>({...prev, image_url: url}));
+      setArticleMsg("Image uploadée !");
+    }
+  }}/>
+  <i className="fa-solid fa-cloud-arrow-up"/>
+  <p><span>Cliquez pour uploader une image</span></p>
+  <p style={{fontSize:"0.74rem",marginTop:4}}>JPG, PNG — max 5 MB</p>
+</div>
             {articleMsg && <div className="alert alert-success"><i className="fa-solid fa-circle-check"/>{articleMsg}</div>}
             <button className="btn btn-blue btn-full" onClick={handleAddArticle}>
               <i className="fa-solid fa-paper-plane"/>Publier l'article
