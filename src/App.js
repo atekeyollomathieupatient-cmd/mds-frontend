@@ -384,13 +384,13 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 }
 `;
 
-const PAGES_LIST = ["accueil","services","actualites","recrutement","partenariats","contact","promoteur","mentions","confidentialite","cgu","admin"];
+const PAGES_LIST = ["accueil","services","actualites","partenariats","contact","promoteur","mentions","confidentialite","cgu","admin"];
 
 const NAV = [
   { id:"accueil",       icon:"fa-house",      label:"Accueil" },
   { id:"services",      icon:"fa-briefcase",  label:"Services" },
   { id:"actualites",    icon:"fa-newspaper",  label:"Actualités" },
-  { id:"recrutement",   icon:"fa-users",      label:"Recrutement" },
+  
   { id:"partenariats",  icon:"fa-handshake",  label:"Partenariats" },
 ];
 
@@ -1617,7 +1617,7 @@ function Footer({ nav }) {
           <h4>Entreprise</h4>
           <ul>
             <li><button onClick={()=>nav("accueil")}><i className="fa-solid fa-circle-info"/>À propos</button></li>
-            <li><button onClick={()=>nav("recrutement")}><i className="fa-solid fa-users"/>Recrutement</button></li>
+            
             <li><button onClick={()=>nav("partenariats")}><i className="fa-solid fa-handshake"/>Partenariats</button></li>
             <li><button onClick={()=>nav("promoteur")}><i className="fa-solid fa-user-tie"/>Le Promoteur</button></li>
           </ul>
@@ -1742,7 +1742,7 @@ export default function App() {
       case "accueil":         return <><HomePage nav={nav}/><Footer nav={nav}/></>;
       case "services":        return <><ServicesPage/><Footer nav={nav}/></>;
       case "actualites":      return <><ActualitesPage/><Footer nav={nav}/></>;
-      case "recrutement":     return <><RecrutementPage openModal={t=>setModal(t)}/><Footer nav={nav}/></>;
+      
       case "partenariats":    return <><PartenariatsPage/><Footer nav={nav}/></>;
       case "contact":         return <><ContactPage/><Footer nav={nav}/></>;
       case "promoteur":       return <><PromoteurPage/><Footer nav={nav}/></>;
