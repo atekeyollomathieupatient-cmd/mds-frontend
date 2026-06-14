@@ -394,12 +394,7 @@ const NAV = [
   { id:"partenariats",  icon:"fa-handshake",  label:"Partenariats" },
 ];
 
-const JOBS = [
-  { dept:"Informatique", icon:"fa-code",          title:"Développeur Full Stack",       type:"CDI", mode:"Présentiel", skills:"React · Node.js" },
-  { dept:"Informatique", icon:"fa-network-wired", title:"Technicien Réseau & Sécurité", type:"CDI", mode:"Terrain",    skills:"Cisco · Linux" },
-  { dept:"Agriculture",  icon:"fa-seedling",       title:"Ingénieur Agronome",            type:"CDI", mode:"Terrain",    skills:"Prod. végétale" },
-  { dept:"Commercial",   icon:"fa-chart-line",     title:"Chargé(e) de Clientèle",       type:"CDI", mode:"Hybride",    skills:"B2B · Vente" },
-];
+
 
 
 
