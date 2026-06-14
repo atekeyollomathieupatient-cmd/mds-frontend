@@ -545,11 +545,38 @@ function ServicesPage() {
 }
 
 function ActualitesPage() {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filtre, setFiltre] = useState("Tout");
   const [showNewsletter, setShowNewsletter] = useState(false);
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
   const [msg, setMsg] = useState("");
   const [msgType, setMsgType] = useState("success");
+
+  const SUPABASE_URL = "https://upmwjlgqzjjhotoahwaa.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwbXdqbGdxempqaG90b2Fod2FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3OTE3MjksImV4cCI6MjA5NjM2NzcyOX0.KnFffTUZlVNd5okLFGGL2Mx7uB22DOgm6aa8nigoxSg";
+
+  useEffect(() => {
+    fetch(`${SUPABASE_URL}/rest/v1/actualites?select=*&order=created_at.desc`, {
+      headers: {
+        "apikey": SUPABASE_KEY,
+        "Authorization": `Bearer ${SUPABASE_KEY}`
+      }
+    })
+    .then(r => r.json())
+    .then(data => { setArticles(data || []); setLoading(false); })
+    .catch(() => setLoading(false));
+  }, []);
+
+  const filtres = ["Tout", "Informatique", "Agriculture", "Entreprise"];
+  const articlesFiltres = filtre === "Tout" ? articles : articles.filter(a => a.categorie === filtre);
+
+  const catStyle = {
+    "Informatique": { col:"var(--blue-l)", bg:"rgba(42,82,201,0.08)", icon:"fa-microchip" },
+    "Agriculture":  { col:"var(--green)",  bg:"rgba(46,163,18,0.08)",  icon:"fa-leaf" },
+    "Entreprise":   { col:"#d97706",       bg:"rgba(217,119,6,0.08)",  icon:"fa-trophy" },
+  };
 
   const handleAbonner = async () => {
     if (!email) return;
@@ -576,26 +603,57 @@ function ActualitesPage() {
       <PH tag="Notre blog" ticon="fa-newspaper" title="Actualités & Informations" sub="Restez informé des dernières nouvelles de MDS NovaTech."/>
       <div className="news-bar">
         <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-          {["Tout","Informatique","Agriculture","Entreprise"].map(f=>(
-            <button key={f} className="btn btn-outline" style={{padding:"7px 14px",fontSize:"0.81rem"}}>{f}</button>
+          {filtres.map(f=>(
+            <button key={f} className={`btn ${filtre===f?"btn-blue":"btn-outline"}`}
+              style={{padding:"7px 14px",fontSize:"0.81rem"}} onClick={()=>setFiltre(f)}>{f}</button>
           ))}
         </div>
         <button className="btn btn-blue" style={{fontSize:"0.81rem"}} onClick={()=>setShowNewsletter(true)}>
           <i className="fa-solid fa-rss"/> S'abonner
         </button>
       </div>
+
+      {loading && (
+        <div style={{textAlign:"center",padding:"40px",color:"var(--gray)"}}>
+          <i className="fa-solid fa-spinner fa-spin" style={{fontSize:"2rem",marginBottom:12,display:"block"}}/>
+          Chargement des actualités...
+        </div>
+      )}
+
+      {!loading && articlesFiltres.length === 0 && (
+        <div style={{textAlign:"center",padding:"40px",color:"var(--gray)"}}>
+          <i className="fa-solid fa-newspaper" style={{fontSize:"2rem",marginBottom:12,display:"block"}}/>
+          Aucun article {filtre !== "Tout" ? `dans la catégorie "${filtre}"` : "publié pour le moment"}.
+        </div>
+      )}
+
       <div className="news-grid">
-        {NEWS_DATA.map(n=>(
-          <div className="news-card" key={n.title}>
-            <div className={`news-thumb ${n.t}`}>{n.em}</div>
-            <div className="news-body">
-              <span className={`cat ${n.cat}`}><i className={`fa-solid ${n.ic}`}/>{n.cl}</span>
-              <h3 className="news-title">{n.title}</h3>
-              <p className="news-excerpt">{n.ex}</p>
-              <p className="news-date"><i className="fa-regular fa-calendar"/>{n.date}</p>
+        {articlesFiltres.map(a=>{
+          const st = catStyle[a.categorie] || catStyle["Entreprise"];
+          return (
+            <div className="news-card" key={a.id}>
+              <div className="news-thumb" style={{
+                background: a.image_url ? "none" : `linear-gradient(135deg, ${st.bg}, rgba(13,24,41,0.1))`,
+                backgroundImage: a.image_url ? `url(${a.image_url})` : "none",
+                backgroundSize: "cover",
+                backgroundPosition: "center"
+              }}>
+                {!a.image_url && <i className={`fa-solid ${st.icon}`} style={{fontSize:"2.5rem",color:st.col}}/>}
+              </div>
+              <div className="news-body">
+                <span className="cat" style={{color:st.col,background:st.bg}}>
+                  <i className={`fa-solid ${st.icon}`}/>{a.categorie}
+                </span>
+                <h3 className="news-title">{a.titre}</h3>
+                <p className="news-excerpt">{a.contenu?.slice(0,120)}...</p>
+                <p className="news-date">
+                  <i className="fa-regular fa-calendar"/>
+                  {new Date(a.date_pub || a.created_at).toLocaleDateString("fr-FR")}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {showNewsletter && (
@@ -617,7 +675,6 @@ function ActualitesPage() {
     </div>
   );
 }
-
 function RecrutementPage({ openModal }) {
   const [domaine, setDomaine] = useState("info");
   const [form, setForm] = useState({ nom:"", prenom:"", email:"", telephone:"", motivation:"" });
