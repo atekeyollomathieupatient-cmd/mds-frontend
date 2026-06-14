@@ -1161,6 +1161,9 @@ function AdminPage({ nav }) {
   const [contacts, setContacts] = useState([]);
   const [candidatures, setCandidatures] = useState([]);
   const [abonnes, setAbonnes] = useState([]);
+  const [partenaires, setPartenaires] = useState([]);
+const [newPartenaire, setNewPartenaire] = useState({ nom:"", description:"", logo_url:"", site_web:"" });
+const [partenaireMsg, setPartenaireMsg] = useState("");
   const [newArticle, setNewArticle] = useState({ titre:"", contenu:"", categorie:"Informatique", image_url:"" });
   const [articleMsg, setArticleMsg] = useState("");
   const [loading, setLoading] = useState(false);
@@ -1203,16 +1206,18 @@ function AdminPage({ nav }) {
 
   const loadData = async () => {
     setLoading(true);
-    const [a, c, ca, ab] = await Promise.all([
-      sbFetch("actualites"),
-      sbFetch("contacts"),
-      sbFetch("candidatures"),
-      sbFetch("abonnes"),
-    ]);
-    setActualites(a || []);
-    setContacts(c || []);
-    setCandidatures(ca || []);
-    setAbonnes(ab || []);
+    const [a, c, ca, ab, pt] = await Promise.all([
+  sbFetch("actualites"),
+  sbFetch("contacts"),
+  sbFetch("candidatures"),
+  sbFetch("abonnes"),
+  sbFetch("partenaires"),
+]);
+setActualites(a || []);
+setContacts(c || []);
+setCandidatures(ca || []);
+setAbonnes(ab || []);
+setPartenaires(pt || []);
     setLoading(false);
   };
 
@@ -1271,6 +1276,7 @@ function AdminPage({ nav }) {
           {icon:"fa-envelope",     col:"var(--blue-l)", bg:"rgba(42,82,201,0.1)", label:"Messages",     val:contacts.length},
           {icon:"fa-users",        col:"var(--green)",  bg:"rgba(46,163,18,0.1)", label:"Candidatures", val:candidatures.length},
           {icon:"fa-rss",          col:"var(--green)",  bg:"rgba(46,163,18,0.1)", label:"Abonnés",      val:abonnes.length},
+          {icon:"fa-handshake", col:"var(--blue-l)", bg:"rgba(42,82,201,0.1)", label:"Partenaires", val:partenaires.length},
         ].map(s=>(
           <div key={s.label} style={{background:"var(--card)",borderRadius:16,padding:"18px",border:"1px solid var(--border)",textAlign:"center"}}>
             <div style={{width:40,height:40,borderRadius:11,background:s.bg,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 10px"}}>
@@ -1289,6 +1295,7 @@ function AdminPage({ nav }) {
           {id:"contacts",     icon:"fa-envelope",   label:"Messages"},
           {id:"candidatures", icon:"fa-users",       label:"Candidatures"},
           {id:"abonnes",      icon:"fa-rss",         label:"Abonnés"},
+          {id:"partenaires",  icon:"fa-handshake",   label:"Partenaires"},
         ].map(t=>(
           <button key={t.id} className={`btn ${activeTab===t.id?"btn-blue":"btn-outline"}`}
             style={{fontSize:"0.82rem",padding:"8px 16px"}} onClick={()=>setActiveTab(t.id)}>
@@ -1417,6 +1424,84 @@ function AdminPage({ nav }) {
           ))}
         </div>
       )}
+      {/* PARTENAIRES TAB */}
+{activeTab==="partenaires" && (
+  <div>
+    <div className="form-box" style={{marginBottom:24}}>
+      <h3><i className="fa-solid fa-plus" style={{color:"var(--blue-l)",marginRight:9}}/>Ajouter un partenaire</h3>
+      <p className="sub">Ajoutez un nouveau partenaire sur le site.</p>
+      <FG label="Nom du partenaire *" icon="fa-building">
+        <input type="text" placeholder="Nom de l'organisation" value={newPartenaire.nom} onChange={e=>setNewPartenaire({...newPartenaire,nom:e.target.value})}/>
+      </FG>
+      <FG label="Description" icon="fa-pen">
+        <textarea placeholder="Description du partenaire..." value={newPartenaire.description} onChange={e=>setNewPartenaire({...newPartenaire,description:e.target.value})} style={{minHeight:80}}/>
+      </FG>
+      <FG label="Site web" icon="fa-globe">
+        <input type="text" placeholder="https://..." value={newPartenaire.site_web} onChange={e=>setNewPartenaire({...newPartenaire,site_web:e.target.value})}/>
+      </FG>
+      <FG label="Logo URL" icon="fa-image">
+        <input type="text" placeholder="https://..." value={newPartenaire.logo_url} onChange={e=>setNewPartenaire({...newPartenaire,logo_url:e.target.value})}/>
+      </FG>
+      <div className="upload" onClick={()=>document.getElementById("logo-upload").click()} style={{marginBottom:13}}>
+        <input type="file" id="logo-upload" accept="image/*" style={{display:"none"}} onChange={async(e)=>{
+          const file = e.target.files[0];
+          if (!file) return;
+          const filename = `${Date.now()}-${file.name}`;
+          const res = await fetch(`${SUPABASE_URL}/storage/v1/object/images/${filename}`, {
+            method: "POST",
+            headers: {
+              "apikey": SUPABASE_KEY,
+              "Authorization": `Bearer ${SUPABASE_KEY}`,
+              "Content-Type": file.type,
+            },
+            body: file
+          });
+          if (res.ok) {
+            const url = `${SUPABASE_URL}/storage/v1/object/public/images/${filename}`;
+            setNewPartenaire(prev=>({...prev, logo_url: url}));
+            setPartenaireMsg("Logo uploadé !");
+          }
+        }}/>
+        <i className="fa-solid fa-cloud-arrow-up"/>
+        <p><span>Cliquez pour uploader le logo</span></p>
+      </div>
+      {partenaireMsg && <div className="alert alert-success"><i className="fa-solid fa-circle-check"/>{partenaireMsg}</div>}
+      <button className="btn btn-blue btn-full" onClick={async()=>{
+        if (!newPartenaire.nom) { setPartenaireMsg("Nom obligatoire."); return; }
+        await sbFetch("partenaires", "POST", { ...newPartenaire });
+        setPartenaireMsg("Partenaire ajouté !");
+        setNewPartenaire({ nom:"", description:"", logo_url:"", site_web:"" });
+        loadData();
+      }}>
+        <i className="fa-solid fa-plus"/>Ajouter le partenaire
+      </button>
+    </div>
+
+    <div style={{display:"flex",flexDirection:"column",gap:14}}>
+      {partenaires.length===0 && <p style={{color:"var(--gray)"}}>Aucun partenaire ajouté.</p>}
+      {partenaires.map(p=>(
+        <div key={p.id} style={{background:"var(--card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--border)",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
+          <div style={{display:"flex",alignItems:"center",gap:14}}>
+            {p.logo_url ? (
+              <img src={p.logo_url} alt={p.nom} style={{width:50,height:50,objectFit:"contain",borderRadius:8,background:"var(--bg2)",padding:4}}/>
+            ) : (
+              <div style={{width:50,height:50,borderRadius:8,background:"var(--bg2)",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--gray)"}}>
+                <i className="fa-solid fa-building"/>
+              </div>
+            )}
+            <div>
+              <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:700,color:"var(--text)"}}>{p.nom}</div>
+              {p.site_web && <div style={{fontSize:"0.78rem",color:"var(--blue-l)"}}>{p.site_web}</div>}
+            </div>
+          </div>
+          <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("partenaires",p.id)}>
+            <i className="fa-solid fa-trash"/>
+          </button>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
 
       {/* ABONNES TAB */}
       {activeTab==="abonnes" && (
