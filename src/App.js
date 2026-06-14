@@ -401,11 +401,7 @@ const JOBS = [
   { dept:"Commercial",   icon:"fa-chart-line",     title:"Chargé(e) de Clientèle",       type:"CDI", mode:"Hybride",    skills:"B2B · Vente" },
 ];
 
-const NEWS_DATA = [
-  { t:"t", cat:"tc", cl:"Informatique", ic:"fa-microchip", em:"🚀", title:"Lancement de notre plateforme cloud nouvelle génération",   ex:"MDS NovaTech dévoile une solution cloud innovante pour les PME.", date:"2 Juin 2026" },
-  { t:"a", cat:"ag", cl:"Agriculture",  ic:"fa-leaf",      em:"🌿", title:"Saison des pluies : optimisez vos cultures dès maintenant", ex:"Les meilleures pratiques agricoles pour maximiser vos rendements.", date:"28 Mai 2026" },
-  { t:"c", cat:"co", cl:"Entreprise",   ic:"fa-trophy",    em:"🏆", title:"MDS NovaTech remporte le Prix de l'Innovation 2026",        ex:"Distingués au palmarès national des entreprises innovantes.", date:"15 Mai 2026" },
-];
+
 
 const PHOTO = "/promoteur.jpg";
 
