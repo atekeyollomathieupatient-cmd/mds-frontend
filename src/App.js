@@ -846,7 +846,7 @@ function PartenariatsPage() {
               <p style={{fontSize:"0.88rem"}}>Devenez notre premier partenaire !</p>
             </div>
           )}
-          <div style={{display:"flex",gap:20,overflowX:"auto",paddingBottom:16,scrollbarWidth:"none"}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
             {partenaires.map(p=>(
               <div key={p.id} style={{background:"var(--card)",borderRadius:18,padding:"28px",border:"1px solid var(--border)",boxShadow:"0 4px 20px rgba(26,58,143,0.06)",transition:"all 0.3s",textAlign:"center"}}>
                 {p.logo_url ? (
