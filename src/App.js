@@ -848,9 +848,9 @@ function PartenariatsPage() {
           )}
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(280px,1fr))",gap:20}}>
             {partenaires.map(p=>(
-              <div key={p.id} style={{background:"var(--card)",borderRadius:18,padding:"28px",border:"1px solid var(--border)",boxShadow:"0 4px 20px rgba(26,58,143,0.06)",transition:"all 0.3s",textAlign:"center"}}>
+              <div key={p.id} style={{background:"var(--card)",borderRadius:18,padding:"16px",border:"1px solid var(--border)",boxShadow:"0 4px 20px rgba(26,58,143,0.06)",transition:"all 0.3s",textAlign:"center"}}>
                 {p.logo_url ? (
-                  <img src={p.logo_url} alt={p.nom} style={{width:100,height:100,objectFit:"contain",borderRadius:12,marginBottom:16,background:"var(--bg2)",padding:8}}/>
+                  <img src={p.logo_url} alt={p.nom} style={{width:60,height:60,objectFit:"contain",borderRadius:12,marginBottom:16,background:"var(--bg2)",padding:8}}/>
                 ) : (
                   <div style={{width:100,height:100,borderRadius:12,background:"var(--bg2)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 16px",fontSize:"2rem",color:"var(--gray)"}}>
                     <i className="fa-solid fa-building"/>
