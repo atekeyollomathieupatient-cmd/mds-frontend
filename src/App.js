@@ -1,6 +1,134 @@
 import { useState, useEffect, useRef } from "react";
 
 const API = "https://mds-novatech.onrender.com";
+const T = {
+  fr: {
+    // NAV
+    nav_accueil: "Accueil",
+    nav_services: "Services",
+    nav_actualites: "Actualités",
+    nav_partenariats: "Partenariats",
+    nav_contact: "Contact",
+    // HERO
+    hero_badge: "Innovation · Technologie · Agriculture",
+    hero_title1: "Solutions",
+    hero_title2: "Digitales",
+    hero_title3: "Excellence",
+    hero_title4: "Agricole",
+    hero_desc: "MDS NovaTech propulse votre entreprise avec des solutions informatiques de pointe et des services agricoles performants. Deux expertises, une vision : votre réussite.",
+    hero_btn1: "Nos services",
+    hero_btn2: "Nous contacter",
+    hero_stat1: "Clients satisfaits",
+    hero_stat2: "Années d'expérience",
+    hero_stat3: "Secteurs expertise",
+    // ABOUT
+    about_tag: "À propos",
+    about_title: "Qui sommes-nous ?",
+    about_p1: "MDS NovaTech est une entreprise dynamique spécialisée dans deux secteurs complémentaires : l'informatique & digital et l'agriculture.",
+    about_p2: "Notre équipe pluridisciplinaire combine expertise technique et connaissance du terrain pour offrir des solutions concrètes et durables.",
+    about_btn: "Voir nos services",
+    about_c1: "Expertise Tech",
+    about_c1d: "Solutions numériques complètes pour votre entreprise",
+    about_c2: "Savoir Agricole",
+    about_c2d: "Accompagnement terrain et conseil en production",
+    about_c3: "Équipe Dédiée",
+    about_c3d: "Des professionnels passionnés à votre service",
+    about_c4: "Fiabilité",
+    about_c4d: "Partenaire de confiance depuis plus de 8 ans",
+    // SERVICES
+    svc_tag: "Ce que nous faisons",
+    svc_title: "Nos Domaines d'Expertise",
+    svc_sub: "Des solutions adaptées à vos besoins, que vous soyez dans le numérique ou l'agriculture.",
+    svc_tech_title: "Informatique & Digital",
+    svc_tech_desc: "Solutions technologiques complètes pour moderniser votre activité et accélérer votre transformation numérique.",
+    svc_agri_title: "Agriculture & Élevage",
+    svc_agri_desc: "Accompagnement expert pour optimiser vos rendements et développer une activité agricole durable et rentable.",
+    // ACTUALITES
+    news_tag: "Notre blog",
+    news_title: "Actualités & Informations",
+    news_sub: "Restez informé des dernières nouvelles de MDS NovaTech.",
+    news_subscribe: "S'abonner",
+    news_empty: "Aucun article publié pour le moment",
+    // CONTACT
+    contact_tag: "Parlons-nous",
+    contact_title: "Contactez-Nous",
+    contact_sub: "Notre équipe est disponible pour répondre à toutes vos questions.",
+    contact_send: "Envoyer le message",
+    contact_sending: "Envoi en cours...",
+    // FOOTER
+    footer_desc: "Solutions informatiques et agricoles pour bâtir un avenir connecté et prospère.",
+    footer_services: "Services",
+    footer_entreprise: "Entreprise",
+    footer_legal: "Légal",
+    footer_about: "À propos",
+    footer_rights: "Tous droits réservés.",
+    // LANG
+    lang_label: "Langue",
+  },
+  en: {
+    // NAV
+    nav_accueil: "Home",
+    nav_services: "Services",
+    nav_actualites: "News",
+    nav_partenariats: "Partnerships",
+    nav_contact: "Contact",
+    // HERO
+    hero_badge: "Innovation · Technology · Agriculture",
+    hero_title1: "Digital",
+    hero_title2: "Solutions",
+    hero_title3: "Agricultural",
+    hero_title4: "Excellence",
+    hero_desc: "MDS NovaTech empowers your business with cutting-edge IT solutions and high-performance agricultural services. Two expertises, one vision: your success.",
+    hero_btn1: "Our services",
+    hero_btn2: "Contact us",
+    hero_stat1: "Satisfied clients",
+    hero_stat2: "Years of experience",
+    hero_stat3: "Areas of expertise",
+    // ABOUT
+    about_tag: "About us",
+    about_title: "Who are we?",
+    about_p1: "MDS NovaTech is a dynamic company specializing in two complementary sectors: IT & digital and agriculture.",
+    about_p2: "Our multidisciplinary team combines technical expertise and field knowledge to deliver concrete and sustainable solutions.",
+    about_btn: "See our services",
+    about_c1: "Tech Expertise",
+    about_c1d: "Complete digital solutions for your business",
+    about_c2: "Agricultural Knowledge",
+    about_c2d: "Field support and production consulting",
+    about_c3: "Dedicated Team",
+    about_c3d: "Passionate professionals at your service",
+    about_c4: "Reliability",
+    about_c4d: "Trusted partner for over 8 years",
+    // SERVICES
+    svc_tag: "What we do",
+    svc_title: "Our Areas of Expertise",
+    svc_sub: "Solutions tailored to your needs, whether in digital or agriculture.",
+    svc_tech_title: "IT & Digital",
+    svc_tech_desc: "Complete technological solutions to modernize your activity and accelerate your digital transformation.",
+    svc_agri_title: "Agriculture & Livestock",
+    svc_agri_desc: "Expert support to optimize your yields and develop a sustainable and profitable agricultural activity.",
+    // ACTUALITES
+    news_tag: "Our blog",
+    news_title: "News & Information",
+    news_sub: "Stay informed about the latest news from MDS NovaTech.",
+    news_subscribe: "Subscribe",
+    news_empty: "No articles published yet",
+    // CONTACT
+    contact_tag: "Let's talk",
+    contact_title: "Contact Us",
+    contact_sub: "Our team is available to answer all your questions.",
+    contact_send: "Send message",
+    contact_sending: "Sending...",
+    // FOOTER
+    footer_desc: "IT and agricultural solutions to build a connected and prosperous future.",
+    footer_services: "Services",
+    footer_entreprise: "Company",
+    footer_legal: "Legal",
+    footer_about: "About",
+    footer_rights: "All rights reserved.",
+    // LANG
+    lang_label: "Language",
+  }
+};
 
 const injectAssets = () => {
   if (!document.getElementById("fa-cdn")) {
@@ -463,22 +591,23 @@ function Alert({ type, msg }) {
   );
 }
 
-function HomePage({ nav }) {
+function HomePage({ nav, lang }) {
+  const t = T[lang];
   return (
     <div>
       <div className="home-hero">
         <div className="hero-bg"/><div className="hero-grid"/>
         <div className="hero-body">
-          <div className="badge"><span className="dot"/> Innovation · Technologie · Agriculture</div>
-          <h1>Solutions <span className="b">Digitales</span> &<br/>Excellence <span className="g">Agricole</span></h1>
-          <p className="hero-desc">MDS NovaTech propulse votre entreprise avec des solutions informatiques de pointe et des services agricoles performants. Deux expertises, une vision : votre réussite.</p>
+          <div className="badge"><span className="dot"/> {t.hero_badge}</div>
+          <h1>{t.hero_title1} <span className="b">{t.hero_title2}</span> &<br/>{t.hero_title3} <span className="g">{t.hero_title4}</span></h1>
+          <p className="hero-desc">{t.hero_desc}</p>
           <div className="hero-btns">
-            <button className="btn btn-blue" onClick={()=>nav("services")}><i className="fa-solid fa-rocket"/> Nos services</button>
-            <button className="btn btn-outline" onClick={()=>nav("contact")}><i className="fa-solid fa-envelope"/> Nous contacter</button>
+            <button className="btn btn-blue" onClick={()=>nav("services")}><i className="fa-solid fa-rocket"/> {t.hero_btn1}</button>
+            <button className="btn btn-outline" onClick={()=>nav("contact")}><i className="fa-solid fa-envelope"/> {t.hero_btn2}</button>
           </div>
         </div>
         <div className="hero-stats">
-          {[["150+","Clients satisfaits"],["8","Années d'expérience"],["2","Secteurs expertise"]].map(([n,l])=>(
+          {[["150+",t.hero_stat1],["8",t.hero_stat2],["2",t.hero_stat3]].map(([n,l])=>(
             <div className="stat" key={l}><div className="stat-n">{n}</div><div className="stat-l">{l}</div></div>
           ))}
         </div>
@@ -486,18 +615,18 @@ function HomePage({ nav }) {
       <div className="home-sections">
         <div className="home-about">
           <div className="about-text">
-            <div className="page-tag" style={{marginBottom:12}}><i className="fa-solid fa-circle-info"/> À propos</div>
-            <h2>Qui sommes-nous ?</h2>
-            <p>MDS NovaTech est une entreprise dynamique spécialisée dans deux secteurs complémentaires : l'informatique & digital et l'agriculture.</p>
-            <p>Notre équipe pluridisciplinaire combine expertise technique et connaissance du terrain pour offrir des solutions concrètes et durables.</p>
-            <button className="btn btn-blue" style={{marginTop:18}} onClick={()=>nav("services")}><i className="fa-solid fa-arrow-right"/> Voir nos services</button>
+            <div className="page-tag" style={{marginBottom:12}}><i className="fa-solid fa-circle-info"/> {t.about_tag}</div>
+            <h2>{t.about_title}</h2>
+            <p>{t.about_p1}</p>
+            <p>{t.about_p2}</p>
+            <button className="btn btn-blue" style={{marginTop:18}} onClick={()=>nav("services")}><i className="fa-solid fa-arrow-right"/> {t.about_btn}</button>
           </div>
           <div className="about-cards">
             {[
-              {icon:"fa-laptop-code",   bg:"rgba(42,82,201,0.1)",  col:"var(--blue-l)", title:"Expertise Tech",   desc:"Solutions numériques complètes pour votre entreprise"},
-              {icon:"fa-wheat-awn",     bg:"rgba(46,163,18,0.1)",  col:"var(--green)",  title:"Savoir Agricole",  desc:"Accompagnement terrain et conseil en production"},
-              {icon:"fa-users",         bg:"rgba(217,119,6,0.1)",  col:"#d97706",       title:"Équipe Dédiée",    desc:"Des professionnels passionnés à votre service"},
-              {icon:"fa-shield-halved", bg:"rgba(42,82,201,0.08)", col:"var(--blue-l)", title:"Fiabilité",        desc:"Partenaire de confiance depuis plus de 8 ans"},
+              {icon:"fa-laptop-code",   bg:"rgba(42,82,201,0.1)",  col:"var(--blue-l)", title:t.about_c1, desc:t.about_c1d},
+              {icon:"fa-wheat-awn",     bg:"rgba(46,163,18,0.1)",  col:"var(--green)",  title:t.about_c2, desc:t.about_c2d},
+              {icon:"fa-users",         bg:"rgba(217,119,6,0.1)",  col:"#d97706",       title:t.about_c3, desc:t.about_c3d},
+              {icon:"fa-shield-halved", bg:"rgba(42,82,201,0.08)", col:"var(--blue-l)", title:t.about_c4, desc:t.about_c4d},
             ].map(c=>(
               <div className="about-card" key={c.title}>
                 <div className="about-card-icon" style={{background:c.bg,color:c.col}}><i className={`fa-solid ${c.icon}`}/></div>
@@ -510,7 +639,6 @@ function HomePage({ nav }) {
     </div>
   );
 }
-
 function ServicesPage() {
   const [openTech, setOpenTech] = useState(null);
   const [openAgri, setOpenAgri] = useState(null);
@@ -1683,19 +1811,18 @@ export default function App() {
 
   const renderPage = (p) => {
     switch(p) {
-      case "accueil":         return <><HomePage nav={nav}/><Footer nav={nav}/></>;
-      case "services":        return <><ServicesPage/><Footer nav={nav}/></>;
-      case "actualites":      return <><ActualitesPage/><Footer nav={nav}/></>;
-      
-      case "partenariats":    return <><PartenariatsPage/><Footer nav={nav}/></>;
-      case "contact":         return <><ContactPage/><Footer nav={nav}/></>;
-      case "promoteur":       return <><PromoteurPage/><Footer nav={nav}/></>;
-      case "mentions":        return <><MentionsPage/><Footer nav={nav}/></>;
-      case "confidentialite": return <><ConfidentialitePage/><Footer nav={nav}/></>;
-      case "cgu":             return <><CguPage/><Footer nav={nav}/></>;
-      case "admin": return <AdminPage nav={nav}/>;
-default: return null;
-    }
+  case "accueil":         return <><HomePage nav={nav} lang={lang}/><Footer nav={nav} lang={lang}/></>;
+  case "services":        return <><ServicesPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
+  case "actualites":      return <><ActualitesPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
+  case "partenariats":    return <><PartenariatsPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
+  case "contact":         return <><ContactPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
+  case "promoteur":       return <><PromoteurPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
+  case "mentions":        return <><MentionsPage/><Footer nav={nav}/></>;
+  case "confidentialite": return <><ConfidentialitePage/><Footer nav={nav}/></>;
+  case "cgu":             return <><CguPage/><Footer nav={nav}/></>;
+  case "admin":           return <AdminPage nav={nav}/>;
+  default: return null;
+}
   };
 
   return (
