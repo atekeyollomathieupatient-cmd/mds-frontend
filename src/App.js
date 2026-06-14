@@ -517,8 +517,25 @@ function HomePage({ nav }) {
 }
 
 function ServicesPage() {
-  const tech = ["Développement web & applications mobiles","Infrastructure réseau & cloud","Cybersécurité & protection des données","Maintenance et support technique","Conseil et audit informatique"];
-  const agri = ["Conseil en production végétale","Gestion et suivi d'exploitations","Fourniture d'intrants agricoles","Formation et encadrement terrain","Études de sol et fertilisation"];
+  const [openTech, setOpenTech] = useState(null);
+  const [openAgri, setOpenAgri] = useState(null);
+
+  const tech = [
+    { titre:"Développement web & applications mobiles", details:["Sites vitrine et e-commerce","Applications mobiles iOS et Android","Interfaces modernes et responsive","Intégration API et bases de données"] },
+    { titre:"Infrastructure réseau & cloud", details:["Installation et configuration de réseaux","Hébergement cloud sécurisé","Virtualisation et serveurs","Sauvegarde et reprise après sinistre"] },
+    { titre:"Cybersécurité & protection des données", details:["Audit de sécurité informatique","Protection contre les cyberattaques","Chiffrement et sécurisation des données","Formation à la cybersécurité"] },
+    { titre:"Maintenance et support technique", details:["Support technique 24/7","Maintenance préventive et corrective","Mise à jour des systèmes","Assistance à distance et sur site"] },
+    { titre:"Conseil et audit informatique", details:["Audit du système d'information","Conseil en transformation digitale","Optimisation des processus","Accompagnement stratégique IT"] },
+  ];
+
+  const agri = [
+    { titre:"Conseil en production végétale", details:["Choix des cultures adaptées","Techniques d'irrigation optimisées","Gestion des intrants agricoles","Amélioration des rendements"] },
+    { titre:"Gestion et suivi d'exploitations", details:["Planification des activités agricoles","Suivi de la production","Gestion des ressources humaines","Rapports et bilans d'exploitation"] },
+    { titre:"Fourniture d'intrants agricoles", details:["Semences sélectionnées","Engrais et produits phytosanitaires","Matériel et équipements agricoles","Conseils d'utilisation"] },
+    { titre:"Formation et encadrement terrain", details:["Formations pratiques sur le terrain","Ateliers techniques","Accompagnement personnalisé","Transfert de compétences"] },
+    { titre:"Études de sol et fertilisation", details:["Analyse physicochimique des sols","Plan de fertilisation adapté","Recommandations agronomiques","Suivi de la fertilité"] },
+  ];
+
   return (
     <div>
       <PH tag="Ce que nous faisons" ticon="fa-briefcase" title="Nos Domaines d'Expertise" sub="Des solutions adaptées à vos besoins, que vous soyez dans le numérique ou l'agriculture."/>
@@ -527,13 +544,55 @@ function ServicesPage() {
           <div className="svc-icon"><i className="fa-solid fa-laptop-code"/></div>
           <h3>Informatique & Digital</h3>
           <p>Solutions technologiques complètes pour moderniser votre activité et accélérer votre transformation numérique.</p>
-          <ul className="svc-list">{tech.map(s=><li key={s}><i className="fa-solid fa-circle-check"/>{s}</li>)}</ul>
+          <ul className="svc-list">
+            {tech.map((s,i)=>(
+              <li key={i} style={{flexDirection:"column",alignItems:"flex-start",gap:0}}>
+                <div style={{display:"flex",alignItems:"center",gap:9,cursor:"pointer",width:"100%",padding:"6px 0"}}
+                  onClick={()=>setOpenTech(openTech===i?null:i)}>
+                  <i className="fa-solid fa-circle-check" style={{color:"var(--blue-l)",fontSize:"0.72rem",flexShrink:0}}/>
+                  <span style={{flex:1}}>{s.titre}</span>
+                  <i className={`fa-solid fa-chevron-${openTech===i?"up":"down"}`} style={{fontSize:"0.7rem",color:"var(--gray)"}}/>
+                </div>
+                {openTech===i && (
+                  <ul style={{listStyle:"none",paddingLeft:22,marginTop:6,marginBottom:6,display:"flex",flexDirection:"column",gap:5}}>
+                    {s.details.map((d,j)=>(
+                      <li key={j} style={{fontSize:"0.8rem",color:"var(--text2)",display:"flex",alignItems:"center",gap:7}}>
+                        <i className="fa-solid fa-arrow-right" style={{color:"var(--blue-g)",fontSize:"0.65rem",flexShrink:0}}/>
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
         <div className="svc-panel agri">
           <div className="svc-icon"><i className="fa-solid fa-wheat-awn"/></div>
           <h3>Agriculture & Élevage</h3>
           <p>Accompagnement expert pour optimiser vos rendements et développer une activité agricole durable et rentable.</p>
-          <ul className="svc-list">{agri.map(s=><li key={s}><i className="fa-solid fa-circle-check"/>{s}</li>)}</ul>
+          <ul className="svc-list">
+            {agri.map((s,i)=>(
+              <li key={i} style={{flexDirection:"column",alignItems:"flex-start",gap:0}}>
+                <div style={{display:"flex",alignItems:"center",gap:9,cursor:"pointer",width:"100%",padding:"6px 0"}}
+                  onClick={()=>setOpenAgri(openAgri===i?null:i)}>
+                  <i className="fa-solid fa-circle-check" style={{color:"var(--green)",fontSize:"0.72rem",flexShrink:0}}/>
+                  <span style={{flex:1}}>{s.titre}</span>
+                  <i className={`fa-solid fa-chevron-${openAgri===i?"up":"down"}`} style={{fontSize:"0.7rem",color:"var(--gray)"}}/>
+                </div>
+                {openAgri===i && (
+                  <ul style={{listStyle:"none",paddingLeft:22,marginTop:6,marginBottom:6,display:"flex",flexDirection:"column",gap:5}}>
+                    {s.details.map((d,j)=>(
+                      <li key={j} style={{fontSize:"0.8rem",color:"var(--text2)",display:"flex",alignItems:"center",gap:7}}>
+                        <i className="fa-solid fa-arrow-right" style={{color:"var(--green-l)",fontSize:"0.65rem",flexShrink:0}}/>
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
