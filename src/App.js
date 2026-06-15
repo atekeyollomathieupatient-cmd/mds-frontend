@@ -281,7 +281,7 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 .hero-bg {
   position: absolute; inset: 0; pointer-events: none;
   background-image: url('/fond.jpg');
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0.15;
