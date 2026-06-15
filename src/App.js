@@ -280,11 +280,8 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 .home-hero { min-height: calc(100vh - 88px); display: flex; align-items: center; position: relative; overflow: hidden; }
 .hero-bg {
   position: absolute; inset: 0; pointer-events: none;
-  background-image: url('/fond.jpg');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.15;
+  background: radial-gradient(ellipse 70% 60% at 75% 50%, rgba(42,82,201,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 10% 80%, rgba(46,163,18,0.06) 0%, transparent 50%);
 }
 .hero-grid {
   position: absolute; inset: 0; pointer-events: none;
@@ -835,7 +832,21 @@ function ActualitesPage({ lang }) {
               <div className="news-body">
                 <span className="cat" style={{color:st.col,background:st.bg}}><i className={`fa-solid ${st.icon}`}/>{a.categorie}</span>
                 <h3 className="news-title">{a.titre}</h3>
-                <p className="news-excerpt">{a.contenu?.slice(0,120)}...</p>
+                <p className="news-excerpt">{a.contenu?.slice(0,120)}{a.contenu?.length>120?"...":""}</p>
+{a.contenu?.length>120 && (
+  <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--blue-l)",fontSize:"0.82rem",fontWeight:600,padding:"4px 0",display:"flex",alignItems:"center",gap:5}}
+    onClick={()=>alert(a.contenu)}>
+    <i className="fa-solid fa-chevron-down" style={{fontSize:"0.7rem"}}/>
+    {lang==="fr"?"Voir plus":"Read more"}
+  </button>
+)}
+{a.lien_externe && (
+  <a href={a.lien_externe} target="_blank" rel="noreferrer"
+    style={{display:"inline-flex",alignItems:"center",gap:6,color:"var(--green)",fontSize:"0.82rem",fontWeight:600,textDecoration:"none",marginTop:6}}>
+    <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize:"0.72rem"}}/>
+    {lang==="fr"?"Visiter le site":"Visit website"}
+  </a>
+)}
                 <p className="news-date"><i className="fa-regular fa-calendar"/>{new Date(a.date_pub||a.created_at).toLocaleDateString(lang==="fr"?"fr-FR":"en-US")}</p>
               </div>
             </div>
@@ -1351,6 +1362,9 @@ function AdminPage({ nav }) {
             </FG>
             <FG label="Contenu" icon="fa-pen"><textarea placeholder="Contenu de l'article..." value={newArticle.contenu} onChange={e=>setNewArticle({...newArticle,contenu:e.target.value})} style={{minHeight:140}}/></FG>
             <FG label="Image URL" icon="fa-image"><input type="text" placeholder="https://..." value={newArticle.image_url} onChange={e=>setNewArticle({...newArticle,image_url:e.target.value})}/></FG>
+            <FG label="Lien externe (optionnel)" icon="fa-link">
+  <input type="text" placeholder="https://site-externe.com" value={newArticle.lien_externe||""} onChange={e=>setNewArticle({...newArticle,lien_externe:e.target.value})}/>
+</FG>
             <div className="upload" onClick={()=>document.getElementById("img-upload").click()} style={{marginBottom:13}}>
               <input type="file" id="img-upload" accept="image/*" style={{display:"none"}} onChange={async(e)=>{
                 const file=e.target.files[0]; if(!file) return;
