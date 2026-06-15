@@ -1627,7 +1627,7 @@ export default function App() {
       </p>
       <div style={{marginTop:8}}>
         <div className="logo-box" style={{width:50,height:50,margin:"0 auto 8px"}}>
-          <img src="/logo.png" alt="MDS NovaTech" style={{width:"200%",height:"200%",objectFit:"contain",borderRadius:"50%",background:"white",padding:"2px"}}/>
+          <img src="/logo.png" alt="MDS NovaTech" style={{width:"100%",height:"100%",objectFit:"contain",borderRadius:"50%",background:"white",padding:"2px"}}/>
         </div>
         <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:800,color:"var(--text)"}}>MDS <span style={{color:"var(--green)"}}>NovaTech</span></div>
       </div>
