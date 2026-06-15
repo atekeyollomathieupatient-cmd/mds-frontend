@@ -835,7 +835,7 @@ function ActualitesPage({ lang }) {
                 <p className="news-excerpt">{a.contenu?.slice(0,120)}{a.contenu?.length>120?"...":""}</p>
 {a.contenu?.length>120 && (
   <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--blue-l)",fontSize:"0.82rem",fontWeight:600,padding:"4px 0",display:"flex",alignItems:"center",gap:5}}
-    onClick={()=>alert(a.contenu)}>
+    onClick={()=>setArticleModal(a)}>
     <i className="fa-solid fa-chevron-down" style={{fontSize:"0.7rem"}}/>
     {lang==="fr"?"Voir plus":"Read more"}
   </button>
@@ -1560,6 +1560,7 @@ function Footer({ nav, lang }) {
 
 export default function App() {
   const [offline, setOffline] = useState(!navigator.onLine);
+  const [articleModal, setArticleModal] = useState(null);
   const [page, setPage] = useState("accueil");
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(false);
@@ -1695,6 +1696,39 @@ export default function App() {
           </div>
         ))}
       </div>
+      {articleModal && (
+  <div className="overlay" onClick={e=>e.target===e.currentTarget&&setArticleModal(null)}>
+    <div className="modal" style={{maxWidth:600}}>
+      <button className="modal-x" onClick={()=>setArticleModal(null)}><i className="fa-solid fa-xmark"/></button>
+      <div style={{marginBottom:12}}>
+        <span className="cat" style={{
+          color:articleModal.categorie==="Agriculture"?"var(--green)":articleModal.categorie==="Entreprise"?"#d97706":"var(--blue-l)",
+          background:articleModal.categorie==="Agriculture"?"rgba(46,163,18,0.08)":articleModal.categorie==="Entreprise"?"rgba(217,119,6,0.08)":"rgba(42,82,201,0.08)"
+        }}>
+          <i className={`fa-solid ${articleModal.categorie==="Agriculture"?"fa-leaf":articleModal.categorie==="Entreprise"?"fa-trophy":"fa-microchip"}`}/>
+          {articleModal.categorie}
+        </span>
+      </div>
+      <h3 style={{marginBottom:12}}>{articleModal.titre}</h3>
+      <p style={{color:"var(--gray)",fontSize:"0.78rem",marginBottom:16}}>
+        <i className="fa-regular fa-calendar" style={{marginRight:5}}/>
+        {new Date(articleModal.date_pub||articleModal.created_at).toLocaleDateString(lang==="fr"?"fr-FR":"en-US")}
+      </p>
+      {articleModal.image_url && (
+        <img src={articleModal.image_url} alt={articleModal.titre} style={{width:"100%",borderRadius:12,marginBottom:16,objectFit:"cover",maxHeight:200}}/>
+      )}
+      <div style={{color:"var(--text2)",fontSize:"0.92rem",lineHeight:1.8,maxHeight:300,overflowY:"auto"}}>
+        {articleModal.contenu}
+      </div>
+      {articleModal.lien_externe && (
+        <a href={articleModal.lien_externe} target="_blank" rel="noreferrer" className="btn btn-blue btn-full" style={{marginTop:16}}>
+          <i className="fa-solid fa-arrow-up-right-from-square"/>
+          {lang==="fr"?"Visiter le site":"Visit website"}
+        </a>
+      )}
+    </div>
+  </div>
+)}
     </>
   );
 }
