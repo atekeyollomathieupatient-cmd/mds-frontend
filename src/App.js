@@ -753,7 +753,7 @@ function ServicesPage({ lang }) {
   );
 }
 
-function ActualitesPage({ lang }) {
+function ActualitesPage({ lang, onArticleClick }) {
   const t = T[lang];
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -835,7 +835,7 @@ function ActualitesPage({ lang }) {
                 <p className="news-excerpt">{a.contenu?.slice(0,120)}{a.contenu?.length>120?"...":""}</p>
 {a.contenu?.length>120 && (
   <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--blue-l)",fontSize:"0.82rem",fontWeight:600,padding:"4px 0",display:"flex",alignItems:"center",gap:5}}
-    onClick={()=>setArticleModal(a)}>
+    onClick={()=>onArticleClick(a)}>
     <i className="fa-solid fa-chevron-down" style={{fontSize:"0.7rem"}}/>
     {lang==="fr"?"Voir plus":"Read more"}
   </button>
@@ -1602,7 +1602,7 @@ export default function App() {
     switch(p) {
       case "accueil":         return <><HomePage nav={nav} lang={lang}/><Footer nav={nav} lang={lang}/></>;
       case "services":        return <><ServicesPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
-      case "actualites":      return <><ActualitesPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
+      case "actualites": return <><ActualitesPage lang={lang} onArticleClick={setArticleModal}/><Footer nav={nav} lang={lang}/></>;
       case "partenariats":    return <><PartenariatsPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
       case "contact":         return <><ContactPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
       case "promoteur":       return <><PromoteurPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
