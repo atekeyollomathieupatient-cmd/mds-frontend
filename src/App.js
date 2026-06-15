@@ -1559,12 +1559,24 @@ function Footer({ nav, lang }) {
 }
 
 export default function App() {
+  const [offline, setOffline] = useState(!navigator.onLine);
   const [page, setPage] = useState("accueil");
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(false);
   const [lang, setLang] = useState("fr");
 
   useEffect(() => { injectAssets(); }, []);
+
+  useEffect(() => {
+    const goOffline = () => setOffline(true);
+    const goOnline = () => setOffline(false);
+    window.addEventListener('offline', goOffline);
+    window.addEventListener('online', goOnline);
+    return () => {
+      window.removeEventListener('offline', goOffline);
+      window.removeEventListener('online', goOnline);
+    };
+  }, []);
 
   useEffect(() => {
     const theme = dark ? DARK : LIGHT;
@@ -1600,6 +1612,31 @@ export default function App() {
       default: return null;
     }
   };
+
+  if (offline) return (
+    <div style={{minHeight:"100vh",display:"flex",alignItems:"center",justifyContent:"center",flexDirection:"column",gap:16,padding:"20px",background:"var(--bg)",textAlign:"center"}}>
+      <style>{CSS}</style>
+      <div style={{width:80,height:80,borderRadius:"50%",background:"rgba(239,68,68,0.1)",display:"flex",alignItems:"center",justifyContent:"center",marginBottom:8}}>
+        <i className="fa-solid fa-wifi" style={{fontSize:"2rem",color:"#ef4444"}}/>
+      </div>
+      <h2 style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"1.5rem",fontWeight:800,color:"var(--text)"}}>
+        {lang==="fr"?"Vous êtes hors ligne":"You are offline"}
+      </h2>
+      <p style={{color:"var(--text2)",fontSize:"0.95rem",maxWidth:320}}>
+        {lang==="fr"?"Vérifiez votre connexion internet et réessayez.":"Please check your internet connection and try again."}
+      </p>
+      <button className="btn btn-blue" onClick={()=>window.location.reload()}>
+        <i className="fa-solid fa-rotate-right"/>
+        {lang==="fr"?"Réessayer":"Try again"}
+      </button>
+      <div style={{marginTop:8}}>
+        <div className="logo-box" style={{width:50,height:50,margin:"0 auto 8px"}}>
+          <img src="/logo.png" alt="MDS NovaTech" style={{width:"100%",height:"100%",objectFit:"contain",borderRadius:"50%",background:"white",padding:"2px"}}/>
+        </div>
+        <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:800,color:"var(--text)"}}>MDS <span style={{color:"var(--green)"}}>NovaTech</span></div>
+      </div>
+    </div>
+  );
 
   return (
     <>
