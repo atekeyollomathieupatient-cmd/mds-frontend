@@ -280,8 +280,11 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 .home-hero { min-height: calc(100vh - 88px); display: flex; align-items: center; position: relative; overflow: hidden; }
 .hero-bg {
   position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 70% 60% at 75% 50%, rgba(42,82,201,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 10% 80%, rgba(46,163,18,0.06) 0%, transparent 50%);
+  background-image: url('/fond.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.15;
 }
 .hero-grid {
   position: absolute; inset: 0; pointer-events: none;
