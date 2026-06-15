@@ -1698,7 +1698,7 @@ export default function App() {
       </div>
       {articleModal && (
   <div className="overlay" onClick={e=>e.target===e.currentTarget&&setArticleModal(null)}>
-    <div className="modal" style={{maxWidth:600}}>
+    <div className="modal" style={{maxWidth:600,maxHeight:"85vh",overflowY:"auto"}}>
       <button className="modal-x" onClick={()=>setArticleModal(null)}><i className="fa-solid fa-xmark"/></button>
       <div style={{marginBottom:12}}>
         <span className="cat" style={{
@@ -1717,7 +1717,7 @@ export default function App() {
       {articleModal.image_url && (
         <img src={articleModal.image_url} alt={articleModal.titre} style={{width:"100%",borderRadius:12,marginBottom:16,objectFit:"cover",maxHeight:200}}/>
       )}
-      <div style={{color:"var(--text2)",fontSize:"0.92rem",lineHeight:1.8,maxHeight:300,overflowY:"auto"}}>
+      <div style={{color:"var(--text2)",fontSize:"0.92rem",lineHeight:1.8,maxHeight:400,overflowY:"auto",paddingRight:4}}>
         {articleModal.contenu}
       </div>
       {articleModal.lien_externe && (
