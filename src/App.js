@@ -5,27 +5,27 @@ const API = "https://mds-novatech.onrender.com";
 const T = {
   fr: {
     nav_accueil:"Accueil", nav_services:"Services", nav_actualites:"Actualités", nav_partenariats:"Partenariats", nav_contact:"Contact",
-    hero_badge:"Innovation · Technologie · Agriculture",
-    hero_t1:"Solutions", hero_t2:"Digitales", hero_t3:"Excellence", hero_t4:"Agricole",
-    hero_desc:"MDS NovaTech propulse votre entreprise avec des solutions informatiques de pointe et des services agricoles performants. Deux expertises, une vision : votre réussite.",
+    hero_badge:"Innovation · Technologie · Intelligence Artificielle",
+    hero_t1:"Solutions", hero_t2:"Digitales", hero_t3:"Propulsées par", hero_t4:"l'IA",
+    hero_desc:"INESTID propulse votre entreprise avec des solutions informatiques de pointe et une expertise en intelligence artificielle. Une vision, votre réussite.",
     hero_btn1:"Nos services", hero_btn2:"Nous contacter",
     hero_s1:"Clients satisfaits", hero_s2:"Années d'expérience", hero_s3:"Secteurs expertise",
     about_tag:"À propos", about_title:"Qui sommes-nous ?",
-    about_p1:"MDS NovaTech est une entreprise dynamique spécialisée dans deux secteurs complémentaires : l'informatique & digital et l'agriculture.",
-    about_p2:"Notre équipe pluridisciplinaire combine expertise technique et connaissance du terrain pour offrir des solutions concrètes et durables.",
+    about_p1:"INESTID est une entreprise dynamique spécialisée dans l'informatique, le digital et l'intelligence artificielle.",
+    about_p2:"Notre équipe pluridisciplinaire combine expertise technique et innovation pour offrir des solutions concrètes et durables.",
     about_btn:"Voir nos services",
     about_c1:"Expertise Tech", about_c1d:"Solutions numériques complètes pour votre entreprise",
-    about_c2:"Savoir Agricole", about_c2d:"Accompagnement terrain et conseil en production",
+    about_c2:"Intelligence IA", about_c2d:"Solutions d'IA adaptées à vos besoins",
     about_c3:"Équipe Dédiée", about_c3d:"Des professionnels passionnés à votre service",
     about_c4:"Fiabilité", about_c4d:"Partenaire de confiance depuis plus de 8 ans",
     svc_tag:"Ce que nous faisons", svc_title:"Nos Domaines d'Expertise",
-    svc_sub:"Des solutions adaptées à vos besoins, que vous soyez dans le numérique ou l'agriculture.",
+    svc_sub:"Des solutions adaptées à vos besoins dans le numérique et l'intelligence artificielle.",
     svc_tech_title:"Informatique & Digital",
     svc_tech_desc:"Solutions technologiques complètes pour moderniser votre activité.",
-    svc_agri_title:"Agriculture & Élevage",
-    svc_agri_desc:"Accompagnement expert pour optimiser vos rendements.",
+    svc_ai_title:"Intelligence Artificielle & Data",
+    svc_ai_desc:"Des solutions IA innovantes pour automatiser et optimiser vos processus.",
     news_tag:"Notre blog", news_title:"Actualités & Informations",
-    news_sub:"Restez informé des dernières nouvelles de MDS NovaTech.",
+    news_sub:"Restez informé des dernières nouvelles d'INESTID.",
     news_subscribe:"S'abonner", news_empty:"Aucun article publié pour le moment",
     news_filter_all:"Tout",
     part_tag:"Partenariats", part_title:"Partenariats Stratégiques",
@@ -47,7 +47,7 @@ const T = {
     contact_tag:"Parlons-nous", contact_title:"Contactez-Nous",
     contact_sub:"Notre équipe est disponible pour répondre à toutes vos questions.",
     contact_desc:"Vous avez un projet ou une question ? N'hésitez pas à nous écrire.",
-    contact_addr:"Adresse", contact_addr_val:"Siège social MDS NovaTech",
+    contact_addr:"Adresse", contact_addr_val:"Siège social INESTID",
     contact_phone:"Téléphone", contact_email:"Email", contact_hours:"WhatsApp",
     contact_hours_val:"Discuter sur WhatsApp",
     contact_form_title:"Envoyer un message",
@@ -55,54 +55,68 @@ const T = {
     contact_service:"Service concerné", contact_msg:"Message *",
     contact_send:"Envoyer le message", contact_sending:"Envoi en cours...",
     promo_tag:"Notre fondateur", promo_title:"Le Promoteur",
-    promo_sub:"Découvrez l'homme derrière la vision de MDS NovaTech.",
+    promo_sub:"Découvrez l'homme derrière la vision d'INESTID.",
     promo_role:"Promoteur & Fondateur",
     promo_bio_title:"Biographie", promo_parcours:"Parcours", promo_values:"Valeurs & Vision",
-    promo_bio1:"YOLOU ATEKEYOLLO MATHIEU PATIENT est un jeune entrepreneur africain visionnaire, fondateur et promoteur de MDS NovaTech. Né en Afrique centrale, il grandit avec une passion profonde pour les technologies et le développement agricole de son continent.",
-    promo_bio2:"Très tôt, il comprend que l'Afrique a besoin de solutions locales adaptées à ses réalités. C'est cette conviction qui le pousse, dès ses études, à s'orienter vers l'informatique et les sciences agronomiques.",
-    promo_bio3:"Fort de cette double expertise, il fonde MDS NovaTech avec une vision claire : créer une entreprise africaine capable de répondre aux défis technologiques et agricoles de demain.",
+    promo_bio1:"YOLOU ATEKEYOLLO MATHIEU PATIENT est un jeune entrepreneur africain visionnaire, fondateur et promoteur d'INESTID. Né en Afrique centrale, il grandit avec une passion profonde pour les technologies et le développement numérique de son continent.",
+    promo_bio2:"Très tôt, il comprend que l'Afrique a besoin de solutions locales adaptées à ses réalités. C'est cette conviction qui le pousse, dès ses études, à s'orienter vers l'informatique et l'intelligence artificielle.",
+    promo_bio3:"Fort de cette expertise, il fonde INESTID avec une vision claire : créer une entreprise africaine capable de répondre aux défis technologiques de demain.",
     promo_bio4:"Animé par des valeurs de rigueur, d'intégrité et de service, MATHIEU PATIENT reste convaincu que la jeunesse africaine est la clé du développement du continent.",
-    promo_t1:"Formation", promo_t1t:"Études en Informatique & Agronomie", promo_t1d:"Double formation qui forge sa vision unique.",
-    promo_t2:"Idée", promo_t2t:"Naissance du concept MDS NovaTech", promo_t2d:"Une vision : créer une entreprise africaine à double expertise.",
-    promo_t3:"Lancement", promo_t3t:"Création de MDS NovaTech", promo_t3d:"Fondation officielle avec une équipe passionnée.",
+    promo_t1:"Formation", promo_t1t:"Études en Informatique & IA", promo_t1d:"Formation qui forge sa vision unique.",
+    promo_t2:"Idée", promo_t2t:"Naissance du concept INESTID", promo_t2d:"Une vision : créer une entreprise africaine d'excellence.",
+    promo_t3:"Lancement", promo_t3t:"Création d'INESTID", promo_t3d:"Fondation officielle avec une équipe passionnée.",
     promo_t4:"Aujourd'hui", promo_t4t:"Reconnaissance & Expansion", promo_t4d:"Prix de l'Innovation 2026 et développement continu.",
     promo_v1:"Recherche", promo_v1d:"Toujours chercher des solutions innovantes.",
     promo_v2:"Innovation", promo_v2d:"Transformer les idées en solutions concrètes.",
     promo_v3:"Développement", promo_v3d:"Contribuer au progrès du continent africain.",
     promo_v4:"Intégrité", promo_v4d:"Agir avec honnêteté en toutes circonstances.",
-    footer_desc:"Solutions informatiques et agricoles pour bâtir un avenir connecté et prospère.",
+    footer_desc:"Solutions informatiques et IA pour bâtir un avenir connecté et prospère.",
     footer_services:"Services", footer_company:"Entreprise", footer_legal:"Légal",
-    footer_about:"À propos", footer_recruit:"Recrutement", footer_partner:"Partenariats", footer_promoter:"Le Promoteur",
+    footer_about:"À propos", footer_partner:"Partenariats", footer_promoter:"Le Promoteur",
     footer_mentions:"Mentions légales", footer_privacy:"Confidentialité", footer_cgu:"CGU",
     footer_rights:"Tous droits réservés.",
     lang_label:"Langue",
-    newsletter_title:"Newsletter MDS NovaTech",
+    newsletter_title:"Newsletter INESTID",
     newsletter_desc:"Recevez nos dernières actualités directement dans votre boîte mail.",
     newsletter_email:"Votre email", newsletter_btn:"S'abonner", newsletter_sending:"Envoi...",
+    mentions_title:"Mentions Légales", mentions_sub:"Informations légales relatives à INESTID.",
+    mentions_alert:"Conformément aux dispositions légales, voici les mentions obligatoires du site INESTID.",
+    confidentialite_title:"Politique de Confidentialité", confidentialite_sub:"Comment INESTID protège vos données personnelles.",
+    confidentialite_alert:"Vos données personnelles sont traitées avec le plus grand soin.",
+    cgu_title:"Conditions Générales d'Utilisation", cgu_sub:"Règles régissant l'utilisation du site INESTID.",
+    cgu_alert:"En utilisant ce site, vous acceptez les présentes CGU.",
+    legal_tag:"Légal",
+    donnees:"Données collectées", finalites:"Finalités du traitement", droits:"Vos droits", dpo:"Contact DPO",
+    objet:"1. Objet", acces:"2. Accès au site", interdit:"3. Utilisations interdites", modif:"4. Modifications",
+    objet_text:"Les présentes CGU définissent les conditions d'utilisation du site web d'INESTID.",
+    acces_text:"INESTID s'efforce de maintenir le site accessible 24h/24, 7j/7.",
+    modif_text:"INESTID se réserve le droit de modifier les présentes CGU à tout moment.",
+    editeur:"Éditeur du site", hebergement:"Hébergement", propriete:"Propriété intellectuelle", droit_app:"Droit applicable",
+    last_update:"Dernière mise à jour",
   },
   en: {
     nav_accueil:"Home", nav_services:"Services", nav_actualites:"News", nav_partenariats:"Partnerships", nav_contact:"Contact",
-    hero_badge:"Innovation · Technology · Agriculture",
-    hero_t1:"Digital", hero_t2:"Solutions", hero_t3:"Agricultural", hero_t4:"Excellence",
-    hero_desc:"MDS NovaTech empowers your business with cutting-edge IT solutions and high-performance agricultural services. Two expertises, one vision: your success.",
+    hero_badge:"Innovation · Technology · Artificial Intelligence",
+    hero_t1:"Digital", hero_t2:"Solutions", hero_t3:"Powered by", hero_t4:"AI",
+    hero_desc:"INESTID empowers your business with cutting-edge IT solutions and artificial intelligence expertise. One vision: your success.",
     hero_btn1:"Our services", hero_btn2:"Contact us",
     hero_s1:"Satisfied clients", hero_s2:"Years of experience", hero_s3:"Areas of expertise",
     about_tag:"About us", about_title:"Who are we?",
-    about_p1:"MDS NovaTech is a dynamic company specializing in two complementary sectors: IT & digital and agriculture.",
-    about_p2:"Our multidisciplinary team combines technical expertise and field knowledge to deliver concrete and sustainable solutions.",
+    about_p1:"INESTID is a dynamic company specializing in IT, digital and artificial intelligence.",
+    about_p2:"Our multidisciplinary team combines technical expertise and innovation to deliver concrete and sustainable solutions.",
     about_btn:"See our services",
     about_c1:"Tech Expertise", about_c1d:"Complete digital solutions for your business",
-    about_c2:"Agricultural Knowledge", about_c2d:"Field support and production consulting",
+    about_c2:"AI Intelligence", about_c2d:"AI solutions adapted to your needs",
     about_c3:"Dedicated Team", about_c3d:"Passionate professionals at your service",
     about_c4:"Reliability", about_c4d:"Trusted partner for over 8 years",
     svc_tag:"What we do", svc_title:"Our Areas of Expertise",
-    svc_sub:"Solutions tailored to your needs, whether in digital or agriculture.",
+    svc_sub:"Solutions tailored to your needs in digital and artificial intelligence.",
     svc_tech_title:"IT & Digital",
     svc_tech_desc:"Complete technological solutions to modernize your activity.",
-    svc_agri_title:"Agriculture & Livestock",
-    svc_agri_desc:"Expert support to optimize your yields.",
+    svc_ai_title:"Artificial Intelligence & Data",
+    svc_ai_desc:"Innovative AI solutions to automate and optimize your processes.",
     news_tag:"Our blog", news_title:"News & Information",
-    news_sub:"Stay informed about the latest news from MDS NovaTech.",
+    news_sub:"Stay informed about the latest news from INESTID.",
     news_subscribe:"Subscribe", news_empty:"No articles published yet",
     news_filter_all:"All",
     part_tag:"Partnerships", part_title:"Strategic Partnerships",
@@ -124,7 +138,7 @@ const T = {
     contact_tag:"Let's talk", contact_title:"Contact Us",
     contact_sub:"Our team is available to answer all your questions.",
     contact_desc:"Have a project or question? Feel free to write to us.",
-    contact_addr:"Address", contact_addr_val:"MDS NovaTech Headquarters",
+    contact_addr:"Address", contact_addr_val:"INESTID Headquarters",
     contact_phone:"Phone", contact_email:"Email", contact_hours:"WhatsApp",
     contact_hours_val:"Chat on WhatsApp",
     contact_form_title:"Send a message",
@@ -132,30 +146,44 @@ const T = {
     contact_service:"Service concerned", contact_msg:"Message *",
     contact_send:"Send message", contact_sending:"Sending...",
     promo_tag:"Our founder", promo_title:"The Promoter",
-    promo_sub:"Discover the man behind the MDS NovaTech vision.",
+    promo_sub:"Discover the man behind the INESTID vision.",
     promo_role:"Promoter & Founder",
     promo_bio_title:"Biography", promo_parcours:"Journey", promo_values:"Values & Vision",
-    promo_bio1:"YOLOU ATEKEYOLLO MATHIEU PATIENT is a visionary young African entrepreneur, founder and promoter of MDS NovaTech. Born in Central Africa, he grew up with a deep passion for technology and agricultural development on his continent.",
-    promo_bio2:"Early on, he understood that Africa needs local solutions adapted to its realities. This conviction led him, from his studies, to focus on computer science and agronomic sciences.",
-    promo_bio3:"With this dual expertise, he founded MDS NovaTech with a clear vision: to create an African company capable of meeting tomorrow's technological and agricultural challenges.",
+    promo_bio1:"YOLOU ATEKEYOLLO MATHIEU PATIENT is a visionary young African entrepreneur, founder and promoter of INESTID. Born in Central Africa, he grew up with a deep passion for technology and digital development on his continent.",
+    promo_bio2:"Early on, he understood that Africa needs local solutions adapted to its realities. This conviction led him to focus on computer science and artificial intelligence.",
+    promo_bio3:"With this expertise, he founded INESTID with a clear vision: to create an African company capable of meeting tomorrow's technological challenges.",
     promo_bio4:"Driven by values of rigor, integrity and service, MATHIEU PATIENT remains convinced that African youth is the key to the continent's development.",
-    promo_t1:"Training", promo_t1t:"Studies in IT & Agronomy", promo_t1d:"Dual training that forges his unique vision.",
-    promo_t2:"Idea", promo_t2t:"Birth of the MDS NovaTech concept", promo_t2d:"A vision: creating an African company with dual expertise.",
-    promo_t3:"Launch", promo_t3t:"Creation of MDS NovaTech", promo_t3d:"Official founding with a passionate team.",
+    promo_t1:"Training", promo_t1t:"Studies in IT & AI", promo_t1d:"Training that forges his unique vision.",
+    promo_t2:"Idea", promo_t2t:"Birth of the INESTID concept", promo_t2d:"A vision: creating an African company of excellence.",
+    promo_t3:"Launch", promo_t3t:"Creation of INESTID", promo_t3d:"Official founding with a passionate team.",
     promo_t4:"Today", promo_t4t:"Recognition & Expansion", promo_t4d:"Innovation Award 2026 and continuous development.",
     promo_v1:"Research", promo_v1d:"Always seeking innovative solutions.",
     promo_v2:"Innovation", promo_v2d:"Transforming ideas into concrete solutions.",
     promo_v3:"Development", promo_v3d:"Contributing to African continent progress.",
     promo_v4:"Integrity", promo_v4d:"Acting with honesty in all circumstances.",
-    footer_desc:"IT and agricultural solutions to build a connected and prosperous future.",
+    footer_desc:"IT and AI solutions to build a connected and prosperous future.",
     footer_services:"Services", footer_company:"Company", footer_legal:"Legal",
-    footer_about:"About", footer_recruit:"Recruitment", footer_partner:"Partnerships", footer_promoter:"The Promoter",
+    footer_about:"About", footer_partner:"Partnerships", footer_promoter:"The Promoter",
     footer_mentions:"Legal notice", footer_privacy:"Privacy", footer_cgu:"TOU",
     footer_rights:"All rights reserved.",
     lang_label:"Language",
-    newsletter_title:"MDS NovaTech Newsletter",
+    newsletter_title:"INESTID Newsletter",
     newsletter_desc:"Receive our latest news directly in your mailbox.",
     newsletter_email:"Your email", newsletter_btn:"Subscribe", newsletter_sending:"Sending...",
+    mentions_title:"Legal Notice", mentions_sub:"Legal information relating to INESTID.",
+    mentions_alert:"In accordance with legal provisions, here are the mandatory notices for the INESTID website.",
+    confidentialite_title:"Privacy Policy", confidentialite_sub:"How INESTID protects your personal data.",
+    confidentialite_alert:"Your personal data is processed with the utmost care.",
+    cgu_title:"Terms of Use", cgu_sub:"Rules governing the use of the INESTID website.",
+    cgu_alert:"By using this site, you accept these Terms of Use.",
+    legal_tag:"Legal",
+    donnees:"Data collected", finalites:"Processing purposes", droits:"Your rights", dpo:"DPO Contact",
+    objet:"1. Purpose", acces:"2. Site access", interdit:"3. Prohibited uses", modif:"4. Modifications",
+    objet_text:"These Terms of Use define the conditions for using the INESTID website.",
+    acces_text:"INESTID strives to keep the site accessible 24/7.",
+    modif_text:"INESTID reserves the right to modify these Terms of Use at any time.",
+    editeur:"Site editor", hebergement:"Hosting", propriete:"Intellectual property", droit_app:"Applicable law",
+    last_update:"Last updated",
   }
 };
 
@@ -211,16 +239,8 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
   box-shadow: 0 4px 24px rgba(26,58,143,0.1);
   transition: background 0.3s, border-color 0.3s;
 }
-.logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-.logo-box {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue-l), var(--green));
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; color: #fff; font-size: 1rem;
-  overflow: hidden; flex-shrink: 0;
-}
-.logo-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.1rem; color: var(--text); transition: color 0.3s; }
-.logo-name span { color: var(--green); }
+.logo { display: flex; align-items: center; cursor: pointer; }
+.logo-img { height: 42px; width: auto; object-fit: contain; }
 .nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
 .nav-links button {
   background: none; border: none; cursor: pointer;
@@ -280,8 +300,11 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 .home-hero { min-height: calc(100vh - 88px); display: flex; align-items: center; position: relative; overflow: hidden; }
 .hero-bg {
   position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse 70% 60% at 75% 50%, rgba(42,82,201,0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 10% 80%, rgba(46,163,18,0.06) 0%, transparent 50%);
+  background-image: url('/fond.jpg');
+  background-size: 80%;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.15;
 }
 .hero-grid {
   position: absolute; inset: 0; pointer-events: none;
@@ -346,16 +369,16 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 .svc-panel { border-radius: 20px; padding: 36px; border: 1px solid var(--border); background: var(--card); box-shadow: 0 4px 20px rgba(26,58,143,0.06); transition: transform 0.3s, box-shadow 0.3s, background 0.3s; }
 .svc-panel:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(26,58,143,0.12); }
 .svc-panel.tech { border-top: 3px solid var(--blue-l); }
-.svc-panel.agri { border-top: 3px solid var(--green); }
+.svc-panel.ai { border-top: 3px solid var(--green); }
 .svc-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; margin-bottom: 20px; }
 .tech .svc-icon { background: rgba(42,82,201,0.1); color: var(--blue-l); }
-.agri .svc-icon { background: rgba(46,163,18,0.1); color: var(--green); }
+.ai .svc-icon { background: rgba(46,163,18,0.1); color: var(--green); }
 .svc-panel h3 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 10px; }
 .svc-panel p { color: var(--text2); font-size: 0.88rem; line-height: 1.7; margin-bottom: 20px; }
 .svc-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
 .svc-list li { display: flex; align-items: center; gap: 9px; font-size: 0.86rem; color: var(--text); }
 .tech .svc-list li i { color: var(--blue-l); font-size: 0.72rem; }
-.agri .svc-list li i { color: var(--green); font-size: 0.72rem; }
+.ai .svc-list li i { color: var(--green); font-size: 0.72rem; }
 .news-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; flex-wrap: wrap; gap: 12px; }
 .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .news-card { background: var(--card); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; box-shadow: 0 2px 12px rgba(26,58,143,0.05); transition: transform 0.3s, box-shadow 0.3s, background 0.3s; }
@@ -433,8 +456,6 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 .footer { background: #070d1a; border-top: 1px solid rgba(255,255,255,0.07); padding: 48px 56px 26px; }
 .footer-top { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px; margin-bottom: 38px; }
 .footer-desc { color: rgba(255,255,255,0.45); font-size: 0.84rem; line-height: 1.7; max-width: 250px; margin-top: 13px; }
-.footer-logo-name { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.1rem; color: #fff; }
-.footer-logo-name span { color: var(--green-l); }
 .footer-col h4 { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.86rem; font-weight: 700; margin-bottom: 13px; color: rgba(255,255,255,0.9); }
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
 .footer-col ul button { background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.4); font-family: 'DM Sans', sans-serif; font-size: 0.84rem; display: flex; align-items: center; gap: 7px; padding: 0; transition: color 0.2s; }
@@ -584,8 +605,7 @@ function LangSelector({ lang, setLang, t }) {
   const [open, setOpen] = useState(false);
   return (
     <div style={{padding:"0 4px"}}>
-      <button
-        style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray)",fontFamily:"'DM Sans',sans-serif",fontSize:"0.97rem",padding:"12px 14px",borderRadius:12,textAlign:"left",display:"flex",alignItems:"center",gap:10,width:"100%",justifyContent:"space-between",transition:"all 0.2s"}}
+      <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray)",fontFamily:"'DM Sans',sans-serif",fontSize:"0.97rem",padding:"12px 14px",borderRadius:12,textAlign:"left",display:"flex",alignItems:"center",gap:10,width:"100%",justifyContent:"space-between",transition:"all 0.2s"}}
         onClick={()=>setOpen(!open)}>
         <span style={{display:"flex",alignItems:"center",gap:10}}>
           <i className="fa-solid fa-globe"/>
@@ -595,12 +615,8 @@ function LangSelector({ lang, setLang, t }) {
       </button>
       {open && (
         <div style={{paddingLeft:16,display:"flex",flexDirection:"column",gap:4,marginBottom:8}}>
-          {[
-            {code:"fr", flag:"🇫🇷", label:"Français"},
-            {code:"en", flag:"🇬🇧", label:"English"},
-          ].map(l=>(
-            <button key={l.code}
-              onClick={()=>{ setLang(l.code); setOpen(false); }}
+          {[{code:"fr",flag:"🇫🇷",label:"Français"},{code:"en",flag:"🇬🇧",label:"English"}].map(l=>(
+            <button key={l.code} onClick={()=>{ setLang(l.code); setOpen(false); }}
               style={{background:lang===l.code?"rgba(42,82,201,0.08)":"none",border:"none",cursor:"pointer",color:lang===l.code?"var(--blue-l)":"var(--gray)",fontFamily:"'DM Sans',sans-serif",fontSize:"0.9rem",padding:"10px 14px",borderRadius:10,textAlign:"left",display:"flex",alignItems:"center",gap:10,transition:"all 0.2s",fontWeight:lang===l.code?600:400}}>
               {l.flag} {l.label}
               {lang===l.code && <i className="fa-solid fa-check" style={{marginLeft:"auto",fontSize:"0.8rem"}}/>}
@@ -645,7 +661,7 @@ function HomePage({ nav, lang }) {
           <div className="about-cards">
             {[
               {icon:"fa-laptop-code",   bg:"rgba(42,82,201,0.1)",  col:"var(--blue-l)", title:t.about_c1, desc:t.about_c1d},
-              {icon:"fa-wheat-awn",     bg:"rgba(46,163,18,0.1)",  col:"var(--green)",  title:t.about_c2, desc:t.about_c2d},
+              {icon:"fa-brain",         bg:"rgba(46,163,18,0.1)",  col:"var(--green)",  title:t.about_c2, desc:t.about_c2d},
               {icon:"fa-users",         bg:"rgba(217,119,6,0.1)",  col:"#d97706",       title:t.about_c3, desc:t.about_c3d},
               {icon:"fa-shield-halved", bg:"rgba(42,82,201,0.08)", col:"var(--blue-l)", title:t.about_c4, desc:t.about_c4d},
             ].map(c=>(
@@ -664,7 +680,7 @@ function HomePage({ nav, lang }) {
 function ServicesPage({ lang }) {
   const t = T[lang];
   const [openTech, setOpenTech] = useState(null);
-  const [openAgri, setOpenAgri] = useState(null);
+  const [openAi, setOpenAi] = useState(null);
 
   const tech = lang==="fr" ? [
     { titre:"Développement web & applications mobiles", details:["Sites vitrine et e-commerce","Applications mobiles iOS et Android","Interfaces modernes et responsive","Intégration API et bases de données"] },
@@ -680,18 +696,18 @@ function ServicesPage({ lang }) {
     { titre:"IT consulting and audit", details:["Information system audit","Digital transformation consulting","Process optimization","Strategic IT support"] },
   ];
 
-  const agri = lang==="fr" ? [
-    { titre:"Conseil en production végétale", details:["Choix des cultures adaptées","Techniques d'irrigation optimisées","Gestion des intrants agricoles","Amélioration des rendements"] },
-    { titre:"Gestion et suivi d'exploitations", details:["Planification des activités agricoles","Suivi de la production","Gestion des ressources humaines","Rapports et bilans d'exploitation"] },
-    { titre:"Fourniture d'intrants agricoles", details:["Semences sélectionnées","Engrais et produits phytosanitaires","Matériel et équipements agricoles","Conseils d'utilisation"] },
-    { titre:"Formation et encadrement terrain", details:["Formations pratiques sur le terrain","Ateliers techniques","Accompagnement personnalisé","Transfert de compétences"] },
-    { titre:"Études de sol et fertilisation", details:["Analyse physicochimique des sols","Plan de fertilisation adapté","Recommandations agronomiques","Suivi de la fertilité"] },
+  const ai = lang==="fr" ? [
+    { titre:"Développement de solutions IA", details:["Conception d'algorithmes d'apprentissage automatique","Intégration de modèles IA dans vos applications","Solutions IA sur mesure","Déploiement et maintenance des modèles"] },
+    { titre:"Analyse et traitement de données", details:["Collecte et nettoyage de données","Analyse statistique avancée","Visualisation de données","Big Data et entrepôts de données"] },
+    { titre:"Automatisation des processus", details:["Automatisation RPA","Optimisation des flux de travail","Réduction des tâches répétitives","Intégration de systèmes intelligents"] },
+    { titre:"Chatbots et assistants virtuels", details:["Conception de chatbots intelligents","Intégration WhatsApp, Messenger, Web","Traitement du langage naturel (NLP)","Support client automatisé 24/7"] },
+    { titre:"Machine Learning & prédiction", details:["Modèles prédictifs personnalisés","Analyse de sentiment","Détection d'anomalies","Recommandations intelligentes"] },
   ] : [
-    { titre:"Crop production consulting", details:["Choice of adapted crops","Optimized irrigation techniques","Agricultural input management","Yield improvement"] },
-    { titre:"Farm management and monitoring", details:["Agricultural activity planning","Production monitoring","Human resource management","Farm reports and assessments"] },
-    { titre:"Supply of agricultural inputs", details:["Selected seeds","Fertilizers and plant protection products","Agricultural machinery and equipment","Usage advice"] },
-    { titre:"Field training and support", details:["Practical field training","Technical workshops","Personalized support","Skills transfer"] },
-    { titre:"Soil studies and fertilization", details:["Physicochemical soil analysis","Adapted fertilization plan","Agronomic recommendations","Fertility monitoring"] },
+    { titre:"AI solution development", details:["Machine learning algorithm design","AI model integration in your apps","Custom AI solutions","Model deployment and maintenance"] },
+    { titre:"Data analysis and processing", details:["Data collection and cleaning","Advanced statistical analysis","Data visualization","Big Data and data warehouses"] },
+    { titre:"Process automation", details:["RPA automation","Workflow optimization","Reduction of repetitive tasks","Intelligent system integration"] },
+    { titre:"Chatbots and virtual assistants", details:["Intelligent chatbot design","WhatsApp, Messenger, Web integration","Natural language processing (NLP)","Automated 24/7 customer support"] },
+    { titre:"Machine Learning & prediction", details:["Custom predictive models","Sentiment analysis","Anomaly detection","Smart recommendations"] },
   ];
 
   return (
@@ -723,19 +739,19 @@ function ServicesPage({ lang }) {
             ))}
           </ul>
         </div>
-        <div className="svc-panel agri">
-          <div className="svc-icon"><i className="fa-solid fa-wheat-awn"/></div>
-          <h3>{t.svc_agri_title}</h3>
-          <p>{t.svc_agri_desc}</p>
+        <div className="svc-panel ai">
+          <div className="svc-icon"><i className="fa-solid fa-brain"/></div>
+          <h3>{t.svc_ai_title}</h3>
+          <p>{t.svc_ai_desc}</p>
           <ul className="svc-list">
-            {agri.map((s,i)=>(
+            {ai.map((s,i)=>(
               <li key={i} style={{flexDirection:"column",alignItems:"flex-start",gap:0}}>
-                <div style={{display:"flex",alignItems:"center",gap:9,cursor:"pointer",width:"100%",padding:"6px 0"}} onClick={()=>setOpenAgri(openAgri===i?null:i)}>
+                <div style={{display:"flex",alignItems:"center",gap:9,cursor:"pointer",width:"100%",padding:"6px 0"}} onClick={()=>setOpenAi(openAi===i?null:i)}>
                   <i className="fa-solid fa-circle-check" style={{color:"var(--green)",fontSize:"0.72rem",flexShrink:0}}/>
                   <span style={{flex:1}}>{s.titre}</span>
-                  <i className={`fa-solid fa-chevron-${openAgri===i?"up":"down"}`} style={{fontSize:"0.7rem",color:"var(--gray)"}}/>
+                  <i className={`fa-solid fa-chevron-${openAi===i?"up":"down"}`} style={{fontSize:"0.7rem",color:"var(--gray)"}}/>
                 </div>
-                {openAgri===i && (
+                {openAi===i && (
                   <ul style={{listStyle:"none",paddingLeft:22,marginTop:6,marginBottom:6,display:"flex",flexDirection:"column",gap:5}}>
                     {s.details.map((d,j)=>(
                       <li key={j} style={{fontSize:"0.8rem",color:"var(--text2)",display:"flex",alignItems:"center",gap:7}}>
@@ -776,12 +792,12 @@ function ActualitesPage({ lang, onArticleClick }) {
     .catch(() => setLoading(false));
   }, []);
 
-  const filtres = lang==="fr" ? ["Tout","Informatique","Agriculture","Entreprise"] : ["All","Informatique","Agriculture","Entreprise"];
+  const filtres = lang==="fr" ? ["Tout","Informatique","IA & Data","Entreprise"] : ["All","IT","AI & Data","Company"];
   const articlesFiltres = filtre==="Tout"||filtre==="All" ? articles : articles.filter(a=>a.categorie===filtre);
 
   const catStyle = {
     "Informatique": { col:"var(--blue-l)", bg:"rgba(42,82,201,0.08)", icon:"fa-microchip" },
-    "Agriculture":  { col:"var(--green)",  bg:"rgba(46,163,18,0.08)",  icon:"fa-leaf" },
+    "IA & Data":    { col:"var(--green)",  bg:"rgba(46,163,18,0.08)",  icon:"fa-brain" },
     "Entreprise":   { col:"#d97706",       bg:"rgba(217,119,6,0.08)",  icon:"fa-trophy" },
   };
 
@@ -833,20 +849,20 @@ function ActualitesPage({ lang, onArticleClick }) {
                 <span className="cat" style={{color:st.col,background:st.bg}}><i className={`fa-solid ${st.icon}`}/>{a.categorie}</span>
                 <h3 className="news-title">{a.titre}</h3>
                 <p className="news-excerpt">{a.contenu?.slice(0,120)}{a.contenu?.length>120?"...":""}</p>
-{a.contenu?.length>120 && (
-  <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--blue-l)",fontSize:"0.82rem",fontWeight:600,padding:"4px 0",display:"flex",alignItems:"center",gap:5}}
-    onClick={()=>onArticleClick(a)}>
-    <i className="fa-solid fa-chevron-down" style={{fontSize:"0.7rem"}}/>
-    {lang==="fr"?"Voir plus":"Read more"}
-  </button>
-)}
-{a.lien_externe && (
-  <a href={a.lien_externe} target="_blank" rel="noreferrer"
-    style={{display:"inline-flex",alignItems:"center",gap:6,color:"var(--green)",fontSize:"0.82rem",fontWeight:600,textDecoration:"none",marginTop:6}}>
-    <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize:"0.72rem"}}/>
-    {lang==="fr"?"Visiter le site":"Visit website"}
-  </a>
-)}
+                {a.contenu?.length>120 && (
+                  <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--blue-l)",fontSize:"0.82rem",fontWeight:600,padding:"4px 0",display:"flex",alignItems:"center",gap:5}}
+                    onClick={()=>onArticleClick(a)}>
+                    <i className="fa-solid fa-chevron-down" style={{fontSize:"0.7rem"}}/>
+                    {lang==="fr"?"Voir plus":"Read more"}
+                  </button>
+                )}
+                {a.lien_externe && (
+                  <a href={a.lien_externe} target="_blank" rel="noreferrer"
+                    style={{display:"inline-flex",alignItems:"center",gap:6,color:"var(--green)",fontSize:"0.82rem",fontWeight:600,textDecoration:"none",marginTop:6}}>
+                    <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize:"0.72rem"}}/>
+                    {lang==="fr"?"Visiter le site":"Visit website"}
+                  </a>
+                )}
                 <p className="news-date"><i className="fa-regular fa-calendar"/>{new Date(a.date_pub||a.created_at).toLocaleDateString(lang==="fr"?"fr-FR":"en-US")}</p>
               </div>
             </div>
@@ -948,7 +964,7 @@ function PartenariatsPage({ lang }) {
             {partenaires.map(p=>(
               <div key={p.id} style={{background:"var(--card)",borderRadius:16,padding:"20px",border:"1px solid var(--border)",boxShadow:"0 4px 20px rgba(26,58,143,0.06)",transition:"all 0.3s",textAlign:"center"}}>
                 {p.logo_url ? (
-                  <img src={p.logo_url} alt={p.nom} style={{width:70,height:70,objectFit:"contain",borderRadius:10,marginBottom:12,background:"var(--bg2)",padding:6}}/>
+                  <img src={p.logo_url} alt={p.nom} style={{width:70,height:70,objectFit:"contain",borderRadius:10,marginBottom:12,padding:6}}/>
                 ) : (
                   <div style={{width:70,height:70,borderRadius:10,background:"var(--bg2)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 12px",fontSize:"1.6rem",color:"var(--gray)"}}>
                     <i className="fa-solid fa-building"/>
@@ -1015,7 +1031,7 @@ function ContactPage({ lang }) {
 
   const serviceOpts = [
     {value:"info",  icon:"fa-laptop-code", label:lang==="fr"?"Informatique & Digital":"IT & Digital"},
-    {value:"agri",  icon:"fa-wheat-awn",   label:lang==="fr"?"Agriculture":"Agriculture"},
+    {value:"ai",    icon:"fa-brain",       label:lang==="fr"?"Intelligence Artificielle":"Artificial Intelligence"},
     {value:"part",  icon:"fa-handshake",   label:lang==="fr"?"Partenariat":"Partnership"},
     {value:"autre", icon:"fa-ellipsis",    label:lang==="fr"?"Autre":"Other"},
   ];
@@ -1043,10 +1059,10 @@ function ContactPage({ lang }) {
           <p style={{color:"var(--text2)",fontSize:"0.93rem",lineHeight:1.75,marginBottom:4}}>{t.contact_desc}</p>
           <div className="contact-cards">
             {[
-              {icon:"fa-location-dot", lbl:t.contact_addr,  val:t.contact_addr_val, href:null, fab:false},
-              {icon:"fa-phone",        lbl:t.contact_phone,  val:"+XXX XX XX XX XX",  href:"tel:+XXX", fab:false},
-              {icon:"fa-envelope",     lbl:t.contact_email,  val:"contact@mds-novatech.com", href:"mailto:contact@mds-novatech.com", fab:false},
-              {icon:"fa-whatsapp",     lbl:t.contact_hours,  val:t.contact_hours_val, href:"https://wa.me/XXX", fab:true},
+              {icon:"fa-location-dot", fab:false, lbl:t.contact_addr,  val:t.contact_addr_val,    href:null},
+              {icon:"fa-phone",        fab:false, lbl:t.contact_phone,  val:"+XXX XX XX XX XX",    href:"tel:+XXX"},
+              {icon:"fa-envelope",     fab:false, lbl:t.contact_email,  val:"contact@inestid.com", href:"mailto:contact@inestid.com"},
+              {icon:"fa-whatsapp",     fab:true,  lbl:t.contact_hours,  val:t.contact_hours_val,   href:"https://wa.me/XXX"},
             ].map(c=>(
               <div className="ccard" key={c.lbl}>
                 <div className="ccard-icon"><i className={`${c.fab?"fa-brands":"fa-solid"} ${c.icon}`}/></div>
@@ -1112,7 +1128,7 @@ function PromoteurPage({ lang }) {
         <div className="promo-content">
           <div className="promo-mots">
             <p>« Recherche, innovation et développement pour une Afrique forte. »</p>
-            <cite>YOLOU ATEKEYOLLO MATHIEU PATIENT — {t.promo_role}, MDS NovaTech</cite>
+            <cite>YOLOU ATEKEYOLLO MATHIEU PATIENT — {t.promo_role}, INESTID</cite>
           </div>
           <div className="promo-section">
             <div className="promo-section-title"><i className="fa-solid fa-id-card"/>{t.promo_bio_title}</div>
@@ -1168,17 +1184,18 @@ function PromoteurPage({ lang }) {
   );
 }
 
-function MentionsPage() {
+function MentionsPage({ lang }) {
+  const t = T[lang]||T["fr"];
   return (
     <div>
-      <PH tag="Légal" ticon="fa-scale-balanced" title="Mentions Légales" sub="Informations légales relatives à MDS NovaTech."/>
+      <PH tag={t.legal_tag} ticon="fa-scale-balanced" title={t.mentions_title} sub={t.mentions_sub}/>
       <div className="legal-content">
-        <div className="legal-alert"><i className="fa-solid fa-circle-info"/>Conformément aux dispositions légales, voici les mentions obligatoires du site MDS NovaTech.</div>
+        <div className="legal-alert"><i className="fa-solid fa-circle-info"/>{t.mentions_alert}</div>
         {[
-          {icon:"fa-building",  title:"Éditeur du site",          content:<><p><strong>Raison sociale :</strong> MDS NovaTech</p><p><strong>Email :</strong> contact@mds-novatech.com</p><p><strong>Siège social :</strong> À compléter</p></>},
-          {icon:"fa-server",    title:"Hébergement",              content:<><p>Ce site est hébergé par un prestataire tiers.</p></>},
-          {icon:"fa-copyright", title:"Propriété intellectuelle", content:<><p>L'ensemble du contenu est la propriété exclusive de MDS NovaTech.</p></>},
-          {icon:"fa-gavel",     title:"Droit applicable",         content:<><p>Les présentes mentions sont soumises au droit applicable dans le pays d'établissement de MDS NovaTech.</p></>},
+          {icon:"fa-building",  title:t.editeur,    content:<><p><strong>{lang==="fr"?"Raison sociale":"Company name"} :</strong> INESTID</p><p><strong>Email :</strong> contact@inestid.com</p><p><strong>{lang==="fr"?"Siège social":"Headquarters"} :</strong> {lang==="fr"?"À compléter":"To be completed"}</p></>},
+          {icon:"fa-server",    title:t.hebergement, content:<><p>{lang==="fr"?"Ce site est hébergé par un prestataire tiers.":"This site is hosted by a third-party provider."}</p></>},
+          {icon:"fa-copyright", title:t.propriete,   content:<><p>{lang==="fr"?"L'ensemble du contenu est la propriété exclusive d'INESTID.":"All content is the exclusive property of INESTID."}</p></>},
+          {icon:"fa-gavel",     title:t.droit_app,   content:<><p>{lang==="fr"?"Les présentes mentions sont soumises au droit applicable dans le pays d'établissement d'INESTID.":"These notices are subject to the law applicable in the country of establishment of INESTID."}</p></>},
         ].map(s=>(
           <div className="legal-section" key={s.title}>
             <h3><i className={`fa-solid ${s.icon}`}/>{s.title}</h3>
@@ -1190,17 +1207,18 @@ function MentionsPage() {
   );
 }
 
-function ConfidentialitePage() {
+function ConfidentialitePage({ lang }) {
+  const t = T[lang]||T["fr"];
   return (
     <div>
-      <PH tag="Légal" ticon="fa-shield-halved" title="Politique de Confidentialité" sub="Comment MDS NovaTech protège vos données personnelles."/>
+      <PH tag={t.legal_tag} ticon="fa-shield-halved" title={t.confidentialite_title} sub={t.confidentialite_sub}/>
       <div className="legal-content">
-        <div className="legal-alert"><i className="fa-solid fa-lock"/>Vos données personnelles sont traitées avec le plus grand soin.</div>
+        <div className="legal-alert"><i className="fa-solid fa-lock"/>{t.confidentialite_alert}</div>
         {[
-          {icon:"fa-database",           title:"Données collectées",      items:["Nom, prénom, email, téléphone","Données de navigation","Informations des formulaires"]},
-          {icon:"fa-bullseye",           title:"Finalités du traitement",  items:["Traitement des candidatures","Réponse aux demandes","Amélioration de nos services"]},
-          {icon:"fa-user-shield",        title:"Vos droits",              items:["Droit d'accès","Droit de rectification","Droit à l'effacement","Droit d'opposition"]},
-          {icon:"fa-envelope-open-text", title:"Contact DPO",             items:["privacy@mds-novatech.com","Délai de réponse : 30 jours maximum"]},
+          {icon:"fa-database",           title:t.donnees,   items:lang==="fr"?["Nom, prénom, email, téléphone","Données de navigation","Informations des formulaires"]:["Name, first name, email, phone","Navigation data","Form information"]},
+          {icon:"fa-bullseye",           title:t.finalites,  items:lang==="fr"?["Traitement des demandes de contact","Amélioration de nos services","Envoi de newsletters (avec consentement)"]:["Processing contact requests","Improving our services","Sending newsletters (with consent)"]},
+          {icon:"fa-user-shield",        title:t.droits,    items:lang==="fr"?["Droit d'accès à vos données","Droit de rectification","Droit à l'effacement","Droit d'opposition"]:["Right of access to your data","Right of rectification","Right to erasure","Right to object"]},
+          {icon:"fa-envelope-open-text", title:t.dpo,       items:["contact@inestid.com",lang==="fr"?"Délai de réponse : 30 jours maximum":"Response time: 30 days maximum"]},
         ].map(s=>(
           <div className="legal-section" key={s.title}>
             <h3><i className={`fa-solid ${s.icon}`}/>{s.title}</h3>
@@ -1212,17 +1230,18 @@ function ConfidentialitePage() {
   );
 }
 
-function CguPage() {
+function CguPage({ lang }) {
+  const t = T[lang]||T["fr"];
   return (
     <div>
-      <PH tag="Légal" ticon="fa-file-lines" title="Conditions Générales d'Utilisation" sub="Règles régissant l'utilisation du site MDS NovaTech."/>
+      <PH tag={t.legal_tag} ticon="fa-file-lines" title={t.cgu_title} sub={t.cgu_sub}/>
       <div className="legal-content">
-        <div className="legal-alert"><i className="fa-solid fa-circle-exclamation"/>En utilisant ce site, vous acceptez les présentes CGU.</div>
+        <div className="legal-alert"><i className="fa-solid fa-circle-exclamation"/>{t.cgu_alert}</div>
         {[
-          {icon:"fa-globe",        title:"1. Objet",                   content:<p>Les présentes CGU définissent les conditions d'utilisation du site web de MDS NovaTech.</p>},
-          {icon:"fa-check-circle", title:"2. Accès au site",           content:<p>MDS NovaTech s'efforce de maintenir le site accessible 24h/24, 7j/7.</p>},
-          {icon:"fa-ban",          title:"3. Utilisations interdites", items:["Utilisation frauduleuse","Diffusion de contenus illégaux","Tentative de piratage","Reproduction non autorisée"]},
-          {icon:"fa-pen-to-square",title:"4. Modifications",           content:<p>MDS NovaTech se réserve le droit de modifier les présentes CGU à tout moment.</p>},
+          {icon:"fa-globe",        title:t.objet,   content:<p>{t.objet_text}</p>},
+          {icon:"fa-check-circle", title:t.acces,   content:<p>{t.acces_text}</p>},
+          {icon:"fa-ban",          title:t.interdit, items:lang==="fr"?["Utilisation frauduleuse","Diffusion de contenus illégaux","Tentative de piratage","Reproduction non autorisée"]:["Fraudulent use","Distribution of illegal content","Hacking attempts","Unauthorized reproduction"]},
+          {icon:"fa-pen-to-square",title:t.modif,   content:<p>{t.modif_text}</p>},
         ].map(s=>(
           <div className="legal-section" key={s.title}>
             <h3><i className={`fa-solid ${s.icon}`}/>{s.title}</h3>
@@ -1230,7 +1249,7 @@ function CguPage() {
             {s.items&&<ul>{s.items.map(i=><li key={i}><i className="fa-solid fa-xmark" style={{color:"#ef4444"}}/>{i}</li>)}</ul>}
           </div>
         ))}
-        <p style={{color:"var(--gray)",fontSize:"0.8rem",marginTop:20}}><i className="fa-regular fa-calendar" style={{marginRight:6}}/>Dernière mise à jour : Juin 2026</p>
+        <p style={{color:"var(--gray)",fontSize:"0.8rem",marginTop:20}}><i className="fa-regular fa-calendar" style={{marginRight:6}}/>{t.last_update} : {lang==="fr"?"Juin 2026":"June 2026"}</p>
       </div>
     </div>
   );
@@ -1247,7 +1266,7 @@ function AdminPage({ nav }) {
   const [candidatures, setCandidatures] = useState([]);
   const [abonnes, setAbonnes] = useState([]);
   const [partenaires, setPartenaires] = useState([]);
-  const [newArticle, setNewArticle] = useState({ titre:"", contenu:"", categorie:"Informatique", image_url:"" });
+  const [newArticle, setNewArticle] = useState({ titre:"", contenu:"", categorie:"Informatique", image_url:"", lien_externe:"" });
   const [articleMsg, setArticleMsg] = useState("");
   const [newPartenaire, setNewPartenaire] = useState({ nom:"", description:"", logo_url:"", site_web:"" });
   const [partenaireMsg, setPartenaireMsg] = useState("");
@@ -1296,7 +1315,7 @@ function AdminPage({ nav }) {
         <h3 style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"1.4rem",fontWeight:800,color:"var(--text)",marginBottom:6}}>
           <i className="fa-solid fa-lock" style={{color:"var(--blue-l)",marginRight:10}}/>Administration
         </h3>
-        <p className="sub">Accès réservé — MDS NovaTech</p>
+        <p className="sub">Accès réservé — INESTID</p>
         <FG label="Email" icon="fa-envelope"><input type="email" placeholder="votre@email.com" value={loginForm.email} onChange={e=>setLoginForm({...loginForm,email:e.target.value})}/></FG>
         <FG label="Mot de passe" icon="fa-lock"><input type="password" placeholder="••••••••" value={loginForm.password} onChange={e=>setLoginForm({...loginForm,password:e.target.value})}/></FG>
         {loginError && <div className="alert alert-error"><i className="fa-solid fa-circle-exclamation"/>{loginError}</div>}
@@ -1358,13 +1377,14 @@ function AdminPage({ nav }) {
             <p className="sub">Ajoutez une nouvelle actualité sur le site.</p>
             <FG label="Titre" icon="fa-heading"><input type="text" placeholder="Titre de l'article" value={newArticle.titre} onChange={e=>setNewArticle({...newArticle,titre:e.target.value})}/></FG>
             <FG label="Catégorie" icon="fa-tags">
-              <CustomSelect options={[{value:"Informatique",icon:"fa-laptop-code",label:"Informatique"},{value:"Agriculture",icon:"fa-wheat-awn",label:"Agriculture"},{value:"Entreprise",icon:"fa-building",label:"Entreprise"}]} value={newArticle.categorie} onChange={v=>setNewArticle({...newArticle,categorie:v})}/>
+              <CustomSelect options={[
+                {value:"Informatique",icon:"fa-laptop-code",label:"Informatique"},
+                {value:"IA & Data",   icon:"fa-brain",      label:"IA & Data"},
+                {value:"Entreprise",  icon:"fa-building",   label:"Entreprise"}
+              ]} value={newArticle.categorie} onChange={v=>setNewArticle({...newArticle,categorie:v})}/>
             </FG>
             <FG label="Contenu" icon="fa-pen"><textarea placeholder="Contenu de l'article..." value={newArticle.contenu} onChange={e=>setNewArticle({...newArticle,contenu:e.target.value})} style={{minHeight:140}}/></FG>
             <FG label="Image URL" icon="fa-image"><input type="text" placeholder="https://..." value={newArticle.image_url} onChange={e=>setNewArticle({...newArticle,image_url:e.target.value})}/></FG>
-            <FG label="Lien externe (optionnel)" icon="fa-link">
-  <input type="text" placeholder="https://site-externe.com" value={newArticle.lien_externe||""} onChange={e=>setNewArticle({...newArticle,lien_externe:e.target.value})}/>
-</FG>
             <div className="upload" onClick={()=>document.getElementById("img-upload").click()} style={{marginBottom:13}}>
               <input type="file" id="img-upload" accept="image/*" style={{display:"none"}} onChange={async(e)=>{
                 const file=e.target.files[0]; if(!file) return;
@@ -1375,11 +1395,12 @@ function AdminPage({ nav }) {
               <i className="fa-solid fa-cloud-arrow-up"/>
               <p><span>Cliquez pour uploader une image</span></p>
             </div>
+            <FG label="Lien externe (optionnel)" icon="fa-link"><input type="text" placeholder="https://site-externe.com" value={newArticle.lien_externe||""} onChange={e=>setNewArticle({...newArticle,lien_externe:e.target.value})}/></FG>
             {articleMsg && <div className="alert alert-success"><i className="fa-solid fa-circle-check"/>{articleMsg}</div>}
             <button className="btn btn-blue btn-full" onClick={async()=>{
               if(!newArticle.titre||!newArticle.contenu){setArticleMsg("Titre et contenu obligatoires.");return;}
               await sbFetch("actualites","POST",{...newArticle,date_pub:new Date().toISOString()});
-              setArticleMsg("Article publié !"); setNewArticle({titre:"",contenu:"",categorie:"Informatique",image_url:""}); loadData();
+              setArticleMsg("Article publié !"); setNewArticle({titre:"",contenu:"",categorie:"Informatique",image_url:"",lien_externe:""}); loadData();
             }}><i className="fa-solid fa-paper-plane"/>Publier l'article</button>
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:14}}>
@@ -1491,7 +1512,7 @@ function AdminPage({ nav }) {
             {partenaires.map(p=>(
               <div key={p.id} style={{background:"var(--card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--border)",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
                 <div style={{display:"flex",alignItems:"center",gap:14}}>
-                  {p.logo_url?(<img src={p.logo_url} alt={p.nom} style={{width:50,height:50,objectFit:"contain",borderRadius:8,background:"var(--bg2)",padding:4}}/>):(<div style={{width:50,height:50,borderRadius:8,background:"var(--bg2)",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--gray)"}}><i className="fa-solid fa-building"/></div>)}
+                  {p.logo_url?(<img src={p.logo_url} alt={p.nom} style={{width:50,height:50,objectFit:"contain",borderRadius:8,padding:4}}/>):(<div style={{width:50,height:50,borderRadius:8,background:"var(--bg2)",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--gray)"}}><i className="fa-solid fa-building"/></div>)}
                   <div>
                     <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:700,color:"var(--text)"}}>{p.nom}</div>
                     {p.site_web&&<div style={{fontSize:"0.78rem",color:"var(--blue-l)"}}>{p.site_web}</div>}
@@ -1515,9 +1536,8 @@ function Footer({ nav, lang }) {
     <footer className="footer">
       <div className="footer-top">
         <div>
-          <div className="logo" onClick={()=>nav("accueil")} style={{gap:10,cursor:"pointer",display:"flex",alignItems:"center"}}>
-            <div className="logo-box"><img src="/logo.png" alt="MDS NovaTech" style={{width:"100%",height:"100%",objectFit:"contain",borderRadius:"50%",background:"white",padding:"2px"}}/></div>
-            <div className="footer-logo-name">MDS <span>NovaTech</span></div>
+          <div className="logo" onClick={()=>nav("accueil")} style={{cursor:"pointer"}}>
+            <img src="/logo1.png" alt="INESTID" className="logo-img"/>
           </div>
           <p className="footer-desc">{t.footer_desc}</p>
         </div>
@@ -1525,7 +1545,7 @@ function Footer({ nav, lang }) {
           <h4>{t.footer_services}</h4>
           <ul>
             <li><button onClick={()=>nav("services")}><i className="fa-solid fa-laptop-code"/>{lang==="fr"?"Informatique":"IT & Digital"}</button></li>
-            <li><button onClick={()=>nav("services")}><i className="fa-solid fa-wheat-awn"/>{lang==="fr"?"Agriculture":"Agriculture"}</button></li>
+            <li><button onClick={()=>nav("services")}><i className="fa-solid fa-brain"/>{lang==="fr"?"Intelligence Artificielle":"Artificial Intelligence"}</button></li>
             <li><button onClick={()=>nav("actualites")}><i className="fa-solid fa-newspaper"/>{lang==="fr"?"Actualités":"News"}</button></li>
           </ul>
         </div>
@@ -1547,7 +1567,7 @@ function Footer({ nav, lang }) {
         </div>
       </div>
       <div className="footer-bottom">
-        <span>© 2026 MDS NovaTech. {t.footer_rights}</span>
+        <span>© 2026 INESTID. {t.footer_rights}</span>
         <div className="socials">
           {["fa-linkedin-in","fa-facebook-f","fa-x-twitter","fa-youtube"].map(ic=>(
             <a key={ic} href="/" className="soc"><i className={`fa-brands ${ic}`}/></a>
@@ -1560,11 +1580,11 @@ function Footer({ nav, lang }) {
 
 export default function App() {
   const [offline, setOffline] = useState(!navigator.onLine);
-  const [articleModal, setArticleModal] = useState(null);
   const [page, setPage] = useState("accueil");
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(false);
   const [lang, setLang] = useState("fr");
+  const [articleModal, setArticleModal] = useState(null);
 
   useEffect(() => { injectAssets(); }, []);
 
@@ -1594,7 +1614,6 @@ export default function App() {
   }, [menuOpen]);
 
   const nav = (p) => { setPage(p); setMenuOpen(false); };
-
   const t = T[lang];
   const NAV = NAV_ITEMS(t);
 
@@ -1602,13 +1621,13 @@ export default function App() {
     switch(p) {
       case "accueil":         return <><HomePage nav={nav} lang={lang}/><Footer nav={nav} lang={lang}/></>;
       case "services":        return <><ServicesPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
-      case "actualites": return <><ActualitesPage lang={lang} onArticleClick={setArticleModal}/><Footer nav={nav} lang={lang}/></>;
+      case "actualites":      return <><ActualitesPage lang={lang} onArticleClick={setArticleModal}/><Footer nav={nav} lang={lang}/></>;
       case "partenariats":    return <><PartenariatsPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
       case "contact":         return <><ContactPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
       case "promoteur":       return <><PromoteurPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
-      case "mentions":        return <><MentionsPage/><Footer nav={nav} lang={lang}/></>;
-      case "confidentialite": return <><ConfidentialitePage/><Footer nav={nav} lang={lang}/></>;
-      case "cgu":             return <><CguPage/><Footer nav={nav} lang={lang}/></>;
+      case "mentions":        return <><MentionsPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
+      case "confidentialite": return <><ConfidentialitePage lang={lang}/><Footer nav={nav} lang={lang}/></>;
+      case "cgu":             return <><CguPage lang={lang}/><Footer nav={nav} lang={lang}/></>;
       case "admin":           return <AdminPage nav={nav}/>;
       default: return null;
     }
@@ -1620,17 +1639,18 @@ export default function App() {
       <div style={{width:80,height:80,borderRadius:"50%",background:"rgba(239,68,68,0.1)",display:"flex",alignItems:"center",justifyContent:"center",marginBottom:8}}>
         <i className="fa-solid fa-wifi" style={{fontSize:"2rem",color:"#ef4444"}}/>
       </div>
-      <h2 style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"1.5rem",fontWeight:800,color:"blue"}}>
+      <h2 style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"1.5rem",fontWeight:800,color:"var(--text)"}}>
         {lang==="fr"?"Vous êtes hors ligne":"You are offline"}
       </h2>
       <p style={{color:"var(--text2)",fontSize:"0.95rem",maxWidth:320}}>
         {lang==="fr"?"Vérifiez votre connexion internet et réessayez.":"Please check your internet connection and try again."}
       </p>
+      <button className="btn btn-blue" onClick={()=>window.location.reload()}>
+        <i className="fa-solid fa-rotate-right"/>
+        {lang==="fr"?"Réessayer":"Try again"}
+      </button>
       <div style={{marginTop:8}}>
-        <div className="logo-box" style={{width:50,height:50,margin:"0 auto 8px"}}>
-          <img src="/logo.png" alt="MDS NovaTech" style={{width:"100%",height:"100%",objectFit:"contain",borderRadius:"50%",background:"white",padding:"2px"}}/>
-        </div>
-        <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:800,color:"var(--text)"}}>MDS <span style={{color:"var(--green)"}}>NovaTech</span></div>
+        <img src="/logo.png" alt="INESTID" style={{height:50,objectFit:"contain"}}/>
       </div>
     </div>
   );
@@ -1647,10 +1667,7 @@ export default function App() {
           if(window._clicks.length>=5){window._clicks=[];nav("admin");}
           else nav("accueil");
         }}>
-          <div className="logo-box">
-            <img src="/logo.png" alt="MDS NovaTech" style={{width:"100%",height:"100%",objectFit:"contain",borderRadius:"50%",background:"white",padding:"2px"}}/>
-          </div>
-          <div className="logo-name">MDS <span>NovaTech</span></div>
+          <img src="/logo.png" alt="INESTID" className="logo-img"/>
         </div>
         <ul className="nav-links">
           {NAV.map(n=>(
@@ -1696,39 +1713,40 @@ export default function App() {
           </div>
         ))}
       </div>
+
       {articleModal && (
-  <div className="overlay" onClick={e=>e.target===e.currentTarget&&setArticleModal(null)}>
-    <div className="modal" style={{maxWidth:600,maxHeight:"85vh",overflowY:"auto"}}>
-      <button className="modal-x" onClick={()=>setArticleModal(null)}><i className="fa-solid fa-xmark"/></button>
-      <div style={{marginBottom:12}}>
-        <span className="cat" style={{
-          color:articleModal.categorie==="Agriculture"?"var(--green)":articleModal.categorie==="Entreprise"?"#d97706":"var(--blue-l)",
-          background:articleModal.categorie==="Agriculture"?"rgba(46,163,18,0.08)":articleModal.categorie==="Entreprise"?"rgba(217,119,6,0.08)":"rgba(42,82,201,0.08)"
-        }}>
-          <i className={`fa-solid ${articleModal.categorie==="Agriculture"?"fa-leaf":articleModal.categorie==="Entreprise"?"fa-trophy":"fa-microchip"}`}/>
-          {articleModal.categorie}
-        </span>
-      </div>
-      <h3 style={{marginBottom:12}}>{articleModal.titre}</h3>
-      <p style={{color:"var(--gray)",fontSize:"0.78rem",marginBottom:16}}>
-        <i className="fa-regular fa-calendar" style={{marginRight:5}}/>
-        {new Date(articleModal.date_pub||articleModal.created_at).toLocaleDateString(lang==="fr"?"fr-FR":"en-US")}
-      </p>
-      {articleModal.image_url && (
-        <img src={articleModal.image_url} alt={articleModal.titre} style={{width:"100%",borderRadius:12,marginBottom:16,objectFit:"cover",maxHeight:200}}/>
+        <div className="overlay" onClick={e=>e.target===e.currentTarget&&setArticleModal(null)}>
+          <div className="modal" style={{maxWidth:600,maxHeight:"85vh",overflowY:"auto"}}>
+            <button className="modal-x" onClick={()=>setArticleModal(null)}><i className="fa-solid fa-xmark"/></button>
+            <div style={{marginBottom:12}}>
+              <span className="cat" style={{
+                color:articleModal.categorie==="IA & Data"?"var(--green)":articleModal.categorie==="Entreprise"?"#d97706":"var(--blue-l)",
+                background:articleModal.categorie==="IA & Data"?"rgba(46,163,18,0.08)":articleModal.categorie==="Entreprise"?"rgba(217,119,6,0.08)":"rgba(42,82,201,0.08)"
+              }}>
+                <i className={`fa-solid ${articleModal.categorie==="IA & Data"?"fa-brain":articleModal.categorie==="Entreprise"?"fa-trophy":"fa-microchip"}`}/>
+                {articleModal.categorie}
+              </span>
+            </div>
+            <h3 style={{marginBottom:12}}>{articleModal.titre}</h3>
+            <p style={{color:"var(--gray)",fontSize:"0.78rem",marginBottom:16}}>
+              <i className="fa-regular fa-calendar" style={{marginRight:5}}/>
+              {new Date(articleModal.date_pub||articleModal.created_at).toLocaleDateString(lang==="fr"?"fr-FR":"en-US")}
+            </p>
+            {articleModal.image_url && (
+              <img src={articleModal.image_url} alt={articleModal.titre} style={{width:"100%",borderRadius:12,marginBottom:16,objectFit:"cover",maxHeight:200}}/>
+            )}
+            <div style={{color:"var(--text2)",fontSize:"0.92rem",lineHeight:1.8,paddingRight:4}}>
+              {articleModal.contenu}
+            </div>
+            {articleModal.lien_externe && (
+              <a href={articleModal.lien_externe} target="_blank" rel="noreferrer" className="btn btn-blue btn-full" style={{marginTop:16}}>
+                <i className="fa-solid fa-arrow-up-right-from-square"/>
+                {lang==="fr"?"Visiter le site":"Visit website"}
+              </a>
+            )}
+          </div>
+        </div>
       )}
-      <div style={{color:"var(--text2)",fontSize:"0.92rem",lineHeight:1.8,maxHeight:400,overflowY:"auto",paddingRight:4}}>
-        {articleModal.contenu}
-      </div>
-      {articleModal.lien_externe && (
-        <a href={articleModal.lien_externe} target="_blank" rel="noreferrer" className="btn btn-blue btn-full" style={{marginTop:16}}>
-          <i className="fa-solid fa-arrow-up-right-from-square"/>
-          {lang==="fr"?"Visiter le site":"Visit website"}
-        </a>
-      )}
-    </div>
-  </div>
-)}
     </>
   );
 }
