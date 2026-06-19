@@ -1650,7 +1650,7 @@ export default function App() {
         {lang==="fr"?"Réessayer":"Try again"}
       </button>
       <div style={{marginTop:8}}>
-        <img src="/logo.png" alt="INESTID" style={{height:50,objectFit:"contain"}}/>
+        <img src={dark?"/logo1.png":"/logo.png"} alt="INESTID" className="logo-img"/>
       </div>
     </div>
   );
