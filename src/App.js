@@ -1537,7 +1537,7 @@ function Footer({ nav, lang }) {
       <div className="footer-top">
         <div>
           <div className="logo" onClick={()=>nav("accueil")} style={{cursor:"pointer"}}>
-            <img src="/logo1.png" alt="INESTID" className="logo-img"/>
+            <img src="/logo1.png" alt="INESTID" style={{height:100, width:"auto", objectFit:"contain"}}/>
           </div>
           <p className="footer-desc">{t.footer_desc}</p>
         </div>
