@@ -240,7 +240,7 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
   transition: background 0.3s, border-color 0.3s;
 }
 .logo { display: flex; align-items: center; cursor: pointer; }
-.logo-img { height: 42px; width: auto; object-fit: contain; }
+.logo-img { height: 70px; width: auto; object-fit: contain; }
 .nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
 .nav-links button {
   background: none; border: none; cursor: pointer;
