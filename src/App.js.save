@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import ChatBot from './ChatBot';
+import { useState, useEffect, useRef } from "react";
 
 const API = "https://mds-novatech.onrender.com";
 
@@ -1714,9 +1713,6 @@ export default function App() {
           </div>
         ))}
       </div>
-
-      {/* BOT IA GROQ - FLOATING CHAT */}
-      <ChatBot />
 
       {articleModal && (
         <div className="overlay" onClick={e=>e.target===e.currentTarget&&setArticleModal(null)}>
