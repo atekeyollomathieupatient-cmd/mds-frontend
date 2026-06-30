@@ -17,8 +17,7 @@ function ChatBot() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/chat', {
-        method: 'POST',
+      const response = await fetch('https://mds-novatech.onrender.com/api/chat', {        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: input })
       });
