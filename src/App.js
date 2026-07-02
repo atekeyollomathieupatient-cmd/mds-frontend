@@ -1,7 +1,37 @@
-import React, { useState, useEffect, useRef } from "react";
-import ChatBot from './ChatBot';
+import { useState, useEffect, useRef } from "react";
 
 const API = "https://mds-novatech.onrender.com";
+const GROQ_KEY = "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";
+
+const INESTID_CONTEXT = `Tu es l'assistant IA officiel d'INESTID. Voici tout ce que tu dois savoir sur INESTID :
+
+NOM : INESTID
+SLOGAN : « L'innovation au service de la croissance »
+DATE DE CRÉATION : 2026
+MISSION : Aider les entreprises et les particuliers à réussir leur transformation numérique grâce à des solutions innovantes.
+VISION : Devenir l'une des références africaines en intelligence artificielle et en développement numérique.
+VALEURS : Innovation, Excellence, Intégrité, Créativité, Satisfaction client.
+
+QUI EST INESTID ? INESTID est une entreprise spécialisée dans le développement de solutions numériques, l'intelligence artificielle, la formation et l'accompagnement des entreprises.
+
+SERVICES :
+- Informatique & Digital : Développement web & applications mobiles, Infrastructure réseau & cloud, Cybersécurité, Maintenance et support technique, Conseil et audit informatique
+- Intelligence Artificielle & Data : Développement de solutions IA, Analyse et traitement de données, Automatisation des processus, Chatbots et assistants virtuels, Machine Learning & prédiction
+
+PRODUIT PHARE : Une intelligence artificielle capable de répondre aux clients 24h/24 en plusieurs langues.
+
+CONTACT : WhatsApp, Facebook, e-mail ou téléphone.
+EMAIL : contact@inestid.com
+
+PAIEMENT : MTN Mobile Money, Moov Money, cartes bancaires et virements bancaires.
+
+REMBOURSEMENT : Les remboursements sont étudiés au cas par cas conformément aux conditions générales.
+
+FONDATEUR : Yolou Atekeyollo Mathieu Patient — Fondateur et Directeur Général.
+
+COMPORTEMENT : Si tu ne connais pas la réponse, dis : "Je suis désolé, je ne dispose pas encore de cette information. Je peux transmettre votre demande à un conseiller INESTID."
+
+IMPORTANT : Réponds toujours dans la langue utilisée par l'utilisateur. Sois professionnel, concis et utile. Tu représentes INESTID.`;
 
 const T = {
   fr: {
@@ -18,7 +48,7 @@ const T = {
     about_c1:"Expertise Tech", about_c1d:"Solutions numériques complètes pour votre entreprise",
     about_c2:"Intelligence IA", about_c2d:"Solutions d'IA adaptées à vos besoins",
     about_c3:"Équipe Dédiée", about_c3d:"Des professionnels passionnés à votre service",
-    about_c4:"Fiabilité", about_c4d:"Partenaire de confiance depuis plus de 8 ans",
+    about_c4:"Fiabilité", about_c4d:"Partenaire de confiance depuis 2026",
     svc_tag:"Ce que nous faisons", svc_title:"Nos Domaines d'Expertise",
     svc_sub:"Des solutions adaptées à vos besoins dans le numérique et l'intelligence artificielle.",
     svc_tech_title:"Informatique & Digital",
@@ -94,6 +124,13 @@ const T = {
     modif_text:"INESTID se réserve le droit de modifier les présentes CGU à tout moment.",
     editeur:"Éditeur du site", hebergement:"Hébergement", propriete:"Propriété intellectuelle", droit_app:"Droit applicable",
     last_update:"Dernière mise à jour",
+    bot_title:"Assistant INESTID",
+    bot_subtitle:"IA · Disponible 24h/24",
+    bot_placeholder:"Posez votre question...",
+    bot_start:"Démarrer une discussion",
+    bot_welcome:"Bonjour ! Je suis l'assistant IA d'INESTID. Comment puis-je vous aider aujourd'hui ?",
+    bot_error:"Une erreur s'est produite. Veuillez réessayer.",
+    bot_thinking:"En train de réfléchir...",
   },
   en: {
     nav_accueil:"Home", nav_services:"Services", nav_actualites:"News", nav_partenariats:"Partnerships", nav_contact:"Contact",
@@ -109,7 +146,7 @@ const T = {
     about_c1:"Tech Expertise", about_c1d:"Complete digital solutions for your business",
     about_c2:"AI Intelligence", about_c2d:"AI solutions adapted to your needs",
     about_c3:"Dedicated Team", about_c3d:"Passionate professionals at your service",
-    about_c4:"Reliability", about_c4d:"Trusted partner for over 8 years",
+    about_c4:"Reliability", about_c4d:"Trusted partner since 2026",
     svc_tag:"What we do", svc_title:"Our Areas of Expertise",
     svc_sub:"Solutions tailored to your needs in digital and artificial intelligence.",
     svc_tech_title:"IT & Digital",
@@ -185,6 +222,13 @@ const T = {
     modif_text:"INESTID reserves the right to modify these Terms of Use at any time.",
     editeur:"Site editor", hebergement:"Hosting", propriete:"Intellectual property", droit_app:"Applicable law",
     last_update:"Last updated",
+    bot_title:"INESTID Assistant",
+    bot_subtitle:"AI · Available 24/7",
+    bot_placeholder:"Ask your question...",
+    bot_start:"Start a conversation",
+    bot_welcome:"Hello! I'm INESTID's AI assistant. How can I help you today?",
+    bot_error:"An error occurred. Please try again.",
+    bot_thinking:"Thinking...",
   }
 };
 
@@ -241,7 +285,7 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
   transition: background 0.3s, border-color 0.3s;
 }
 .logo { display: flex; align-items: center; cursor: pointer; }
-.logo-img { height: 200px; width: auto; object-fit: contain;margin-top: 38px;  }
+.logo-img { height: 42px; width: auto; object-fit: contain; }
 .nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
 .nav-links button {
   background: none; border: none; cursor: pointer;
@@ -289,6 +333,114 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 }
 .mob-menu button:hover, .mob-menu button.active { color: var(--text); background: var(--bg3); }
 .mob-menu-divider { height: 1px; background: var(--border); margin: 6px 0; }
+
+/* BOT BUTTON */
+.bot-btn {
+  background: linear-gradient(135deg, var(--blue-l), var(--blue-g));
+  color: white; border: none; cursor: pointer;
+  padding: 12px 14px; border-radius: 12px; text-align: left;
+  display: flex; align-items: center; gap: 10px; transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif; font-size: 0.97rem; font-weight: 500;
+  width: 100%;
+}
+.bot-btn:hover { opacity: 0.9; transform: translateX(3px); }
+.bot-btn-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: #4eff91;
+  margin-left: auto; animation: blink 2s infinite;
+}
+
+/* BOT MODAL */
+.bot-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(7,13,26,0.6); backdrop-filter: blur(12px);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding: 0;
+}
+.bot-panel {
+  width: 100%; max-width: 520px;
+  height: 88vh; max-height: 700px;
+  background: var(--card);
+  border-radius: 28px 28px 0 0;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 -20px 60px rgba(26,58,143,0.2);
+  animation: slideUp 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.bot-header {
+  background: linear-gradient(135deg, #0f1e3d, #1a3a8f);
+  padding: 20px 20px 16px;
+  display: flex; align-items: center; gap: 14px;
+  flex-shrink: 0;
+}
+.bot-avatar {
+  width: 46px; height: 46px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--blue-g), var(--green));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; flex-shrink: 0;
+}
+.bot-header-info { flex: 1; }
+.bot-header-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 2px; }
+.bot-header-sub { font-size: 0.75rem; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 6px; }
+.bot-online { width: 7px; height: 7px; border-radius: 50%; background: #4eff91; animation: blink 2s infinite; }
+.bot-close { background: rgba(255,255,255,0.1); border: none; color: rgba(255,255,255,0.7); width: 34px; height: 34px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-size: 1rem; }
+.bot-close:hover { background: rgba(255,255,255,0.2); color: #fff; }
+.bot-messages {
+  flex: 1; overflow-y: auto; padding: 20px 16px;
+  display: flex; flex-direction: column; gap: 14px;
+  scroll-behavior: smooth;
+}
+.bot-messages::-webkit-scrollbar { width: 3px; }
+.bot-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.bot-msg { display: flex; gap: 10px; animation: up 0.3s ease; }
+.bot-msg.user { flex-direction: row-reverse; }
+.bot-msg-avatar {
+  width: 32px; height: 32px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 0.85rem;
+}
+.bot-msg.bot .bot-msg-avatar { background: linear-gradient(135deg, var(--blue-l), var(--blue-g)); color: white; }
+.bot-msg.user .bot-msg-avatar { background: linear-gradient(135deg, var(--green), var(--green-l)); color: white; }
+.bot-msg-bubble {
+  max-width: 78%; padding: 12px 16px; border-radius: 18px;
+  font-size: 0.88rem; line-height: 1.6;
+}
+.bot-msg.bot .bot-msg-bubble { background: var(--bg2); color: var(--text); border-radius: 4px 18px 18px 18px; }
+.bot-msg.user .bot-msg-bubble { background: linear-gradient(135deg, var(--blue-l), var(--blue-g)); color: white; border-radius: 18px 4px 18px 18px; }
+.bot-msg-time { font-size: 0.68rem; color: var(--gray); margin-top: 4px; }
+.bot-msg.user .bot-msg-time { text-align: right; }
+.bot-typing { display: flex; gap: 5px; align-items: center; padding: 12px 16px; background: var(--bg2); border-radius: 4px 18px 18px 18px; width: fit-content; }
+.bot-typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--gray); animation: typing 1.2s infinite; }
+.bot-typing span:nth-child(2) { animation-delay: 0.2s; }
+.bot-typing span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing { 0%,60%,100%{transform:translateY(0);opacity:0.4} 30%{transform:translateY(-6px);opacity:1} }
+.bot-suggestions { padding: 0 16px 12px; display: flex; gap: 8px; flex-wrap: wrap; }
+.bot-suggestion { background: rgba(42,82,201,0.08); border: 1px solid rgba(42,82,201,0.2); color: var(--blue-l); border-radius: 100px; padding: 6px 14px; font-size: 0.78rem; font-weight: 500; cursor: pointer; transition: all 0.2s; white-space: nowrap; font-family: 'DM Sans', sans-serif; }
+.bot-suggestion:hover { background: rgba(42,82,201,0.15); }
+.bot-input-area {
+  padding: 12px 16px 16px; border-top: 1px solid var(--border);
+  display: flex; gap: 10px; align-items: flex-end; flex-shrink: 0;
+  background: var(--card);
+}
+.bot-input {
+  flex: 1; background: var(--bg); border: 1.5px solid var(--border);
+  border-radius: 16px; padding: 11px 16px;
+  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+  outline: none; resize: none; max-height: 100px; overflow-y: auto;
+  transition: border-color 0.2s;
+  -webkit-user-select: text !important; user-select: text !important;
+}
+.bot-input:focus { border-color: var(--blue-l); }
+.bot-send {
+  width: 42px; height: 42px; border-radius: 13px; border: none; cursor: pointer;
+  background: linear-gradient(135deg, var(--blue-l), var(--blue-g));
+  color: white; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; transition: all 0.2s; flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(42,82,201,0.3);
+}
+.bot-send:hover { transform: scale(1.05); }
+.bot-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.bot-powered { text-align: center; padding: 6px; font-size: 0.68rem; color: var(--gray); }
+
 .pages { position: fixed; top: 88px; left: 0; right: 0; bottom: 0; overflow: hidden; }
 .page {
   position: absolute; inset: 0; overflow-y: auto;
@@ -302,10 +454,7 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 .hero-bg {
   position: absolute; inset: 0; pointer-events: none;
   background-image: url('/fond.jpg');
-  background-size: 80%;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.15;
+  background-size: 80%; background-position: center; background-repeat: no-repeat; opacity: 0.15;
 }
 .hero-grid {
   position: absolute; inset: 0; pointer-events: none;
@@ -313,26 +462,16 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
   background-size: 56px 56px; opacity: 0.5;
 }
 .hero-body { position: relative; z-index: 1; max-width: 640px; }
-.badge {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: rgba(46,163,18,0.08); border: 1px solid rgba(46,163,18,0.25);
-  border-radius: 100px; padding: 5px 15px;
-  font-size: 0.76rem; font-weight: 600; color: var(--green); margin-bottom: 26px;
-  animation: up 0.5s ease both;
-}
+.badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(46,163,18,0.08); border: 1px solid rgba(46,163,18,0.25); border-radius: 100px; padding: 5px 15px; font-size: 0.76rem; font-weight: 600; color: var(--green); margin-bottom: 26px; animation: up 0.5s ease both; }
 .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
 @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.3;transform:scale(0.6)} }
-.hero-body h1 {
-  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800;
-  font-size: clamp(2.4rem, 4.5vw, 3.8rem); line-height: 1.1; margin-bottom: 20px;
-  color: var(--text); animation: up 0.5s 0.08s ease both; transition: color 0.3s;
-}
+.hero-body h1 { font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: clamp(2.4rem, 4.5vw, 3.8rem); line-height: 1.1; margin-bottom: 20px; color: var(--text); animation: up 0.5s 0.08s ease both; transition: color 0.3s; }
 .hero-body h1 .b { color: var(--blue-l); }
 .hero-body h1 .g { color: var(--green); }
 .hero-desc { color: var(--text2); font-size: 1rem; line-height: 1.7; max-width: 490px; margin-bottom: 34px; animation: up 0.5s 0.16s ease both; }
 .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; animation: up 0.5s 0.24s ease both; }
 .hero-stats { position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 14px; animation: up 0.5s 0.32s ease both; }
-.stat { background: var(--card); border: 1px solid var(--border); border-radius: 15px; padding: 20px 24px; text-align: center; min-width: 144px; box-shadow: 0 4px 20px rgba(26,58,143,0.07); transition: transform 0.3s, background 0.3s; }
+.stat { background: var(--card); border: 1px solid var(--border); border-radius: 15px; padding: 20px 24px; text-align: center; min-width: 144px; box-shadow: 0 4px 20px rgba(26,58,143,0.07); transition: transform 0.3s; }
 .stat:hover { transform: translateX(-5px); }
 .stat-n { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.9rem; font-weight: 800; background: linear-gradient(135deg, var(--blue-l), var(--green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .stat-l { font-size: 0.73rem; color: var(--gray); margin-top: 3px; }
@@ -367,7 +506,7 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 .alert-success { background: rgba(46,163,18,0.1); border: 1px solid rgba(46,163,18,0.25); color: var(--green); }
 .alert-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25); color: #ef4444; }
 .svc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.svc-panel { border-radius: 20px; padding: 36px; border: 1px solid var(--border); background: var(--card); box-shadow: 0 4px 20px rgba(26,58,143,0.06); transition: transform 0.3s, box-shadow 0.3s, background 0.3s; }
+.svc-panel { border-radius: 20px; padding: 36px; border: 1px solid var(--border); background: var(--card); box-shadow: 0 4px 20px rgba(26,58,143,0.06); transition: transform 0.3s, box-shadow 0.3s; }
 .svc-panel:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(26,58,143,0.12); }
 .svc-panel.tech { border-top: 3px solid var(--blue-l); }
 .svc-panel.ai { border-top: 3px solid var(--green); }
@@ -382,14 +521,11 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 .ai .svc-list li i { color: var(--green); font-size: 0.72rem; }
 .news-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; flex-wrap: wrap; gap: 12px; }
 .news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.news-card { background: var(--card); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; box-shadow: 0 2px 12px rgba(26,58,143,0.05); transition: transform 0.3s, box-shadow 0.3s, background 0.3s; }
+.news-card { background: var(--card); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); cursor: pointer; box-shadow: 0 2px 12px rgba(26,58,143,0.05); transition: transform 0.3s, box-shadow 0.3s; }
 .news-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(42,82,201,0.12); }
 .news-thumb { height: 150px; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; }
 .news-body { padding: 20px; }
 .cat { display: inline-flex; align-items: center; gap: 5px; font-size: 0.69rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; padding: 3px 9px; border-radius: 5px; margin-bottom: 8px; }
-.cat.tc { color: var(--blue-l); background: rgba(42,82,201,0.08); }
-.cat.ag { color: var(--green); background: rgba(46,163,18,0.08); }
-.cat.co { color: #d97706; background: rgba(217,119,6,0.08); }
 .news-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 8px; line-height: 1.4; }
 .news-excerpt { color: var(--text2); font-size: 0.82rem; line-height: 1.6; }
 .news-date { color: var(--gray); font-size: 0.75rem; margin-top: 12px; display: flex; align-items: center; gap: 5px; }
@@ -521,6 +657,7 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
   .frow { grid-template-columns: 1fr; }
   .form-box { padding: 22px 16px; }
   .modal { padding: 24px 16px; }
+  .bot-panel { border-radius: 0; height: 100vh; max-height: 100vh; }
 }
 @media (max-width: 480px) {
   .footer-top { grid-template-columns: 1fr; }
@@ -529,14 +666,12 @@ body { color: var(--text); font-family: 'DM Sans', sans-serif; transition: backg
 `;
 
 const PAGES_LIST = ["accueil","services","actualites","partenariats","contact","promoteur","mentions","confidentialite","cgu","admin"];
-
 const NAV_ITEMS = (t) => [
   { id:"accueil",       icon:"fa-house",      label:t.nav_accueil },
   { id:"services",      icon:"fa-briefcase",  label:t.nav_services },
   { id:"actualites",    icon:"fa-newspaper",  label:t.nav_actualites },
   { id:"partenariats",  icon:"fa-handshake",  label:t.nav_partenariats },
 ];
-
 const PHOTO = "/promoteur.jpg";
 
 function CustomSelect({ options, value, onChange }) {
@@ -606,7 +741,7 @@ function LangSelector({ lang, setLang, t }) {
   const [open, setOpen] = useState(false);
   return (
     <div style={{padding:"0 4px"}}>
-      <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray)",fontFamily:"'DM Sans',sans-serif",fontSize:"0.97rem",padding:"12px 14px",borderRadius:12,textAlign:"left",display:"flex",alignItems:"center",gap:10,width:"100%",justifyContent:"space-between",transition:"all 0.2s"}}
+      <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--gray)",fontFamily:"'DM Sans',sans-serif",fontSize:"0.97rem",padding:"12px 14px",borderRadius:12,textAlign:"left",display:"flex",alignItems:"center",gap:10,width:"100%",justifyContent:"space-between"}}
         onClick={()=>setOpen(!open)}>
         <span style={{display:"flex",alignItems:"center",gap:10}}>
           <i className="fa-solid fa-globe"/>
@@ -618,13 +753,138 @@ function LangSelector({ lang, setLang, t }) {
         <div style={{paddingLeft:16,display:"flex",flexDirection:"column",gap:4,marginBottom:8}}>
           {[{code:"fr",flag:"🇫🇷",label:"Français"},{code:"en",flag:"🇬🇧",label:"English"}].map(l=>(
             <button key={l.code} onClick={()=>{ setLang(l.code); setOpen(false); }}
-              style={{background:lang===l.code?"rgba(42,82,201,0.08)":"none",border:"none",cursor:"pointer",color:lang===l.code?"var(--blue-l)":"var(--gray)",fontFamily:"'DM Sans',sans-serif",fontSize:"0.9rem",padding:"10px 14px",borderRadius:10,textAlign:"left",display:"flex",alignItems:"center",gap:10,transition:"all 0.2s",fontWeight:lang===l.code?600:400}}>
+              style={{background:lang===l.code?"rgba(42,82,201,0.08)":"none",border:"none",cursor:"pointer",color:lang===l.code?"var(--blue-l)":"var(--gray)",fontFamily:"'DM Sans',sans-serif",fontSize:"0.9rem",padding:"10px 14px",borderRadius:10,textAlign:"left",display:"flex",alignItems:"center",gap:10,fontWeight:lang===l.code?600:400}}>
               {l.flag} {l.label}
               {lang===l.code && <i className="fa-solid fa-check" style={{marginLeft:"auto",fontSize:"0.8rem"}}/>}
             </button>
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+// ── BOT IA ──
+function BotIA({ lang, onClose }) {
+  const t = T[lang];
+  const [messages, setMessages] = useState([
+    { role:"assistant", content: t.bot_welcome, time: new Date().toLocaleTimeString(lang==="fr"?"fr-FR":"en-US",{hour:"2-digit",minute:"2-digit"}) }
+  ]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
+
+  const suggestions = lang==="fr"
+    ? ["Quels sont vos services ?", "Comment vous contacter ?", "Qui est le fondateur ?", "Moyens de paiement ?"]
+    : ["What are your services?", "How to contact you?", "Who is the founder?", "Payment methods?"];
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior:"smooth" });
+  }, [messages, loading]);
+
+  const sendMessage = async (text) => {
+    const userText = text || input.trim();
+    if (!userText || loading) return;
+    setInput("");
+    const time = new Date().toLocaleTimeString(lang==="fr"?"fr-FR":"en-US",{hour:"2-digit",minute:"2-digit"});
+    const newMessages = [...messages, { role:"user", content:userText, time }];
+    setMessages(newMessages);
+    setLoading(true);
+    try {
+      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${GROQ_KEY}`
+        },
+        body: JSON.stringify({
+          model: "llama3-8b-8192",
+          messages: [
+            { role:"system", content: INESTID_CONTEXT },
+            ...newMessages.map(m => ({ role: m.role, content: m.content }))
+          ],
+          max_tokens: 512,
+          temperature: 0.7,
+        })
+      });
+      const data = await res.json();
+      const reply = data.choices?.[0]?.message?.content || t.bot_error;
+      setMessages(prev => [...prev, {
+        role:"assistant",
+        content: reply,
+        time: new Date().toLocaleTimeString(lang==="fr"?"fr-FR":"en-US",{hour:"2-digit",minute:"2-digit"})
+      }]);
+    } catch {
+      setMessages(prev => [...prev, { role:"assistant", content: t.bot_error, time: new Date().toLocaleTimeString() }]);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div className="bot-overlay" onClick={e=>e.target===e.currentTarget&&onClose()}>
+      <div className="bot-panel">
+        {/* HEADER */}
+        <div className="bot-header">
+          <div className="bot-avatar"><i className="fa-solid fa-robot"/></div>
+          <div className="bot-header-info">
+            <div className="bot-header-title">{t.bot_title}</div>
+            <div className="bot-header-sub">
+              <span className="bot-online"/>
+              {t.bot_subtitle}
+            </div>
+          </div>
+          <button className="bot-close" onClick={onClose}><i className="fa-solid fa-xmark"/></button>
+        </div>
+
+        {/* MESSAGES */}
+        <div className="bot-messages">
+          {messages.map((m, i) => (
+            <div key={i} className={`bot-msg ${m.role}`}>
+              <div className="bot-msg-avatar">
+                <i className={`fa-solid ${m.role==="assistant"?"fa-robot":"fa-user"}`}/>
+              </div>
+              <div>
+                <div className="bot-msg-bubble">{m.content}</div>
+                <div className="bot-msg-time">{m.time}</div>
+              </div>
+            </div>
+          ))}
+          {loading && (
+            <div className="bot-msg bot">
+              <div className="bot-msg-avatar"><i className="fa-solid fa-robot"/></div>
+              <div className="bot-typing"><span/><span/><span/></div>
+            </div>
+          )}
+          <div ref={messagesEndRef}/>
+        </div>
+
+        {/* SUGGESTIONS */}
+        {messages.length <= 2 && (
+          <div className="bot-suggestions">
+            {suggestions.map(s=>(
+              <button key={s} className="bot-suggestion" onClick={()=>sendMessage(s)}>{s}</button>
+            ))}
+          </div>
+        )}
+
+        {/* INPUT */}
+        <div className="bot-input-area">
+          <textarea
+            ref={inputRef}
+            className="bot-input"
+            placeholder={t.bot_placeholder}
+            value={input}
+            rows={1}
+            onChange={e=>setInput(e.target.value)}
+            onKeyDown={e=>{ if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMessage();} }}
+          />
+          <button className="bot-send" onClick={()=>sendMessage()} disabled={loading||!input.trim()}>
+            <i className="fa-solid fa-paper-plane"/>
+          </button>
+        </div>
+        <div className="bot-powered">Powered by INESTID AI · Llama 3</div>
+      </div>
     </div>
   );
 }
@@ -690,21 +950,21 @@ function ServicesPage({ lang }) {
     { titre:"Maintenance et support technique", details:["Support technique 24/7","Maintenance préventive et corrective","Mise à jour des systèmes","Assistance à distance et sur site"] },
     { titre:"Conseil et audit informatique", details:["Audit du système d'information","Conseil en transformation digitale","Optimisation des processus","Accompagnement stratégique IT"] },
   ] : [
-    { titre:"Web development & mobile applications", details:["Showcase and e-commerce sites","iOS and Android mobile applications","Modern and responsive interfaces","API and database integration"] },
-    { titre:"Network infrastructure & cloud", details:["Network installation and configuration","Secure cloud hosting","Virtualization and servers","Backup and disaster recovery"] },
-    { titre:"Cybersecurity & data protection", details:["IT security audit","Protection against cyberattacks","Data encryption and security","Cybersecurity training"] },
-    { titre:"Maintenance and technical support", details:["24/7 technical support","Preventive and corrective maintenance","System updates","Remote and on-site assistance"] },
+    { titre:"Web development & mobile apps", details:["Showcase and e-commerce sites","iOS and Android apps","Modern responsive interfaces","API and database integration"] },
+    { titre:"Network infrastructure & cloud", details:["Network installation","Secure cloud hosting","Virtualization and servers","Backup and disaster recovery"] },
+    { titre:"Cybersecurity & data protection", details:["IT security audit","Protection against cyberattacks","Data encryption","Cybersecurity training"] },
+    { titre:"Maintenance and technical support", details:["24/7 technical support","Preventive maintenance","System updates","Remote and on-site assistance"] },
     { titre:"IT consulting and audit", details:["Information system audit","Digital transformation consulting","Process optimization","Strategic IT support"] },
   ];
 
   const ai = lang==="fr" ? [
-    { titre:"Développement de solutions IA", details:["Conception d'algorithmes d'apprentissage automatique","Intégration de modèles IA dans vos applications","Solutions IA sur mesure","Déploiement et maintenance des modèles"] },
+    { titre:"Développement de solutions IA", details:["Conception d'algorithmes ML","Intégration de modèles IA","Solutions IA sur mesure","Déploiement et maintenance des modèles"] },
     { titre:"Analyse et traitement de données", details:["Collecte et nettoyage de données","Analyse statistique avancée","Visualisation de données","Big Data et entrepôts de données"] },
     { titre:"Automatisation des processus", details:["Automatisation RPA","Optimisation des flux de travail","Réduction des tâches répétitives","Intégration de systèmes intelligents"] },
     { titre:"Chatbots et assistants virtuels", details:["Conception de chatbots intelligents","Intégration WhatsApp, Messenger, Web","Traitement du langage naturel (NLP)","Support client automatisé 24/7"] },
     { titre:"Machine Learning & prédiction", details:["Modèles prédictifs personnalisés","Analyse de sentiment","Détection d'anomalies","Recommandations intelligentes"] },
   ] : [
-    { titre:"AI solution development", details:["Machine learning algorithm design","AI model integration in your apps","Custom AI solutions","Model deployment and maintenance"] },
+    { titre:"AI solution development", details:["ML algorithm design","AI model integration","Custom AI solutions","Model deployment and maintenance"] },
     { titre:"Data analysis and processing", details:["Data collection and cleaning","Advanced statistical analysis","Data visualization","Big Data and data warehouses"] },
     { titre:"Process automation", details:["RPA automation","Workflow optimization","Reduction of repetitive tasks","Intelligent system integration"] },
     { titre:"Chatbots and virtual assistants", details:["Intelligent chatbot design","WhatsApp, Messenger, Web integration","Natural language processing (NLP)","Automated 24/7 customer support"] },
@@ -727,15 +987,13 @@ function ServicesPage({ lang }) {
                   <span style={{flex:1}}>{s.titre}</span>
                   <i className={`fa-solid fa-chevron-${openTech===i?"up":"down"}`} style={{fontSize:"0.7rem",color:"var(--gray)"}}/>
                 </div>
-                {openTech===i && (
-                  <ul style={{listStyle:"none",paddingLeft:22,marginTop:6,marginBottom:6,display:"flex",flexDirection:"column",gap:5}}>
-                    {s.details.map((d,j)=>(
-                      <li key={j} style={{fontSize:"0.8rem",color:"var(--text2)",display:"flex",alignItems:"center",gap:7}}>
-                        <i className="fa-solid fa-arrow-right" style={{color:"var(--blue-g)",fontSize:"0.65rem",flexShrink:0}}/>{d}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                {openTech===i && <ul style={{listStyle:"none",paddingLeft:22,marginTop:6,marginBottom:6,display:"flex",flexDirection:"column",gap:5}}>
+                  {s.details.map((d,j)=>(
+                    <li key={j} style={{fontSize:"0.8rem",color:"var(--text2)",display:"flex",alignItems:"center",gap:7}}>
+                      <i className="fa-solid fa-arrow-right" style={{color:"var(--blue-g)",fontSize:"0.65rem",flexShrink:0}}/>{d}
+                    </li>
+                  ))}
+                </ul>}
               </li>
             ))}
           </ul>
@@ -752,15 +1010,13 @@ function ServicesPage({ lang }) {
                   <span style={{flex:1}}>{s.titre}</span>
                   <i className={`fa-solid fa-chevron-${openAi===i?"up":"down"}`} style={{fontSize:"0.7rem",color:"var(--gray)"}}/>
                 </div>
-                {openAi===i && (
-                  <ul style={{listStyle:"none",paddingLeft:22,marginTop:6,marginBottom:6,display:"flex",flexDirection:"column",gap:5}}>
-                    {s.details.map((d,j)=>(
-                      <li key={j} style={{fontSize:"0.8rem",color:"var(--text2)",display:"flex",alignItems:"center",gap:7}}>
-                        <i className="fa-solid fa-arrow-right" style={{color:"var(--green-l)",fontSize:"0.65rem",flexShrink:0}}/>{d}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                {openAi===i && <ul style={{listStyle:"none",paddingLeft:22,marginTop:6,marginBottom:6,display:"flex",flexDirection:"column",gap:5}}>
+                  {s.details.map((d,j)=>(
+                    <li key={j} style={{fontSize:"0.8rem",color:"var(--text2)",display:"flex",alignItems:"center",gap:7}}>
+                      <i className="fa-solid fa-arrow-right" style={{color:"var(--green-l)",fontSize:"0.65rem",flexShrink:0}}/>{d}
+                    </li>
+                  ))}
+                </ul>}
               </li>
             ))}
           </ul>
@@ -806,10 +1062,7 @@ function ActualitesPage({ lang, onArticleClick }) {
     if (!email) return;
     setSending(true);
     try {
-      const res = await fetch(`${API}/api/abonner`, {
-        method: "POST", headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email })
-      });
+      const res = await fetch(`${API}/api/abonner`, { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({email}) });
       const data = await res.json();
       setMsg(data.message); setMsgType(data.success?"success":"error");
       if (data.success) setEmail("");
@@ -823,8 +1076,7 @@ function ActualitesPage({ lang, onArticleClick }) {
       <div className="news-bar">
         <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
           {filtres.map(f=>(
-            <button key={f} className={`btn ${filtre===f?"btn-blue":"btn-outline"}`}
-              style={{padding:"7px 14px",fontSize:"0.81rem"}} onClick={()=>setFiltre(f)}>{f}</button>
+            <button key={f} className={`btn ${filtre===f?"btn-blue":"btn-outline"}`} style={{padding:"7px 14px",fontSize:"0.81rem"}} onClick={()=>setFiltre(f)}>{f}</button>
           ))}
         </div>
         <button className="btn btn-blue" style={{fontSize:"0.81rem"}} onClick={()=>setShowNewsletter(true)}>
@@ -832,12 +1084,7 @@ function ActualitesPage({ lang, onArticleClick }) {
         </button>
       </div>
       {loading && <div style={{textAlign:"center",padding:"40px",color:"var(--gray)"}}><i className="fa-solid fa-spinner fa-spin" style={{fontSize:"2rem",marginBottom:12,display:"block"}}/>Chargement...</div>}
-      {!loading && articlesFiltres.length===0 && (
-        <div style={{textAlign:"center",padding:"40px",color:"var(--gray)"}}>
-          <i className="fa-solid fa-newspaper" style={{fontSize:"2rem",marginBottom:12,display:"block"}}/>
-          {t.news_empty}
-        </div>
-      )}
+      {!loading && articlesFiltres.length===0 && <div style={{textAlign:"center",padding:"40px",color:"var(--gray)"}}><i className="fa-solid fa-newspaper" style={{fontSize:"2rem",marginBottom:12,display:"block"}}/>{t.news_empty}</div>}
       <div className="news-grid">
         {articlesFiltres.map(a=>{
           const st = catStyle[a.categorie]||catStyle["Entreprise"];
@@ -851,17 +1098,13 @@ function ActualitesPage({ lang, onArticleClick }) {
                 <h3 className="news-title">{a.titre}</h3>
                 <p className="news-excerpt">{a.contenu?.slice(0,120)}{a.contenu?.length>120?"...":""}</p>
                 {a.contenu?.length>120 && (
-                  <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--blue-l)",fontSize:"0.82rem",fontWeight:600,padding:"4px 0",display:"flex",alignItems:"center",gap:5}}
-                    onClick={()=>onArticleClick(a)}>
-                    <i className="fa-solid fa-chevron-down" style={{fontSize:"0.7rem"}}/>
-                    {lang==="fr"?"Voir plus":"Read more"}
+                  <button style={{background:"none",border:"none",cursor:"pointer",color:"var(--blue-l)",fontSize:"0.82rem",fontWeight:600,padding:"4px 0",display:"flex",alignItems:"center",gap:5}} onClick={()=>onArticleClick(a)}>
+                    <i className="fa-solid fa-chevron-down" style={{fontSize:"0.7rem"}}/>{lang==="fr"?"Voir plus":"Read more"}
                   </button>
                 )}
                 {a.lien_externe && (
-                  <a href={a.lien_externe} target="_blank" rel="noreferrer"
-                    style={{display:"inline-flex",alignItems:"center",gap:6,color:"var(--green)",fontSize:"0.82rem",fontWeight:600,textDecoration:"none",marginTop:6}}>
-                    <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize:"0.72rem"}}/>
-                    {lang==="fr"?"Visiter le site":"Visit website"}
+                  <a href={a.lien_externe} target="_blank" rel="noreferrer" style={{display:"inline-flex",alignItems:"center",gap:6,color:"var(--green)",fontSize:"0.82rem",fontWeight:600,textDecoration:"none",marginTop:6}}>
+                    <i className="fa-solid fa-arrow-up-right-from-square" style={{fontSize:"0.72rem"}}/>{lang==="fr"?"Visiter le site":"Visit website"}
                   </a>
                 )}
                 <p className="news-date"><i className="fa-regular fa-calendar"/>{new Date(a.date_pub||a.created_at).toLocaleDateString(lang==="fr"?"fr-FR":"en-US")}</p>
@@ -876,9 +1119,7 @@ function ActualitesPage({ lang, onArticleClick }) {
             <button className="modal-x" onClick={()=>setShowNewsletter(false)}><i className="fa-solid fa-xmark"/></button>
             <h3><i className="fa-solid fa-rss" style={{color:"var(--blue-l)",marginRight:8}}/>{t.newsletter_title}</h3>
             <p>{t.newsletter_desc}</p>
-            <FG label={t.newsletter_email} icon="fa-envelope">
-              <input type="email" placeholder="email@exemple.com" value={email} onChange={e=>setEmail(e.target.value)}/>
-            </FG>
+            <FG label={t.newsletter_email} icon="fa-envelope"><input type="email" placeholder="email@exemple.com" value={email} onChange={e=>setEmail(e.target.value)}/></FG>
             <button className="btn btn-blue btn-full" onClick={handleAbonner} disabled={sending}>
               <i className="fa-solid fa-paper-plane"/>{sending?t.newsletter_sending:t.newsletter_btn}
             </button>
@@ -922,18 +1163,18 @@ function PartenariatsPage({ lang }) {
   ];
 
   const handlePartner = async () => {
-    if (!form.organisation||!form.email) { setMsg(lang==="fr"?"Champs obligatoires manquants.":"Required fields missing."); setMsgType("error"); return; }
+    if (!form.organisation||!form.email) { setMsg(lang==="fr"?"Champs obligatoires.":"Required fields."); setMsgType("error"); return; }
     setSending(true);
     try {
       const res = await fetch(`${API}/api/contact`, {
         method:"POST", headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({ nom:form.contact, email:form.email, service:`Partnership — ${typeOpts.find(t=>t.value===type)?.label}`, message:`Org: ${form.organisation}\n\n${form.proposition}` })
+        body:JSON.stringify({ nom:form.contact, email:form.email, service:`Partnership — ${typeOpts.find(t=>t.value===type)?.label}`, message:`Org: ${form.organisation}\n\n${form.proposition}` })
       });
       const data = await res.json();
-      setMsg(data.success?(lang==="fr"?"Proposition envoyée ! Nous vous contacterons sous 48h.":"Proposal sent! We will contact you within 48h."):data.message);
+      setMsg(data.success?(lang==="fr"?"Proposition envoyée !":"Proposal sent!"):data.message);
       setMsgType(data.success?"success":"error");
       if (data.success) setForm({organisation:"",contact:"",email:"",proposition:""});
-    } catch { setMsg(lang==="fr"?"Erreur — réessayez.":"Error — please try again."); setMsgType("error"); }
+    } catch { setMsg(lang==="fr"?"Erreur.":"Error."); setMsgType("error"); }
     setSending(false);
   };
 
@@ -941,12 +1182,8 @@ function PartenariatsPage({ lang }) {
     <div>
       <PH tag={t.part_tag} ticon="fa-handshake" title={t.part_title} sub={t.part_sub}/>
       <div style={{display:"flex",gap:8,marginBottom:36}}>
-        <button className={`btn ${onglet==="partenaires"?"btn-blue":"btn-outline"}`} onClick={()=>setOnglet("partenaires")} style={{fontSize:"0.88rem"}}>
-          <i className="fa-solid fa-star"/>{t.part_tab1}
-        </button>
-        <button className={`btn ${onglet==="collaborons"?"btn-blue":"btn-outline"}`} onClick={()=>setOnglet("collaborons")} style={{fontSize:"0.88rem"}}>
-          <i className="fa-solid fa-handshake"/>{t.part_tab2}
-        </button>
+        <button className={`btn ${onglet==="partenaires"?"btn-blue":"btn-outline"}`} onClick={()=>setOnglet("partenaires")} style={{fontSize:"0.88rem"}}><i className="fa-solid fa-star"/>{t.part_tab1}</button>
+        <button className={`btn ${onglet==="collaborons"?"btn-blue":"btn-outline"}`} onClick={()=>setOnglet("collaborons")} style={{fontSize:"0.88rem"}}><i className="fa-solid fa-handshake"/>{t.part_tab2}</button>
       </div>
       {onglet==="partenaires" && (
         <div>
@@ -956,28 +1193,16 @@ function PartenariatsPage({ lang }) {
               <i className="fa-solid fa-handshake" style={{fontSize:"3rem",marginBottom:16,display:"block",opacity:0.3}}/>
               <p style={{fontSize:"1rem",fontWeight:600,color:"var(--text)",marginBottom:8}}>{t.part_empty}</p>
               <p style={{fontSize:"0.88rem"}}>{t.part_become}</p>
-              <button className="btn btn-blue" style={{marginTop:20}} onClick={()=>setOnglet("collaborons")}>
-                <i className="fa-solid fa-handshake"/>{t.part_propose_btn}
-              </button>
+              <button className="btn btn-blue" style={{marginTop:20}} onClick={()=>setOnglet("collaborons")}><i className="fa-solid fa-handshake"/>{t.part_propose_btn}</button>
             </div>
           )}
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(220px,1fr))",gap:16}}>
             {partenaires.map(p=>(
-              <div key={p.id} style={{background:"var(--card)",borderRadius:16,padding:"20px",border:"1px solid var(--border)",boxShadow:"0 4px 20px rgba(26,58,143,0.06)",transition:"all 0.3s",textAlign:"center"}}>
-                {p.logo_url ? (
-                  <img src={p.logo_url} alt={p.nom} style={{width:70,height:70,objectFit:"contain",borderRadius:10,marginBottom:12,padding:6}}/>
-                ) : (
-                  <div style={{width:70,height:70,borderRadius:10,background:"var(--bg2)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 12px",fontSize:"1.6rem",color:"var(--gray)"}}>
-                    <i className="fa-solid fa-building"/>
-                  </div>
-                )}
+              <div key={p.id} style={{background:"var(--card)",borderRadius:16,padding:"20px",border:"1px solid var(--border)",boxShadow:"0 4px 20px rgba(26,58,143,0.06)",textAlign:"center",transition:"all 0.3s"}}>
+                {p.logo_url ? <img src={p.logo_url} alt={p.nom} style={{width:70,height:70,objectFit:"contain",borderRadius:10,marginBottom:12,padding:6}}/> : <div style={{width:70,height:70,borderRadius:10,background:"var(--bg2)",display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 12px",fontSize:"1.6rem",color:"var(--gray)"}}><i className="fa-solid fa-building"/></div>}
                 <h3 style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"0.95rem",fontWeight:700,color:"var(--text)",marginBottom:6}}>{p.nom}</h3>
                 {p.description && <p style={{fontSize:"0.8rem",color:"var(--text2)",lineHeight:1.6,marginBottom:10}}>{p.description}</p>}
-                {p.site_web && (
-                  <a href={p.site_web} target="_blank" rel="noreferrer" className="btn btn-outline" style={{fontSize:"0.75rem",padding:"6px 12px",display:"inline-flex"}}>
-                    <i className="fa-solid fa-arrow-up-right-from-square"/>{t.part_visit}
-                  </a>
-                )}
+                {p.site_web && <a href={p.site_web} target="_blank" rel="noreferrer" className="btn btn-outline" style={{fontSize:"0.75rem",padding:"6px 12px",display:"inline-flex"}}><i className="fa-solid fa-arrow-up-right-from-square"/>{t.part_visit}</a>}
               </div>
             ))}
           </div>
@@ -986,7 +1211,7 @@ function PartenariatsPage({ lang }) {
       {onglet==="collaborons" && (
         <div className="partner-grid">
           <div>
-            <p style={{color:"var(--text2)",fontSize:"0.93rem",lineHeight:1.75,marginBottom:8}}>{lang==="fr"?"Nous croyons en la force des alliances stratégiques pour créer de la valeur durable.":"We believe in the power of strategic alliances to create lasting value."}</p>
+            <p style={{color:"var(--text2)",fontSize:"0.93rem",lineHeight:1.75,marginBottom:8}}>{lang==="fr"?"Nous croyons en la force des alliances stratégiques.":"We believe in the power of strategic alliances."}</p>
             <div className="benefits">
               {[
                 {icon:"fa-store",            title:t.collab_p1, desc:t.collab_d1},
@@ -994,10 +1219,7 @@ function PartenariatsPage({ lang }) {
                 {icon:"fa-building-columns", title:t.collab_p3, desc:t.collab_d3},
                 {icon:"fa-chart-line",       title:t.collab_p4, desc:t.collab_d4},
               ].map(b=>(
-                <div className="benefit" key={b.title}>
-                  <div className="ben-icon"><i className={`fa-solid ${b.icon}`}/></div>
-                  <div className="ben-text"><h4>{b.title}</h4><p>{b.desc}</p></div>
-                </div>
+                <div className="benefit" key={b.title}><div className="ben-icon"><i className={`fa-solid ${b.icon}`}/></div><div className="ben-text"><h4>{b.title}</h4><p>{b.desc}</p></div></div>
               ))}
             </div>
           </div>
@@ -1011,9 +1233,7 @@ function PartenariatsPage({ lang }) {
             </div>
             <FG label={t.part_type} icon="fa-tags"><CustomSelect options={typeOpts} value={type} onChange={setType}/></FG>
             <FG label={t.part_prop} icon="fa-pen-to-square"><textarea placeholder={lang==="fr"?"Présentez votre proposition...":"Present your proposal..."} value={form.proposition} onChange={e=>setForm({...form,proposition:e.target.value})}/></FG>
-            <button className="btn btn-green btn-full" onClick={handlePartner} disabled={sending}>
-              <i className="fa-solid fa-paper-plane"/>{sending?t.part_sending:t.part_send}
-            </button>
+            <button className="btn btn-green btn-full" onClick={handlePartner} disabled={sending}><i className="fa-solid fa-paper-plane"/>{sending?t.part_sending:t.part_send}</button>
             <Alert type={msgType} msg={msg}/>
           </div>
         </div>
@@ -1038,17 +1258,17 @@ function ContactPage({ lang }) {
   ];
 
   const handleContact = async () => {
-    if (!form.nom||!form.email||!form.message) { setMsg(lang==="fr"?"Champs obligatoires manquants.":"Required fields missing."); setMsgType("error"); return; }
+    if (!form.nom||!form.email||!form.message) { setMsg(lang==="fr"?"Champs obligatoires.":"Required fields."); setMsgType("error"); return; }
     setSending(true);
     try {
       const res = await fetch(`${API}/api/contact`, {
         method:"POST", headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({ nom:`${form.prenom} ${form.nom}`, email:form.email, service:serviceOpts.find(s=>s.value===service)?.label, message:form.message })
+        body:JSON.stringify({ nom:`${form.prenom} ${form.nom}`, email:form.email, service:serviceOpts.find(s=>s.value===service)?.label, message:form.message })
       });
       const data = await res.json();
       setMsg(data.message); setMsgType(data.success?"success":"error");
       if (data.success) setForm({prenom:"",nom:"",email:"",message:""});
-    } catch { setMsg(lang==="fr"?"Erreur — réessayez.":"Error — please try again."); setMsgType("error"); }
+    } catch { setMsg(lang==="fr"?"Erreur.":"Error."); setMsgType("error"); }
     setSending(false);
   };
 
@@ -1060,20 +1280,16 @@ function ContactPage({ lang }) {
           <p style={{color:"var(--text2)",fontSize:"0.93rem",lineHeight:1.75,marginBottom:4}}>{t.contact_desc}</p>
           <div className="contact-cards">
             {[
-              {icon:"fa-location-dot", fab:false, lbl:t.contact_addr,  val:t.contact_addr_val,    href:null},
-              {icon:"fa-phone",        fab:false, lbl:t.contact_phone,  val:"+XXX XX XX XX XX",    href:"tel:+XXX"},
-              {icon:"fa-envelope",     fab:false, lbl:t.contact_email,  val:"contact@inestid.com", href:"mailto:contact@inestid.com"},
-              {icon:"fa-whatsapp",     fab:true,  lbl:t.contact_hours,  val:t.contact_hours_val,   href:"https://wa.me/XXX"},
+              {icon:"fa-location-dot",fab:false,lbl:t.contact_addr, val:t.contact_addr_val,href:null},
+              {icon:"fa-phone",       fab:false,lbl:t.contact_phone,val:"+XXX XX XX XX XX",href:"tel:+XXX"},
+              {icon:"fa-envelope",    fab:false,lbl:t.contact_email,val:"contact@inestid.com",href:"mailto:contact@inestid.com"},
+              {icon:"fa-whatsapp",    fab:true, lbl:t.contact_hours,val:t.contact_hours_val,href:"https://wa.me/XXX"},
             ].map(c=>(
               <div className="ccard" key={c.lbl}>
                 <div className="ccard-icon"><i className={`${c.fab?"fa-brands":"fa-solid"} ${c.icon}`}/></div>
                 <div>
                   <div className="ccard-lbl">{c.lbl}</div>
-                  {c.href ? (
-                    <a href={c.href} style={{color:"var(--blue-l)",fontWeight:500,fontSize:"0.91rem",textDecoration:"none"}}>{c.val}</a>
-                  ) : (
-                    <div className="ccard-val">{c.val}</div>
-                  )}
+                  {c.href ? <a href={c.href} style={{color:"var(--blue-l)",fontWeight:500,fontSize:"0.91rem",textDecoration:"none"}}>{c.val}</a> : <div className="ccard-val">{c.val}</div>}
                 </div>
               </div>
             ))}
@@ -1089,9 +1305,7 @@ function ContactPage({ lang }) {
           <FG label={t.contact_em} icon="fa-envelope"><input type="email" placeholder="email@exemple.com" value={form.email} onChange={e=>setForm({...form,email:e.target.value})}/></FG>
           <FG label={t.contact_service} icon="fa-tags"><CustomSelect options={serviceOpts} value={service} onChange={setService}/></FG>
           <FG label={t.contact_msg} icon="fa-pen"><textarea placeholder={lang==="fr"?"Décrivez votre besoin...":"Describe your need..."} value={form.message} onChange={e=>setForm({...form,message:e.target.value})}/></FG>
-          <button className="btn btn-blue btn-full" onClick={handleContact} disabled={sending}>
-            <i className="fa-solid fa-paper-plane"/>{sending?t.contact_sending:t.contact_send}
-          </button>
+          <button className="btn btn-blue btn-full" onClick={handleContact} disabled={sending}><i className="fa-solid fa-paper-plane"/>{sending?t.contact_sending:t.contact_send}</button>
           <Alert type={msgType} msg={msg}/>
         </div>
       </div>
@@ -1117,7 +1331,7 @@ function PromoteurPage({ lang }) {
           <div className="promo-card-body">
             <div className="promo-quote">
               <p>« Recherche, innovation et développement pour une Afrique forte. »</p>
-              <cite>— YOLOU MATHIEU PATIENT</cite>
+              — YOLOU MATHIEU PATIENT
             </div>
             <div className="promo-socials">
               {[["fa-linkedin-in"],["fa-x-twitter"],["fa-facebook-f"]].map(([ic])=>(
@@ -1129,33 +1343,24 @@ function PromoteurPage({ lang }) {
         <div className="promo-content">
           <div className="promo-mots">
             <p>« Recherche, innovation et développement pour une Afrique forte. »</p>
-            <cite>YOLOU ATEKEYOLLO MATHIEU PATIENT — {t.promo_role}, INESTID</cite>
+            YOLOU ATEKEYOLLO MATHIEU PATIENT — {t.promo_role}, INESTID
           </div>
           <div className="promo-section">
             <div className="promo-section-title"><i className="fa-solid fa-id-card"/>{t.promo_bio_title}</div>
-            <div className="promo-bio">
-              <p>{t.promo_bio1}</p>
-              <p>{t.promo_bio2}</p>
-              <p>{t.promo_bio3}</p>
-              <p>{t.promo_bio4}</p>
-            </div>
+            <div className="promo-bio"><p>{t.promo_bio1}</p><p>{t.promo_bio2}</p><p>{t.promo_bio3}</p><p>{t.promo_bio4}</p></div>
           </div>
           <div className="promo-section">
             <div className="promo-section-title"><i className="fa-solid fa-timeline"/>{t.promo_parcours}</div>
             <div className="promo-timeline">
               {[
-                {icon:"fa-graduation-cap", year:t.promo_t1, title:t.promo_t1t, desc:t.promo_t1d},
-                {icon:"fa-lightbulb",      year:t.promo_t2, title:t.promo_t2t, desc:t.promo_t2d},
-                {icon:"fa-rocket",         year:t.promo_t3, title:t.promo_t3t, desc:t.promo_t3d},
-                {icon:"fa-trophy",         year:t.promo_t4, title:t.promo_t4t, desc:t.promo_t4d},
+                {icon:"fa-graduation-cap",year:t.promo_t1,title:t.promo_t1t,desc:t.promo_t1d},
+                {icon:"fa-lightbulb",     year:t.promo_t2,title:t.promo_t2t,desc:t.promo_t2d},
+                {icon:"fa-rocket",        year:t.promo_t3,title:t.promo_t3t,desc:t.promo_t3d},
+                {icon:"fa-trophy",        year:t.promo_t4,title:t.promo_t4t,desc:t.promo_t4d},
               ].map(item=>(
                 <div className="timeline-item" key={item.title}>
                   <div className="timeline-dot"><i className={`fa-solid ${item.icon}`}/></div>
-                  <div className="timeline-body">
-                    <div className="timeline-year">{item.year}</div>
-                    <div className="timeline-title">{item.title}</div>
-                    <div className="timeline-desc">{item.desc}</div>
-                  </div>
+                  <div className="timeline-body"><div className="timeline-year">{item.year}</div><div className="timeline-title">{item.title}</div><div className="timeline-desc">{item.desc}</div></div>
                 </div>
               ))}
             </div>
@@ -1164,10 +1369,10 @@ function PromoteurPage({ lang }) {
             <div className="promo-section-title"><i className="fa-solid fa-star"/>{t.promo_values}</div>
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:12}}>
               {[
-                {icon:"fa-magnifying-glass", col:"var(--blue-l)", bg:"rgba(42,82,201,0.08)", title:t.promo_v1, desc:t.promo_v1d},
-                {icon:"fa-lightbulb",        col:"#d97706",        bg:"rgba(217,119,6,0.08)", title:t.promo_v2, desc:t.promo_v2d},
-                {icon:"fa-chart-line",       col:"var(--green)",   bg:"rgba(46,163,18,0.08)", title:t.promo_v3, desc:t.promo_v3d},
-                {icon:"fa-shield-halved",    col:"var(--blue-l)", bg:"rgba(42,82,201,0.08)", title:t.promo_v4, desc:t.promo_v4d},
+                {icon:"fa-magnifying-glass",col:"var(--blue-l)",bg:"rgba(42,82,201,0.08)",title:t.promo_v1,desc:t.promo_v1d},
+                {icon:"fa-lightbulb",       col:"#d97706",       bg:"rgba(217,119,6,0.08)",title:t.promo_v2,desc:t.promo_v2d},
+                {icon:"fa-chart-line",      col:"var(--green)",  bg:"rgba(46,163,18,0.08)",title:t.promo_v3,desc:t.promo_v3d},
+                {icon:"fa-shield-halved",   col:"var(--blue-l)",bg:"rgba(42,82,201,0.08)",title:t.promo_v4,desc:t.promo_v4d},
               ].map(v=>(
                 <div key={v.title} style={{background:v.bg,borderRadius:14,padding:"16px"}}>
                   <div style={{width:36,height:36,borderRadius:10,background:"white",display:"flex",alignItems:"center",justifyContent:"center",marginBottom:10,boxShadow:"0 2px 8px rgba(0,0,0,0.08)"}}>
@@ -1193,15 +1398,12 @@ function MentionsPage({ lang }) {
       <div className="legal-content">
         <div className="legal-alert"><i className="fa-solid fa-circle-info"/>{t.mentions_alert}</div>
         {[
-          {icon:"fa-building",  title:t.editeur,    content:<><p><strong>{lang==="fr"?"Raison sociale":"Company name"} :</strong> INESTID</p><p><strong>Email :</strong> contact@inestid.com</p><p><strong>{lang==="fr"?"Siège social":"Headquarters"} :</strong> {lang==="fr"?"À compléter":"To be completed"}</p></>},
-          {icon:"fa-server",    title:t.hebergement, content:<><p>{lang==="fr"?"Ce site est hébergé par un prestataire tiers.":"This site is hosted by a third-party provider."}</p></>},
-          {icon:"fa-copyright", title:t.propriete,   content:<><p>{lang==="fr"?"L'ensemble du contenu est la propriété exclusive d'INESTID.":"All content is the exclusive property of INESTID."}</p></>},
-          {icon:"fa-gavel",     title:t.droit_app,   content:<><p>{lang==="fr"?"Les présentes mentions sont soumises au droit applicable dans le pays d'établissement d'INESTID.":"These notices are subject to the law applicable in the country of establishment of INESTID."}</p></>},
+          {icon:"fa-building",  title:t.editeur,    content:<><p><strong>{lang==="fr"?"Raison sociale":"Company"} :</strong> INESTID</p><p><strong>Email :</strong> contact@inestid.com</p><p><strong>{lang==="fr"?"Siège social":"HQ"} :</strong> {lang==="fr"?"À compléter":"To be completed"}</p></>},
+          {icon:"fa-server",    title:t.hebergement, content:<p>{lang==="fr"?"Ce site est hébergé par Vercel.":"This site is hosted by Vercel."}</p>},
+          {icon:"fa-copyright", title:t.propriete,   content:<p>{lang==="fr"?"L'ensemble du contenu est la propriété exclusive d'INESTID.":"All content is the exclusive property of INESTID."}</p>},
+          {icon:"fa-gavel",     title:t.droit_app,   content:<p>{lang==="fr"?"Les présentes mentions sont soumises au droit applicable.":"These notices are subject to applicable law."}</p>},
         ].map(s=>(
-          <div className="legal-section" key={s.title}>
-            <h3><i className={`fa-solid ${s.icon}`}/>{s.title}</h3>
-            {s.content}
-          </div>
+          <div className="legal-section" key={s.title}><h3><i className={`fa-solid ${s.icon}`}/>{s.title}</h3>{s.content}</div>
         ))}
       </div>
     </div>
@@ -1216,15 +1418,12 @@ function ConfidentialitePage({ lang }) {
       <div className="legal-content">
         <div className="legal-alert"><i className="fa-solid fa-lock"/>{t.confidentialite_alert}</div>
         {[
-          {icon:"fa-database",           title:t.donnees,   items:lang==="fr"?["Nom, prénom, email, téléphone","Données de navigation","Informations des formulaires"]:["Name, first name, email, phone","Navigation data","Form information"]},
-          {icon:"fa-bullseye",           title:t.finalites,  items:lang==="fr"?["Traitement des demandes de contact","Amélioration de nos services","Envoi de newsletters (avec consentement)"]:["Processing contact requests","Improving our services","Sending newsletters (with consent)"]},
-          {icon:"fa-user-shield",        title:t.droits,    items:lang==="fr"?["Droit d'accès à vos données","Droit de rectification","Droit à l'effacement","Droit d'opposition"]:["Right of access to your data","Right of rectification","Right to erasure","Right to object"]},
-          {icon:"fa-envelope-open-text", title:t.dpo,       items:["contact@inestid.com",lang==="fr"?"Délai de réponse : 30 jours maximum":"Response time: 30 days maximum"]},
+          {icon:"fa-database",           title:t.donnees,   items:lang==="fr"?["Nom, prénom, email, téléphone","Données de navigation","Informations des formulaires"]:["Name, email, phone","Navigation data","Form information"]},
+          {icon:"fa-bullseye",           title:t.finalites,  items:lang==="fr"?["Traitement des demandes","Amélioration des services","Newsletters (avec consentement)"]:["Processing requests","Improving services","Newsletters (with consent)"]},
+          {icon:"fa-user-shield",        title:t.droits,    items:lang==="fr"?["Droit d'accès","Droit de rectification","Droit à l'effacement","Droit d'opposition"]:["Right of access","Right of rectification","Right to erasure","Right to object"]},
+          {icon:"fa-envelope-open-text", title:t.dpo,       items:["contact@inestid.com",lang==="fr"?"Délai : 30 jours max":"Response: 30 days max"]},
         ].map(s=>(
-          <div className="legal-section" key={s.title}>
-            <h3><i className={`fa-solid ${s.icon}`}/>{s.title}</h3>
-            <ul>{s.items.map(i=><li key={i}><i className="fa-solid fa-circle-check"/>{i}</li>)}</ul>
-          </div>
+          <div className="legal-section" key={s.title}><h3><i className={`fa-solid ${s.icon}`}/>{s.title}</h3><ul>{s.items.map(i=><li key={i}><i className="fa-solid fa-circle-check"/>{i}</li>)}</ul></div>
         ))}
       </div>
     </div>
@@ -1241,14 +1440,10 @@ function CguPage({ lang }) {
         {[
           {icon:"fa-globe",        title:t.objet,   content:<p>{t.objet_text}</p>},
           {icon:"fa-check-circle", title:t.acces,   content:<p>{t.acces_text}</p>},
-          {icon:"fa-ban",          title:t.interdit, items:lang==="fr"?["Utilisation frauduleuse","Diffusion de contenus illégaux","Tentative de piratage","Reproduction non autorisée"]:["Fraudulent use","Distribution of illegal content","Hacking attempts","Unauthorized reproduction"]},
+          {icon:"fa-ban",          title:t.interdit, items:lang==="fr"?["Utilisation frauduleuse","Contenus illégaux","Tentative de piratage","Reproduction non autorisée"]:["Fraudulent use","Illegal content","Hacking attempts","Unauthorized reproduction"]},
           {icon:"fa-pen-to-square",title:t.modif,   content:<p>{t.modif_text}</p>},
         ].map(s=>(
-          <div className="legal-section" key={s.title}>
-            <h3><i className={`fa-solid ${s.icon}`}/>{s.title}</h3>
-            {s.content||null}
-            {s.items&&<ul>{s.items.map(i=><li key={i}><i className="fa-solid fa-xmark" style={{color:"#ef4444"}}/>{i}</li>)}</ul>}
-          </div>
+          <div className="legal-section" key={s.title}><h3><i className={`fa-solid ${s.icon}`}/>{s.title}</h3>{s.content||null}{s.items&&<ul>{s.items.map(i=><li key={i}><i className="fa-solid fa-xmark" style={{color:"#ef4444"}}/>{i}</li>)}</ul>}</div>
         ))}
         <p style={{color:"var(--gray)",fontSize:"0.8rem",marginTop:20}}><i className="fa-regular fa-calendar" style={{marginRight:6}}/>{t.last_update} : {lang==="fr"?"Juin 2026":"June 2026"}</p>
       </div>
@@ -1256,7 +1451,7 @@ function CguPage({ lang }) {
   );
 }
 
-function AdminPage({ nav }) {
+function AdminPage() {
   const [authed, setAuthed] = useState(false);
   const [loginForm, setLoginForm] = useState({ email:"", password:"" });
   const [loginError, setLoginError] = useState("");
@@ -1277,14 +1472,8 @@ function AdminPage({ nav }) {
   const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVwbXdqbGdxempqaG90b2Fod2FhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3OTE3MjksImV4cCI6MjA5NjM2NzcyOX0.KnFffTUZlVNd5okLFGGL2Mx7uB22DOgm6aa8nigoxSg";
 
   const sbFetch = async (table, method="GET", body=null, id=null) => {
-    const url = method==="GET"
-      ? `${SUPABASE_URL}/rest/v1/${table}?select=*&order=created_at.desc`
-      : `${SUPABASE_URL}/rest/v1/${table}${id?`?id=eq.${id}`:""}`;
-    const res = await fetch(url, {
-      method,
-      headers: { "apikey":SUPABASE_KEY, "Authorization":`Bearer ${SUPABASE_KEY}`, "Content-Type":"application/json", "Prefer":method==="POST"?"return=minimal":"" },
-      body: body ? JSON.stringify(body) : null
-    });
+    const url = method==="GET" ? `${SUPABASE_URL}/rest/v1/${table}?select=*&order=created_at.desc` : `${SUPABASE_URL}/rest/v1/${table}${id?`?id=eq.${id}`:""}`;
+    const res = await fetch(url, { method, headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Content-Type":"application/json","Prefer":method==="POST"?"return=minimal":""}, body:body?JSON.stringify(body):null });
     if (method==="GET") return await res.json();
     return res;
   };
@@ -1301,9 +1490,7 @@ function AdminPage({ nav }) {
 
   const loadData = async () => {
     setLoading(true);
-    const [a,c,ca,ab,pt] = await Promise.all([
-      sbFetch("actualites"), sbFetch("contacts"), sbFetch("candidatures"), sbFetch("abonnes"), sbFetch("partenaires")
-    ]);
+    const [a,c,ca,ab,pt] = await Promise.all([sbFetch("actualites"),sbFetch("contacts"),sbFetch("candidatures"),sbFetch("abonnes"),sbFetch("partenaires")]);
     setActualites(a||[]); setContacts(c||[]); setCandidatures(ca||[]); setAbonnes(ab||[]); setPartenaires(pt||[]);
     setLoading(false);
   };
@@ -1334,22 +1521,18 @@ function AdminPage({ nav }) {
           <div className="page-tag"><i className="fa-solid fa-gauge"/>Tableau de bord</div>
           <h1 style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"clamp(1.6rem,3vw,2.2rem)",fontWeight:800,color:"var(--text)"}}>Administration</h1>
         </div>
-        <button className="btn btn-outline" onClick={()=>setAuthed(false)} style={{fontSize:"0.82rem"}}>
-          <i className="fa-solid fa-right-from-bracket"/>Déconnexion
-        </button>
+        <button className="btn btn-outline" onClick={()=>setAuthed(false)} style={{fontSize:"0.82rem"}}><i className="fa-solid fa-right-from-bracket"/>Déconnexion</button>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"repeat(5,1fr)",gap:14,marginBottom:28}}>
         {[
-          {icon:"fa-newspaper",  col:"var(--blue-l)", bg:"rgba(42,82,201,0.1)", label:"Actualités",   val:actualites.length},
-          {icon:"fa-envelope",   col:"var(--blue-l)", bg:"rgba(42,82,201,0.1)", label:"Messages",     val:contacts.length},
-          {icon:"fa-users",      col:"var(--green)",  bg:"rgba(46,163,18,0.1)", label:"Candidatures", val:candidatures.length},
-          {icon:"fa-rss",        col:"var(--green)",  bg:"rgba(46,163,18,0.1)", label:"Abonnés",      val:abonnes.length},
-          {icon:"fa-handshake",  col:"var(--blue-l)", bg:"rgba(42,82,201,0.1)", label:"Partenaires",  val:partenaires.length},
+          {icon:"fa-newspaper", col:"var(--blue-l)",bg:"rgba(42,82,201,0.1)",label:"Actualités",  val:actualites.length},
+          {icon:"fa-envelope",  col:"var(--blue-l)",bg:"rgba(42,82,201,0.1)",label:"Messages",    val:contacts.length},
+          {icon:"fa-users",     col:"var(--green)", bg:"rgba(46,163,18,0.1)",label:"Candidatures",val:candidatures.length},
+          {icon:"fa-rss",       col:"var(--green)", bg:"rgba(46,163,18,0.1)",label:"Abonnés",     val:abonnes.length},
+          {icon:"fa-handshake", col:"var(--blue-l)",bg:"rgba(42,82,201,0.1)",label:"Partenaires", val:partenaires.length},
         ].map(s=>(
           <div key={s.label} style={{background:"var(--card)",borderRadius:16,padding:"18px",border:"1px solid var(--border)",textAlign:"center"}}>
-            <div style={{width:40,height:40,borderRadius:11,background:s.bg,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 10px"}}>
-              <i className={`fa-solid ${s.icon}`} style={{color:s.col}}/>
-            </div>
+            <div style={{width:40,height:40,borderRadius:11,background:s.bg,display:"flex",alignItems:"center",justifyContent:"center",margin:"0 auto 10px"}}><i className={`fa-solid ${s.icon}`} style={{color:s.col}}/></div>
             <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontSize:"1.6rem",fontWeight:800,color:"var(--text)"}}>{s.val}</div>
             <div style={{fontSize:"0.75rem",color:"var(--gray)"}}>{s.label}</div>
           </div>
@@ -1357,14 +1540,13 @@ function AdminPage({ nav }) {
       </div>
       <div style={{display:"flex",gap:8,marginBottom:24,flexWrap:"wrap"}}>
         {[
-          {id:"actualites",   icon:"fa-newspaper",  label:"Actualités"},
-          {id:"contacts",     icon:"fa-envelope",   label:"Messages"},
-          {id:"candidatures", icon:"fa-users",       label:"Candidatures"},
-          {id:"abonnes",      icon:"fa-rss",         label:"Abonnés"},
-          {id:"partenaires",  icon:"fa-handshake",   label:"Partenaires"},
+          {id:"actualites",  icon:"fa-newspaper", label:"Actualités"},
+          {id:"contacts",    icon:"fa-envelope",  label:"Messages"},
+          {id:"candidatures",icon:"fa-users",      label:"Candidatures"},
+          {id:"abonnes",     icon:"fa-rss",        label:"Abonnés"},
+          {id:"partenaires", icon:"fa-handshake",  label:"Partenaires"},
         ].map(tab=>(
-          <button key={tab.id} className={`btn ${activeTab===tab.id?"btn-blue":"btn-outline"}`}
-            style={{fontSize:"0.82rem",padding:"8px 16px"}} onClick={()=>setActiveTab(tab.id)}>
+          <button key={tab.id} className={`btn ${activeTab===tab.id?"btn-blue":"btn-outline"}`} style={{fontSize:"0.82rem",padding:"8px 16px"}} onClick={()=>setActiveTab(tab.id)}>
             <i className={`fa-solid ${tab.icon}`}/>{tab.label}
           </button>
         ))}
@@ -1375,16 +1557,12 @@ function AdminPage({ nav }) {
         <div>
           <div className="form-box" style={{marginBottom:24}}>
             <h3><i className="fa-solid fa-plus" style={{color:"var(--blue-l)",marginRight:9}}/>Publier un article</h3>
-            <p className="sub">Ajoutez une nouvelle actualité sur le site.</p>
-            <FG label="Titre" icon="fa-heading"><input type="text" placeholder="Titre de l'article" value={newArticle.titre} onChange={e=>setNewArticle({...newArticle,titre:e.target.value})}/></FG>
+            <p className="sub">Ajoutez une nouvelle actualité.</p>
+            <FG label="Titre" icon="fa-heading"><input type="text" placeholder="Titre" value={newArticle.titre} onChange={e=>setNewArticle({...newArticle,titre:e.target.value})}/></FG>
             <FG label="Catégorie" icon="fa-tags">
-              <CustomSelect options={[
-                {value:"Informatique",icon:"fa-laptop-code",label:"Informatique"},
-                {value:"IA & Data",   icon:"fa-brain",      label:"IA & Data"},
-                {value:"Entreprise",  icon:"fa-building",   label:"Entreprise"}
-              ]} value={newArticle.categorie} onChange={v=>setNewArticle({...newArticle,categorie:v})}/>
+              <CustomSelect options={[{value:"Informatique",icon:"fa-laptop-code",label:"Informatique"},{value:"IA & Data",icon:"fa-brain",label:"IA & Data"},{value:"Entreprise",icon:"fa-building",label:"Entreprise"}]} value={newArticle.categorie} onChange={v=>setNewArticle({...newArticle,categorie:v})}/>
             </FG>
-            <FG label="Contenu" icon="fa-pen"><textarea placeholder="Contenu de l'article..." value={newArticle.contenu} onChange={e=>setNewArticle({...newArticle,contenu:e.target.value})} style={{minHeight:140}}/></FG>
+            <FG label="Contenu" icon="fa-pen"><textarea placeholder="Contenu..." value={newArticle.contenu} onChange={e=>setNewArticle({...newArticle,contenu:e.target.value})} style={{minHeight:140}}/></FG>
             <FG label="Image URL" icon="fa-image"><input type="text" placeholder="https://..." value={newArticle.image_url} onChange={e=>setNewArticle({...newArticle,image_url:e.target.value})}/></FG>
             <div className="upload" onClick={()=>document.getElementById("img-upload").click()} style={{marginBottom:13}}>
               <input type="file" id="img-upload" accept="image/*" style={{display:"none"}} onChange={async(e)=>{
@@ -1393,29 +1571,26 @@ function AdminPage({ nav }) {
                 const res=await fetch(`${SUPABASE_URL}/storage/v1/object/images/${filename}`,{method:"POST",headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Content-Type":file.type},body:file});
                 if(res.ok){const url=`${SUPABASE_URL}/storage/v1/object/public/images/${filename}`;setNewArticle(prev=>({...prev,image_url:url}));setArticleMsg("Image uploadée !");}
               }}/>
-              <i className="fa-solid fa-cloud-arrow-up"/>
-              <p><span>Cliquez pour uploader une image</span></p>
+              <i className="fa-solid fa-cloud-arrow-up"/><p><span>Uploader une image</span></p>
             </div>
-            <FG label="Lien externe (optionnel)" icon="fa-link"><input type="text" placeholder="https://site-externe.com" value={newArticle.lien_externe||""} onChange={e=>setNewArticle({...newArticle,lien_externe:e.target.value})}/></FG>
+            <FG label="Lien externe (optionnel)" icon="fa-link"><input type="text" placeholder="https://..." value={newArticle.lien_externe||""} onChange={e=>setNewArticle({...newArticle,lien_externe:e.target.value})}/></FG>
             {articleMsg && <div className="alert alert-success"><i className="fa-solid fa-circle-check"/>{articleMsg}</div>}
             <button className="btn btn-blue btn-full" onClick={async()=>{
               if(!newArticle.titre||!newArticle.contenu){setArticleMsg("Titre et contenu obligatoires.");return;}
               await sbFetch("actualites","POST",{...newArticle,date_pub:new Date().toISOString()});
               setArticleMsg("Article publié !"); setNewArticle({titre:"",contenu:"",categorie:"Informatique",image_url:"",lien_externe:""}); loadData();
-            }}><i className="fa-solid fa-paper-plane"/>Publier l'article</button>
+            }}><i className="fa-solid fa-paper-plane"/>Publier</button>
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:14}}>
-            {actualites.length===0&&<p style={{color:"var(--gray)"}}>Aucun article publié.</p>}
+            {actualites.length===0&&<p style={{color:"var(--gray)"}}>Aucun article.</p>}
             {actualites.map(a=>(
               <div key={a.id} style={{background:"var(--card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--border)",display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12}}>
                 <div>
                   <div style={{fontSize:"0.7rem",fontWeight:700,color:"var(--blue-l)",textTransform:"uppercase",marginBottom:4}}>{a.categorie}</div>
                   <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:700,color:"var(--text)",marginBottom:4}}>{a.titre}</div>
-                  <div style={{fontSize:"0.8rem",color:"var(--gray)"}}>{a.contenu?.slice(0,100)}...</div>
+                  <div style={{fontSize:"0.8rem",color:"var(--gray)"}}>{a.contenu?.slice(0,80)}...</div>
                 </div>
-                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("actualites",a.id)}>
-                  <i className="fa-solid fa-trash"/>
-                </button>
+                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("actualites",a.id)}><i className="fa-solid fa-trash"/></button>
               </div>
             ))}
           </div>
@@ -1424,19 +1599,17 @@ function AdminPage({ nav }) {
 
       {activeTab==="contacts" && (
         <div style={{display:"flex",flexDirection:"column",gap:14}}>
-          {contacts.length===0&&<p style={{color:"var(--gray)"}}>Aucun message reçu.</p>}
+          {contacts.length===0&&<p style={{color:"var(--gray)"}}>Aucun message.</p>}
           {contacts.map(c=>(
             <div key={c.id} style={{background:"var(--card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--border)"}}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12}}>
+              <div style={{display:"flex",justifyContent:"space-between",gap:12}}>
                 <div style={{flex:1}}>
                   <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:700,color:"var(--text)",marginBottom:4}}>{c.nom}</div>
                   <div style={{fontSize:"0.8rem",color:"var(--blue-l)",marginBottom:6}}>{c.email} · {c.service}</div>
                   <div style={{fontSize:"0.85rem",color:"var(--text2)",lineHeight:1.6}}>{c.message}</div>
                   <div style={{fontSize:"0.72rem",color:"var(--gray)",marginTop:8}}><i className="fa-regular fa-calendar" style={{marginRight:5}}/>{new Date(c.created_at).toLocaleDateString("fr-FR")}</div>
                 </div>
-                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("contacts",c.id)}>
-                  <i className="fa-solid fa-trash"/>
-                </button>
+                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("contacts",c.id)}><i className="fa-solid fa-trash"/></button>
               </div>
             </div>
           ))}
@@ -1445,20 +1618,18 @@ function AdminPage({ nav }) {
 
       {activeTab==="candidatures" && (
         <div style={{display:"flex",flexDirection:"column",gap:14}}>
-          {candidatures.length===0&&<p style={{color:"var(--gray)"}}>Aucune candidature reçue.</p>}
+          {candidatures.length===0&&<p style={{color:"var(--gray)"}}>Aucune candidature.</p>}
           {candidatures.map(c=>(
             <div key={c.id} style={{background:"var(--card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--border)"}}>
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",gap:12}}>
+              <div style={{display:"flex",justifyContent:"space-between",gap:12}}>
                 <div style={{flex:1}}>
                   <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:700,color:"var(--text)",marginBottom:4}}>{c.prenom} {c.nom}</div>
                   <div style={{fontSize:"0.8rem",color:"var(--blue-l)",marginBottom:4}}>{c.email} · {c.telephone}</div>
-                  <div style={{fontSize:"0.8rem",color:"var(--gray)",marginBottom:6}}><strong>Poste :</strong> {c.poste} · <strong>Domaine :</strong> {c.domaine}</div>
-                  <div style={{fontSize:"0.83rem",color:"var(--text2)",lineHeight:1.6}}>{c.motivation}</div>
+                  <div style={{fontSize:"0.8rem",color:"var(--gray)",marginBottom:6}}>{c.poste} · {c.domaine}</div>
+                  <div style={{fontSize:"0.83rem",color:"var(--text2)"}}>{c.motivation}</div>
                   <div style={{fontSize:"0.72rem",color:"var(--gray)",marginTop:8}}><i className="fa-regular fa-calendar" style={{marginRight:5}}/>{new Date(c.created_at).toLocaleDateString("fr-FR")}</div>
                 </div>
-                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("candidatures",c.id)}>
-                  <i className="fa-solid fa-trash"/>
-                </button>
+                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("candidatures",c.id)}><i className="fa-solid fa-trash"/></button>
               </div>
             </div>
           ))}
@@ -1474,9 +1645,7 @@ function AdminPage({ nav }) {
                 <div style={{fontWeight:500,color:"var(--text)"}}>{a.email}</div>
                 <div style={{fontSize:"0.72rem",color:"var(--gray)",marginTop:3}}><i className="fa-regular fa-calendar" style={{marginRight:5}}/>{new Date(a.created_at).toLocaleDateString("fr-FR")}</div>
               </div>
-              <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("abonnes",a.id)}>
-                <i className="fa-solid fa-trash"/>
-              </button>
+              <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("abonnes",a.id)}><i className="fa-solid fa-trash"/></button>
             </div>
           ))}
         </div>
@@ -1486,8 +1655,8 @@ function AdminPage({ nav }) {
         <div>
           <div className="form-box" style={{marginBottom:24}}>
             <h3><i className="fa-solid fa-plus" style={{color:"var(--blue-l)",marginRight:9}}/>Ajouter un partenaire</h3>
-            <p className="sub">Ajoutez un nouveau partenaire sur le site.</p>
-            <FG label="Nom du partenaire *" icon="fa-building"><input type="text" placeholder="Nom de l'organisation" value={newPartenaire.nom} onChange={e=>setNewPartenaire({...newPartenaire,nom:e.target.value})}/></FG>
+            <p className="sub">Ajoutez un partenaire.</p>
+            <FG label="Nom *" icon="fa-building"><input type="text" placeholder="Nom" value={newPartenaire.nom} onChange={e=>setNewPartenaire({...newPartenaire,nom:e.target.value})}/></FG>
             <FG label="Description" icon="fa-pen"><textarea placeholder="Description..." value={newPartenaire.description} onChange={e=>setNewPartenaire({...newPartenaire,description:e.target.value})} style={{minHeight:80}}/></FG>
             <FG label="Site web" icon="fa-globe"><input type="text" placeholder="https://..." value={newPartenaire.site_web} onChange={e=>setNewPartenaire({...newPartenaire,site_web:e.target.value})}/></FG>
             <FG label="Logo URL" icon="fa-image"><input type="text" placeholder="https://..." value={newPartenaire.logo_url} onChange={e=>setNewPartenaire({...newPartenaire,logo_url:e.target.value})}/></FG>
@@ -1498,30 +1667,27 @@ function AdminPage({ nav }) {
                 const res=await fetch(`${SUPABASE_URL}/storage/v1/object/images/${filename}`,{method:"POST",headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Content-Type":file.type},body:file});
                 if(res.ok){const url=`${SUPABASE_URL}/storage/v1/object/public/images/${filename}`;setNewPartenaire(prev=>({...prev,logo_url:url}));setPartenaireMsg("Logo uploadé !");}
               }}/>
-              <i className="fa-solid fa-cloud-arrow-up"/>
-              <p><span>Cliquez pour uploader le logo</span></p>
+              <i className="fa-solid fa-cloud-arrow-up"/><p><span>Uploader le logo</span></p>
             </div>
             {partenaireMsg&&<div className="alert alert-success"><i className="fa-solid fa-circle-check"/>{partenaireMsg}</div>}
             <button className="btn btn-blue btn-full" onClick={async()=>{
               if(!newPartenaire.nom){setPartenaireMsg("Nom obligatoire.");return;}
               await sbFetch("partenaires","POST",{...newPartenaire});
               setPartenaireMsg("Partenaire ajouté !"); setNewPartenaire({nom:"",description:"",logo_url:"",site_web:""}); loadData();
-            }}><i className="fa-solid fa-plus"/>Ajouter le partenaire</button>
+            }}><i className="fa-solid fa-plus"/>Ajouter</button>
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:14}}>
-            {partenaires.length===0&&<p style={{color:"var(--gray)"}}>Aucun partenaire ajouté.</p>}
+            {partenaires.length===0&&<p style={{color:"var(--gray)"}}>Aucun partenaire.</p>}
             {partenaires.map(p=>(
               <div key={p.id} style={{background:"var(--card)",borderRadius:14,padding:"18px 20px",border:"1px solid var(--border)",display:"flex",justifyContent:"space-between",alignItems:"center",gap:12}}>
                 <div style={{display:"flex",alignItems:"center",gap:14}}>
-                  {p.logo_url?(<img src={p.logo_url} alt={p.nom} style={{width:50,height:50,objectFit:"contain",borderRadius:8,padding:4}}/>):(<div style={{width:50,height:50,borderRadius:8,background:"var(--bg2)",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--gray)"}}><i className="fa-solid fa-building"/></div>)}
+                  {p.logo_url?<img src={p.logo_url} alt={p.nom} style={{width:50,height:50,objectFit:"contain",borderRadius:8,padding:4}}/>:<div style={{width:50,height:50,borderRadius:8,background:"var(--bg2)",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--gray)"}}><i className="fa-solid fa-building"/></div>}
                   <div>
                     <div style={{fontFamily:"'Plus Jakarta Sans',sans-serif",fontWeight:700,color:"var(--text)"}}>{p.nom}</div>
                     {p.site_web&&<div style={{fontSize:"0.78rem",color:"var(--blue-l)"}}>{p.site_web}</div>}
                   </div>
                 </div>
-                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("partenaires",p.id)}>
-                  <i className="fa-solid fa-trash"/>
-                </button>
+                <button className="btn btn-outline" style={{fontSize:"0.78rem",padding:"7px 12px",flexShrink:0,color:"#ef4444",borderColor:"rgba(239,68,68,0.3)"}} onClick={()=>handleDelete("partenaires",p.id)}><i className="fa-solid fa-trash"/></button>
               </div>
             ))}
           </div>
@@ -1538,7 +1704,7 @@ function Footer({ nav, lang }) {
       <div className="footer-top">
         <div>
           <div className="logo" onClick={()=>nav("accueil")} style={{cursor:"pointer"}}>
-            <img src="/logo1.png" alt="INESTID" style={{height:100, width:"auto", objectFit:"contain"}}/>
+            <img src="/logo1.png" alt="INESTID" style={{height:70,width:"auto",objectFit:"contain"}}/>
           </div>
           <p className="footer-desc">{t.footer_desc}</p>
         </div>
@@ -1586,6 +1752,7 @@ export default function App() {
   const [dark, setDark] = useState(false);
   const [lang, setLang] = useState("fr");
   const [articleModal, setArticleModal] = useState(null);
+  const [showBot, setShowBot] = useState(false);
 
   useEffect(() => { injectAssets(); }, []);
 
@@ -1594,10 +1761,7 @@ export default function App() {
     const goOnline = () => setOffline(false);
     window.addEventListener('offline', goOffline);
     window.addEventListener('online', goOnline);
-    return () => {
-      window.removeEventListener('offline', goOffline);
-      window.removeEventListener('online', goOnline);
-    };
+    return () => { window.removeEventListener('offline', goOffline); window.removeEventListener('online', goOnline); };
   }, []);
 
   useEffect(() => {
@@ -1647,18 +1811,17 @@ export default function App() {
         {lang==="fr"?"Vérifiez votre connexion internet et réessayez.":"Please check your internet connection and try again."}
       </p>
       <button className="btn btn-blue" onClick={()=>window.location.reload()}>
-        <i className="fa-solid fa-rotate-right"/>
-        {lang==="fr"?"Réessayer":"Try again"}
+        <i className="fa-solid fa-rotate-right"/>{lang==="fr"?"Réessayer":"Try again"}
       </button>
-      <div style={{marginTop:8}}>
-        <img src={dark?"/logo1.png":"/logo.png"} alt="INESTID" className="logo-img"/>
-      </div>
+      <img src="/logo.png" alt="INESTID" style={{height:50,objectFit:"contain",marginTop:8}}/>
     </div>
   );
 
   return (
     <>
       <style>{CSS}</style>
+
+      {/* NAV */}
       <nav className="nav">
         <div className="logo" onClick={()=>{
           const now=Date.now();
@@ -1668,7 +1831,7 @@ export default function App() {
           if(window._clicks.length>=5){window._clicks=[];nav("admin");}
           else nav("accueil");
         }}>
-          <img src="/logo.png" alt="INESTID" className="logo-img"/>
+          <img src={dark?"/logo1.png":"/logo.png"} alt="INESTID" className="logo-img"/>
         </div>
         <ul className="nav-links">
           {NAV.map(n=>(
@@ -1694,6 +1857,7 @@ export default function App() {
         </div>
       </nav>
 
+      {/* MOBILE MENU */}
       <div className={`mob-menu${menuOpen?" open":""}`}>
         {NAV.map(n=>(
           <button key={n.id} className={page===n.id?"active":""} onClick={()=>nav(n.id)}>
@@ -1704,9 +1868,19 @@ export default function App() {
         <div className="mob-menu-divider"/>
         <button onClick={()=>nav("promoteur")}><i className="fa-solid fa-user-tie"/>{t.footer_promoter}</button>
         <div className="mob-menu-divider"/>
+
+        {/* BOT BUTTON */}
+        <button className="bot-btn" onClick={()=>{ setShowBot(true); setMenuOpen(false); }}>
+          <i className="fa-solid fa-robot"/>
+          {t.bot_start}
+          <span className="bot-btn-dot"/>
+        </button>
+
+        <div className="mob-menu-divider"/>
         <LangSelector lang={lang} setLang={setLang} t={t}/>
       </div>
 
+      {/* PAGES */}
       <div className="pages">
         {PAGES_LIST.map(p=>(
           <div key={p} className={`page${page===p?" active":""}`}>
@@ -1715,9 +1889,7 @@ export default function App() {
         ))}
       </div>
 
-      {/* BOT IA GROQ - FLOATING CHAT */}
-      <ChatBot />
-
+      {/* ARTICLE MODAL */}
       {articleModal && (
         <div className="overlay" onClick={e=>e.target===e.currentTarget&&setArticleModal(null)}>
           <div className="modal" style={{maxWidth:600,maxHeight:"85vh",overflowY:"auto"}}>
@@ -1736,21 +1908,19 @@ export default function App() {
               <i className="fa-regular fa-calendar" style={{marginRight:5}}/>
               {new Date(articleModal.date_pub||articleModal.created_at).toLocaleDateString(lang==="fr"?"fr-FR":"en-US")}
             </p>
-            {articleModal.image_url && (
-              <img src={articleModal.image_url} alt={articleModal.titre} style={{width:"100%",borderRadius:12,marginBottom:16,objectFit:"cover",maxHeight:200}}/>
-            )}
-            <div style={{color:"var(--text2)",fontSize:"0.92rem",lineHeight:1.8,paddingRight:4}}>
-              {articleModal.contenu}
-            </div>
+            {articleModal.image_url && <img src={articleModal.image_url} alt={articleModal.titre} style={{width:"100%",borderRadius:12,marginBottom:16,objectFit:"cover",maxHeight:200}}/>}
+            <div style={{color:"var(--text2)",fontSize:"0.92rem",lineHeight:1.8,paddingRight:4}}>{articleModal.contenu}</div>
             {articleModal.lien_externe && (
               <a href={articleModal.lien_externe} target="_blank" rel="noreferrer" className="btn btn-blue btn-full" style={{marginTop:16}}>
-                <i className="fa-solid fa-arrow-up-right-from-square"/>
-                {lang==="fr"?"Visiter le site":"Visit website"}
+                <i className="fa-solid fa-arrow-up-right-from-square"/>{lang==="fr"?"Visiter le site":"Visit website"}
               </a>
             )}
           </div>
         </div>
       )}
+
+      {/* BOT IA */}
+      {showBot && <BotIA lang={lang} onClose={()=>setShowBot(false)}/>}
     </>
   );
 }
